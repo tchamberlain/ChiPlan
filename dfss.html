@@ -1,0 +1,129 @@
+<head>
+  <title>ChiPLAN</title>
+</head>
+
+<body>
+	  
+</body>
+
+<template name="register">
+    <h2>Register</h2>
+</template>
+
+<template name="login">
+    <h2>Login</h2>
+</template>
+
+
+<template name="seeAll">
+	<h2>All activities</h2>
+	{{#each get_act_list}}
+	 <!-- <button id="{{ name }}" type="submit" name="{{ product.type }}">{{ product.type }}</button> -->
+	 <li class="activity">{{name}}</li>
+	 {{/each}}
+</template>
+
+<!-- provides a home page, also sets up list of activty ids -->
+<template name="home">
+    {{set_act_index}}
+</template>
+
+<!-- for the "swiping" screen, where you say yes or no to an activity -->
+<template name="swipe">
+    {{set_up_act_list "entertainment"}}
+    {{> display_activity}}
+     <ul><input type="button" class="nexter" value="Next"></ul>
+     <li><a href="{{pathFor route='confirm'}}">confirm</a></li>
+      <li><a href="{{pathFor route='seeAll'}}">see all</a></li>
+
+</template>
+
+
+<template name="entertainment">
+    <h2>entertainment</h2>
+    {{set_category "entertainment" }}
+    {{>swipe}}
+
+</template>
+
+<template name="sports">
+    <h2>sports</h2>
+    {{set_category "sports"}}
+    {{>swipe}}
+</template>
+
+<template name="art">
+    <h2>art</h2>
+    {{set_category "art"}}
+    {{>swipe}}
+</template>
+
+<template name="stayin">
+    <h2>stayin</h2>
+    {{set_category "stayin"}}
+    {{>swipe}}
+
+</template>
+
+<template name="surpriseme">
+    <h2>stayin</h2>
+    {{set_category "surpriseme"}}
+    {{>swipe}}
+</template>
+
+<template name="confirm">
+    <h2>Confirm activity</h2>
+    {{> display_activity_info}}
+    <ul><input type="button" class="favorite" value="Add activity to calendar"></ul>
+</template>
+
+<!-- trying to create web page for user dashboard, display favorites -->
+<template name="dashboard">
+	<h2>Your Favorites</h2>
+     {{#each currentUser.profile.favorites}}
+     	  <li>{{name}}</li>
+     {{/each}}
+</template>
+
+
+<!-- gets teh name of the current activity -->
+<template name="display_activity">
+	<ul>{{current_activity.name}}</ul>
+</template>
+
+<template name="display_activity_info">
+	<ul>{{current_activity.name}}</ul>	
+	<ul>Time: {{current_activity.time}}</ul>
+	<ul>Location: {{current_activity.location}}</ul>
+	<ul>Description: {{current_activity.description}}</ul>
+</template>
+
+<template name="main">
+	
+     {{> loginButtons}}
+     {{> header}}
+     {{> yield}}
+     {{> navigation}} 
+    <hr />
+    <p>Copyright &copy; ChiPlan, 2014-2015.</p>
+</template>
+
+<template name="header">
+	 <div class="logo"></div>
+    <h1 class="title">ChiPlan</h1>
+    <div class="subtitle">Select a category</div>
+</template>
+
+
+<template name="navigation">
+    <ul>
+        <li><a href="{{pathFor route='home'}}">Home</a></li>
+        <li><a href="{{pathFor route='sports'}}">sports</a></li>
+         <li><a href="{{pathFor route='art'}}">art</a></li>
+         <li><a href="{{pathFor route='entertainment'}}">entertainment</a></li>
+         <li><a href="{{pathFor route='stayin'}}">stayin</a></li>
+         <li><a href="{{pathFor route='surpriseme'}}">surpriseme</a></li>
+         <li><a href="{{pathFor route='dashboard'}}">dashboard</a></li>
+
+    </ul>
+</template>
