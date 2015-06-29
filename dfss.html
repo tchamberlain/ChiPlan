@@ -116,14 +116,15 @@
 
 
 <template name="navigation">
-    <ul>
-        <li><a href="{{pathFor route='home'}}">Home</a></li>
-        <li><a href="{{pathFor route='sports'}}">sports</a></li>
-         <li><a href="{{pathFor route='art'}}">art</a></li>
-         <li><a href="{{pathFor route='entertainment'}}">entertainment</a></li>
-         <li><a href="{{pathFor route='stayin'}}">stayin</a></li>
-         <li><a href="{{pathFor route='surpriseme'}}">surpriseme</a></li>
-         <li><a href="{{pathFor route='dashboard'}}">dashboard</a></li>
+    <!-- using bootstrap classes -->
+    <ul class="list-group">
+        <li class="list-group-item"><a href="{{pathFor route='home'}}">Home</a></li>
+        <li class="list-group-item"><a href="{{pathFor route='sports'}}">sports</a></li>
+         <li class="list-group-item"><a href="{{pathFor route='art'}}">art</a></li>
+         <li class="list-group-item"><a href="{{pathFor route='entertainment'}}">entertainment</a></li>
+         <li class="list-group-item"><a href="{{pathFor route='stayin'}}">stayin</a></li>
+         <li class="list-group-item"><a href="{{pathFor route='surpriseme'}}">surpriseme</a></li>
+         <li class="list-group-item"><a href="{{pathFor route='dashboard'}}">dashboard</a></li>
 
     </ul>
 </template>
