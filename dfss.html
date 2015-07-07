@@ -1,129 +1,416 @@
 <head>
-  <title>ChiPLAN</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+   
+  <!-- adding stuff to hopefully get maps working -->
+<!-- <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script> -->
+<!-- <script src='/path/to/underscore[.min].js'></script>
+<script src='/path/to/lodash.underscore[.min].js'></script>
+<script src='/path/to/angular-google-maps[.min].js'></script> -->
+
+
 </head>
 
 <body>
-	  
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1655047711391983',
+      xfbml      : true,
+      version    : 'v2.3'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
 </body>
 
-<template name="register">
-    <h2>Register</h2>
-</template>
 
-<template name="login">
-    <h2>Login</h2>
-</template>
+
+
 
 
 <template name="seeAll">
 	<h2>All activities</h2>
-	{{#each get_act_list}}
-	 <!-- <button id="{{ name }}" type="submit" name="{{ product.type }}">{{ product.type }}</button> -->
-	 <li class="activity">{{name}}</li>
-	 {{/each}}
+    
+    <div class="ui center aligned selection  list"> 
+        {{#each get_act_list}}
+      <div class="item">
+        <div class="content">
+            <div id="activity" class="header">{{title}}</div>
+        </div>
+      </div>
+      {{/each}}
+
+      </div>
+
+	<!-- {{#each get_act_list}}
+	 <li class="activity">{{title}}</li>
+	 {{/each}} -->
 </template>
 
 <!-- provides a home page, also sets up list of activty ids -->
 <template name="home">
     {{set_act_index}}
+
+      <!--grid -->
+    <div class="ui page grid">
+        <div class="left floated three wide column">
+
+<!-- START ACCORDION -->
+                <div class="ui vertical accordion menu">
+                    <div class="item">
+                      <a class="active title">
+                        <!-- <i class="dropdown icon"></i> -->
+                        When do you want to go?
+                      </a>
+                      <div class="active content">
+                        <div class="ui form">
+                          <div class="grouped fields">
+                            <div class="field">
+                              <div id= "today" class="ui radio checkbox">
+                                <input type="radio" name="size" value="today">
+                                <label> Today</label>
+                              </div>
+                            </div>
+                            <div class="field">
+                              <div id= "tomorrow" class="ui radio checkbox">
+                                <input type="radio" name="size" value="tomorrow">
+                                <label>Tomorrow</label>
+                              </div>
+                            </div>
+                            <div class="field">
+                              <div id= "weekend" class="ui radio checkbox">
+                                <input type="radio" name="size" value="weekend">
+                                <label>This weekend</label>
+                              </div>
+                            </div>
+                            <div class="field">
+                              <div id= "week" class="ui radio checkbox">
+                                <input type="radio" name="size" value="week">
+                                <label>This week</label>
+                              </div>
+                            </div>
+<!--                             <div class="field">
+                              <div id= "month" class="ui radio checkbox">
+                                <input type="radio" name="size" value="month">
+                                <label>This month</label>
+                              </div>
+                            </div> -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+<div class="item">
+                      <a class="active title">
+                        <!-- <i class="dropdown icon"></i> -->
+                        When do you want to go?
+                      </a>
+                      <div class="active content">
+                        <div class="ui form">
+                          <div class="grouped fields">
+                            <div class="field">
+                              <div id= "today" class="ui radio checkbox">
+                                <input type="radio" name="size" value="today">
+                                <label> Today</label>
+                              </div>
+                            </div>
+                            <div class="field">
+                              <div id= "tomorrow" class="ui radio checkbox">
+                                <input type="radio" name="size" value="tomorrow">
+                                <label>Tomorrow</label>
+                              </div>
+                            </div>
+                            <div class="field">
+                              <div id= "weekend" class="ui radio checkbox">
+                                <input type="radio" name="size" value="weekend">
+                                <label>This weekend</label>
+                              </div>
+                            </div>
+                            <div class="field">
+                              <div id= "week" class="ui radio checkbox">
+                                <input type="radio" name="size" value="week">
+                                <label>This week</label>
+                              </div>
+                            </div>
+<!--                             <div class="field">
+                              <div id= "month" class="ui radio checkbox">
+                                <input type="radio" name="size" value="month">
+                                <label>This month</label>
+                              </div>
+                            </div> -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                 
+                  </div>
+                          <!-- END OF ACCORDION -->
+                          
+
+        </div>
+
+
+        <!-- attempt at activity buttons  -->
+        <div class="left floated left aligned three wide column">
+          <img class="B_sports" src=" https://im1.shutterfly.com/media/47a5d925b3127ccee9dd082ea70300000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150704150638530.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" style="width:222px;height:175px;">
+          <img class="B_art" src="https://im1.shutterfly.com/media/47a5d922b3127ccee9d2adf04dfc00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150703213654974.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" style="width:220px;height:170px;">
+        </div>
+       <div class="center aligned three wide column">
+            <div class="row">
+            </div>
+            <div class="row">
+                <img class="B_surpriseme" src=" https://im1.shutterfly.com/media/47a5d925b3127ccee9ddd28e26fe00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150704151623973.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" style="width:220px;height:170px;">
+            </div>
+       </div>
+       <div class="left floated left aligned three wide column">
+          <img class="B_art" src=" https://im1.shutterfly.com/media/47a5d811b3127ccee9287cdaf10300000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150630181916608.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" style="width:220px;height:170px;">
+          <img class="B_art" src=" https://im1.shutterfly.com/media/47a5d925b3127ccee9dcdbf5c76500000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150704144348399.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" style="width:220px;height:170px;">
+        </div>
+
+
+            
+
+    </div>
+        <li align="center" class="B_sports">Sports</li>
+        <li align="center" class="B_art">Art</li>
+        <li align="center" class="B_entertainment">Entertainment</li>
+        <li align="center" class="B_surpriseme">Surprise Me</li>
+        <li align="center" class="B_stayin">Stay in</li>
 </template>
 
 <!-- for the "swiping" screen, where you say yes or no to an activity -->
 <template name="swipe">
     {{set_up_act_list "entertainment"}}
-    {{> display_activity}}
-     <ul><input type="button" class="nexter" value="Next"></ul>
-     <li><a href="{{pathFor route='confirm'}}">confirm</a></li>
-      <li><a href="{{pathFor route='seeAll'}}">see all</a></li>
+    <h2 align="center" >{{> display_activity}}</h2>
 
+    <!-- tryna add nice button -->
+    <div id="nexter" class="ui left attached huge button">Next</div>
+    <div  id="info" class="ui right aligned huge button">See info</div>
+    <div  id="seeAll" class="ui center aligned huge button">See all</div>
 </template>
 
 
 <template name="entertainment">
-    <h2>entertainment</h2>
+    <ul>Activity type: entertainment</ul>
     {{set_category "entertainment" }}
     {{>swipe}}
 
 </template>
 
 <template name="sports">
-    <h2>sports</h2>
+    <ul>Activity type: sports</ul>
     {{set_category "sports"}}
     {{>swipe}}
 </template>
 
 <template name="art">
-    <h2>art</h2>
+
+    <h2>       How about....</h2>
     {{set_category "art"}}
     {{>swipe}}
 </template>
 
 <template name="stayin">
-    <h2>stayin</h2>
+    <ul>Activity type: stayin</ul>
     {{set_category "stayin"}}
     {{>swipe}}
 
 </template>
 
 <template name="surpriseme">
-    <h2>stayin</h2>
+    <ul>Surprise me</ul>
     {{set_category "surpriseme"}}
     {{>swipe}}
 </template>
 
-<template name="confirm">
-    <h2>Confirm activity</h2>
-    {{> display_activity_info}}
-    <ul><input type="button" class="favorite" value="Add activity to calendar"></ul>
+
+
+<template name="actInfo">
+    <div class="ui very padded raised segment">
+        <h3>{{chosen_activity.title}}</h3> 
+        <ul><b>Time:</b> {{chosen_activity.start_time}}</ul>
+        <ul><b>Date:</b> {{chosen_activity.start_date}}</ul>
+        <ul><b>Address:</b> {{chosen_activity.address}}</ul>
+        <ul><b>Description:</b> {{chosen_activity.description}}</ul>
+
+        <div  id="favorite" class="ui center aligned large button">Add Activity to Calendar</div>
+    </div>
 </template>
 
-<!-- trying to create web page for user dashboard, display favorites -->
+<template name="share">
+    <!-- try to call a helper that will let us set a session current activity -->
+
+    <div class="ui very padded raised segment">
+        <h3>Great Choice!</h3> 
+        <ul>How will you get there?</ul>
+        <ul> link to google maps/ google maps api for directions????</ul>
+        <ul>Invite a friend form</ul>
+        <div id="invite_form" class="ui icon input">
+          <input class="newLink" id="invite_form" type="text" placeholder="Search...">
+          <i class="circular search link icon" id="search_button" ></i>
+        </div>
+        <ul>Share this event (social media buttons)</ul>
+        <button class="ui facebook button">
+          <i class="facebook icon"></i>
+          Facebook
+        </button>
+        <button class="ui twitter button">
+          <i class="twitter icon"></i>
+          Twitter
+        </button>
+        <button class="ui instagram button">
+        <i class="instagram icon"></i>
+        Instagram
+        </button>
+
+    </div>
+
+<!-- user input error modal -->
+     <div class="ui small modal error_modal">
+      <div class="header"><h4>Sorry the user you've entered doesn't exitst.</h4> <p>Try searching for a different user</p></div>
+     <div class="actions">
+        <div class="ui center aligned positive right labeled icon button">
+          Ok
+          <i class="checkmark icon"></i>
+        </div>
+      </div>
+    </div>
+<!-- send invite modal -->
+     <div id="send" class="ui large modal send_modal">
+        {{>invite_modal}}
+    </div>
+
+</template>
+
+
+<!-- put modal in a separate template so that you can use a click event with it -->
+<template name="invite_modal">
+      <div class="header"><h4>Invite      
+        <div class="ui massive label">
+           <p> <i class="user icon"></i>      {{get_person.profile.name}} </p>
+        </div>
+           to   </h4> <h3 align="center"><b><p> {{chosen_activity.title}}</p></b></h3></div>
+       <div class="actions">
+        <div class="ui left labeled gray deny big icon button">
+          Cancel
+          <i class="remove icon"></i>
+        </div>
+        <div id="invite" class="ui positive left labeled big icon button">
+          Send invite
+          <i class="send icon"></i>
+        </div>
+      </div>
+</template>
+
+
+
+<!-- created a page for user dashboard, display favorites -->
 <template name="dashboard">
-	<h2>Your Favorites</h2>
-     {{#each currentUser.profile.favorites}}
-     	  <li>{{name}}</li>
-     {{/each}}
+	
+    <div class="ui page grid">
+        <div class="row">
+        <h2 class="  header">
+                Your Events
+        </h2>
+         </div>
+    <div class="sixteen wide column">
+        <div class="ui center aligned divided selection list">
+            {{#each get_fav_list}}
+          <div class="item">
+            <div class="content">
+                <div id="activity" class="header">{{title}}</div>
+                <div class="right floated content">
+                    <button class="ui labeled icon button" id="remove">
+                    <i class="remove icon"></i>
+                        Remove
+                        </button>
+                </div>
+            </div>
+          </div>
+          {{/each}}
+
+          </div>
+        </div>
+    </div>
+<!--  invited activities -->
+
+    <div class="ui page grid">
+        <div class="row">
+        <h2 class="  header">
+                Activites you were invited to
+        </h2>
+         </div>
+    <div class="sixteen wide column">
+        <div class="ui center aligned divided selection list">
+            {{#each get_invited_events}}
+          <div class="item">
+            <div class="content">
+                <div id="activity" class="header">{{inviter.name}} invited you to {{activity.title}}</div>
+                <div class="right floated content">
+                    <button class="ui labeled icon button" id="remove_invite">
+                    <i class="remove icon"></i>
+                        Remove
+                        </button>
+                </div>
+            </div>
+          </div>
+          {{/each}}
+
+          </div>
+        </div>
+    </div>
+
+
 </template>
 
 
-<!-- gets teh name of the current activity -->
+<!-- gets the name of the current activity -->
 <template name="display_activity">
-	<ul>{{current_activity.name}}</ul>
+    <div class="ui raised segment">
+    {{current_activity.title}}
+    </div>
 </template>
 
-<template name="display_activity_info">
-	<ul>{{current_activity.name}}</ul>	
-	<ul>Time: {{current_activity.time}}</ul>
-	<ul>Location: {{current_activity.location}}</ul>
-	<ul>Description: {{current_activity.description}}</ul>
-</template>
 
 <template name="main">
-	
-     {{> loginButtons}}
      {{> header}}
      {{> yield}}
-     {{> navigation}} 
     <hr />
-    <p>Copyright &copy; ChiPlan, 2014-2015.</p>
 </template>
 
 <template name="header">
-	 <div class="logo"></div>
-    <h1 class="title">ChiPlan</h1>
-    <div class="subtitle">Select a category</div>
+	    <div class="ui segment">
+        {{> loginButtons}}
+        <button id="dashboard" class="ui right floated labeled icon huge button">
+            <i class="calendar icon"></i>
+            Calendar
+        </button>
+         <h1 align="center" class="heading">
+            ChiPlan
+        </h1>
+        <div class="subtitle">Select a category</div>
+    </div>
+
 </template>
 
 
 <template name="navigation">
     <ul>
-        <li><a href="{{pathFor route='home'}}">Home</a></li>
+        Navigation
         <li><a href="{{pathFor route='sports'}}">sports</a></li>
          <li><a href="{{pathFor route='art'}}">art</a></li>
          <li><a href="{{pathFor route='entertainment'}}">entertainment</a></li>
          <li><a href="{{pathFor route='stayin'}}">stayin</a></li>
          <li><a href="{{pathFor route='surpriseme'}}">surpriseme</a></li>
          <li><a href="{{pathFor route='dashboard'}}">dashboard</a></li>
-
     </ul>
 </template>
+
+
+
