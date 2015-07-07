@@ -9,6 +9,11 @@ autopublish
 insecure
 iron:router
 accounts-facebook
-accounts-ui
 accounts-password
 accounts-twitter
+jquery
+semantic:ui
+semantic:ui-css
+dburles:google-maps
+aldeed:geocoder
+accounts-ui
