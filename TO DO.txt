@@ -1,0 +1,119 @@
+TO DO:
+
+
+CURRENT WORKING ON 
+
+
+
+-implement something that removes past events upon startup
+
+
+
+PROBLEMS::
+
+  	-when should i generate activity index for each categroy page???? on rendered is too late
+  	-when I refresh an activity page, the current activity goes away, but maybe if i make current activity a global variable??	
+  
+  	-is there a  better way to get the encoded latlng of all events then just to do a big client-side update to add a geojson location  after importing all events? ideally could do this in the shell, or server side, as you take pre_activities to activities
+
+
+
+
+Most important???
+
+-check on how categories generated, seems to be an issue-----> -make sure your querying things that are double tagged for categories
+
+
+
+
+
+
+    geocoder = new google.maps.Geocoder();
+    geocoder.geocode( { 'address': pin.location}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+            pin.lat = results[0].geometry.location.lat();
+            pin.lng = results[0].geometry.location.lng();
+
+            Meteor.call('post', pin, function(error, id){
+                if (error)
+                    return alert(error.reason);
+
+                Meteor.Router.to('pinPage', pin);
+            });
+        } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+        }
+    
+
+
+
+
+TO DO:
+
+-calendar
+-get psuedo distance searcher working
+-make front page look better
+-click hover on header
+-put date in nicer form to disply
+-make "remove" button for dash view rather than add button
+
+
+To make the time search feature work:
+
+-must update all of the start dates to include times
+
+
+
+
+To do tonight:
+-add feature that shows how many people are going!
+-make the twitter/ fb / insta buttons actually do something
+
+
+_____
+invites!!!
+
+	-they will enter their name, meaning when they sign in thru email or twitter, they will need to enter theoir name
+		-so u have to store name as separate attribute in profile
+
+	-then the event will show up in list of invited activities, on their home page
+
+
+-possibly cheeating work around --> save invites in separate collection, then display that collection on user's dash
+	-this could get hairy if we ever get around to having security things
+
+
+
+
+
+
+
+
+
+-Uncaught SyntaxError: Unexpected token Y
+
+
+
+_____________________
+FOR STACK OVERFLOW QUESTION:
+____________________________________________
+______________________
+_______
+
+Note: to get modals working, removed twitter bootstrap---- might cause other issues
+	packages:
+		mrt:jquery-ui-bootstrap 
+		ajduke:bootstrap-tagsinput
+		flemay:less-autoprefixer
+		accounts-ui 
+
+
+
+---maybe ask about iron router stuff// best way to pass along this object???
+
+
+
+
+
+
+            
