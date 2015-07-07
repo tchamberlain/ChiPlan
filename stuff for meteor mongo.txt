@@ -15,8 +15,6 @@ db.pre_activities.update({description : /.*art.*/i}, {$set: {tags: ["art"]}}, {m
 db.pre_activities.update({description : /.*museum.*/i}, {$set: {tags: ["art"]}}, {multi: true })
 db.pre_activities.update({description : /.*festival.*/i}, {$set: {tags: ["entertainment"]}}, {multi: true })
 db.pre_activities.update({title : /.*basketball.*/i}, {$set: {tags: ["sports"]}}, {multi: true })
-db.pre_activities.update({description : /.*sports.*/i}, {$set: {tags: ["sports"]}}, {multi: true })
-
 
 
 3. put it in a new database (run in meteor, not in mongo shell)

@@ -208,41 +208,57 @@ Template.header.events({
     //     }
     //   });
 
-       //tryna update all docs to include a json object
 
-//WHEN YOU ARE UNBLOCKED, RUN THIS TO GEOCODE ALL OF YOUR DB
- // Activities.find().forEach( 
+          function geocode_update_db (elem) {   
 
- //    function (elem) {   
- //        setTimeout(function(){
- //        geocoder = new google.maps.Geocoder();
- //        geocoder.geocode( { 'address': '5337 South Kimbark Avenue, Chicago, IL 60615'}, function(results, status) {
- //        if (status == google.maps.GeocoderStatus.OK) {
- //            lat = results[0].geometry.location.lat();
- //            lng = results[0].geometry.location.lng();
- //            console.log(lat);
- //            console.log(lng);
- //        } else {
- //            alert('Geocode was not successful for the following reason: ' + status);
- //        }
+              geocoder = new google.maps.Geocoder();
+              geocoder.geocode( { 'address': elem.address}, function(results, status) {
+              if (status == google.maps.GeocoderStatus.OK) {
+                  lat = results[0].geometry.location.lat();
+                  lng = results[0].geometry.location.lng();
+                  console.log(lat);
+                  console.log(lng);
+              } else {
+                  alert('Geocode was not successful for the following reason: ' + status);
+              }
 
 
- //      Activities.update({
- //        loc: {
- //          "type" : "Point",
- //          "coordinates" : [ 
- //            lng, 
- //            lat
- //          ]
- //          }
 
- //      });
- //    });
- //    }, 3000);
- //    });
+              Activities.update({_id: elem._id}, {$set: {
+                  loc: {
+                    "type" : "Point",
+                    "coordinates" : [ 
+                      lng, 
+                      lat
+                    ]
+                    } 
+                  }});
 
-    
+          });
+      }
+
+
+
+
+
+      all_activities=Activities.find().fetch()
+      //space out google maps api requests
+      update_all_db(670);
+      function update_all_db(i) {
+        if(all_activities.length > i) {
+            setTimeout(function() {
+                 geocode_update_db(all_activities[i]);
+                i+=1;
+                update_all_db(i);
+                console.log(i);
+            }, 8000);
+        }
+      } 
+
+
+
   },
+
   
   'click #dashboard': function(){
     Router.go('dashboard');   
@@ -507,46 +523,46 @@ Meteor.startup(function() {
 
 
 // trying to fix weird _id in imported mongo docs
-// // also turned dates into real dates
+// // also turned dates into real java dates
 
-//   if ((Activities.find().count())<752){
-//     console.log('r u doing anything')
-//     Pre_activities.find().forEach(     
-//     function (elem) {     
+  if ((Activities.find().count())<752){
+    console.log('r u doing anything')
+    Pre_activities.find().forEach(     
+    function (elem) {     
 
         
 
-//       //split the dates into arrays that can be used later
-//       var start_date_array=elem.start_date.split("/");
-//       var end_date_array=elem.end_date.split("/");
+      //split the dates into arrays that can be used later
+      var start_date_array=elem.start_date.split("/");
+      var end_date_array=elem.end_date.split("/");
 
-//       //create javascript date objects from these arrays, subtracting 1 from the month (january is 0)
-//       start_date1=new Date(Number(start_date_array[2]), Number(start_date_array[0])-1, Number(start_date_array[1]))
-//       end_date1=new Date(Number(end_date_array[2]), Number(end_date_array[0])-1, Number(end_date_array[1]))
+      //create javascript date objects from these arrays, subtracting 1 from the month (january is 0)
+      start_date1=new Date(Number(start_date_array[2]), Number(start_date_array[0])-1, Number(start_date_array[1]))
+      end_date1=new Date(Number(end_date_array[2]), Number(end_date_array[0])-1, Number(end_date_array[1]))
 
-//       Activities.insert({
-//         title: elem.title,
-//         start_time: elem.start_time,
-//         end_time: elem.end_time,
-//         start_date_a: {day: Number(start_date_array[1]),month:Number(start_date_array[0]),year:Number(start_date_array[2])},
-//         end_date_a: {day:Number(end_date_array[1]),month: Number(end_date_array[0]),year: Number(end_date_array[2])},
-//         start_date: start_date1,
-//         end_date: end_date1,
-//         address:elem.location,
-//         description: elem.description,
-//         tags:elem.tags,
-//         loc: {
-//               "type" : "Point",
-//               "coordinates" : [ 
-//                 0, 
-//                 0
-//               ]
-//               }
-//       });
+      Activities.insert({
+        title: elem.title,
+        start_time: elem.start_time,
+        end_time: elem.end_time,
+        start_date_a: {day: Number(start_date_array[1]),month:Number(start_date_array[0]),year:Number(start_date_array[2])},
+        end_date_a: {day:Number(end_date_array[1]),month: Number(end_date_array[0]),year: Number(end_date_array[2])},
+        start_date: start_date1,
+        end_date: end_date1,
+        address:elem.location,
+        description: elem.description,
+        tags:elem.tags,
+        loc: {
+              "type" : "Point",
+              "coordinates" : [ 
+                0, 
+                0
+              ]
+              }
+      });
 
-//   } );
+  } );
 
-// }
+}
 
 
   Accounts.onCreateUser(function(options, user) {
