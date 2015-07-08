@@ -195,20 +195,19 @@ Template.header.events({
   'click .heading': function(){
     Router.go('home');   
 
-    // //testing maps
-    // geocoder = new google.maps.Geocoder();
-    // geocoder.geocode( { 'address': '5337 South Kimbark Avenue, Chicago, IL 60615'}, function(results, status) {
-    // if (status == google.maps.GeocoderStatus.OK) {
-    //         lat = results[0].geometry.location.lat();
-    //         lng = results[0].geometry.location.lng();
-    //         console.log(lat);
-    //         console.log(lng);
-    //     } else {
-    //         alert('Geocode was not successful for the following reason: ' + status);
-    //     }
-    //   });
+    //testing maps
+    geocoder = new google.maps.Geocoder();
+    geocoder.geocode( { 'address': '5337 South Kimbark Avenue, Chicago, IL 60615'}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+            lat = results[0].geometry.location.lat();
+            lng = results[0].geometry.location.lng();
+            console.log(lat);
+            console.log(lng);
+        } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+        }
+      });
 
-       //tryna update all docs to include a json object
 
 //WHEN YOU ARE UNBLOCKED, RUN THIS TO GEOCODE ALL OF YOUR DB
  // Activities.find().forEach( 
