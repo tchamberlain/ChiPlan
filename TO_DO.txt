@@ -1,0 +1,86 @@
+TO DO:
+
+
+TONIGHT:
+  	-when I refresh an activity page, the current activity goes away, but maybe if i make current activity a global variable??	
+  			-need to fix add back button on info, make sure your spot shows up
+  	-make it so you can check multiple radios
+  	-BEGIN: calender
+  	-BEGIN : google maps api show directions on info page
+  	-can't invite w/o email + twitter name form
+
+
+NON APP TODO:
+	-send check to t_greg
+	-make lunch
+	-get car
+	-put away laundry
+
+
+
+REAL PROBLEMS:
+  	-when I refresh an activity page, the current activity goes away, but maybe if i make current activity a global variable??	
+  			-need to fix add back button on info, make sure your spot shows up
+  	-modal is ugly, ask on stack overflow
+  	-can't invite w/o email + twitter name form
+  	- front page buttons don't match
+  	-front page buttons aren't reactive
+  	-front page grid not lined up real nice with the five buttons
+  	-facebook/ twitter buttons do not lead u to a status / tweet
+  	-better designs for info page
+  	-better designs for swipe page
+  	-header doesn't hover not reactive
+  	-need to learn to deploy data to meteor host
+  	-display date in nicer form
+  	-add feature that shows how many people are going!
+  	-implement something that removes past events upon startup
+
+ BIG FEATURES to IMPLEMENT:
+ 	-google maps api show directions on info page
+ 	-no calendar
+
+
+
+
+ERRORS TO FIX:
+-Uncaught SyntaxError: Unexpected token Y
+-Uncaught SecurityError: Failed to read the 'contentDocument' property from 'HTMLIFrameElement': Blocked a frame with origin "http://localhost:3000" from accessing a frame with origin "http://static.ak.facebook.com". The frame being accessed set "document.domain" to "facebook.com", but the frame requesting access did not. Both must set "document.domain" to the same value to allow access.
+-GET https://s-static.ak.facebook.com/connect/xd_arbiter/xRlIuTsSMoE.js?version=41 net::ERR_INSECURE_RESPONSE
+-The "fb-root" div has not been created, auto-creating
+
+
+
+ CAN'T BE SOLVED TIL CRIME LABS MEETING:
+ 	-hour---> how store? posssibly depends on data sources, if most data sources have the whole date object, then simply make that the standard and use functions to pull out the hour and the minute 
+
+ BIG FUTURE CHANGES:
+ 	-clean code!!!! read about structure, drop everything in the correct directory
+ 	-security issues.............maybe save this one for later, or save for the weekend
+
+
+
+
+
+
+_____________________
+FOR STACK OVERFLOW QUESTION:
+____________________________________________
+______________________
+_______
+
+Note: to get modals working, removed twitter bootstrap---- might cause other issues
+	packages:
+		mrt:jquery-ui-bootstrap 
+		ajduke:bootstrap-tagsinput
+		flemay:less-autoprefixer
+		accounts-ui 
+
+
+
+
+
+
+
+
+
+            

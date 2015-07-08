@@ -54,18 +54,6 @@ if (Meteor.isClient) {
 
   Meteor.startup(function() {
     GoogleMaps.load();
-      // first get current location lat and lng
-
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-    } else { 
-       print_eventually= "Geolocation is not supported by this browser.";
-    }
-
-    function showPosition(position) {
-       Session.set('lat',position.coords.latitude);
-       Session.set('lng',position.coords.longitude);
-    }
 
   });
 
@@ -74,8 +62,6 @@ if (Meteor.isClient) {
   Template.swipe.helpers({
     'set_up_act_list': function(){
 
-
-      // ************DATE QUERY SETUP************
       //here we get the current date and put it in a useable foramt
       //we want these dates to not have times (hours or seconds)
       var today = new Date();
@@ -83,14 +69,16 @@ if (Meteor.isClient) {
       var mm = today.getMonth();
       var yr = today.getFullYear();
       today= new Date(yr,mm,dd);
-      
-      console.log("are you called multiple times")
+
+      // //remove leading zeros
+      // var this_day= parseInt(dd, 10);
+    
 
       //if tomorrow is checked, get only tom events
       if ($("#tomorrow").checkbox('is checked')){
-        //get tomorrows date using today's date, however don't get hours, only day month and year
         tomorrow=new Date(yr,mm,dd);     
         tomorrow.setDate(tomorrow.getDate() + 1); 
+        console.log(tomorrow)
         date_query= { "start_date": tomorrow }
       } 
 
@@ -107,6 +95,7 @@ if (Meteor.isClient) {
                 {start_date: {$gte: today}}
             ]}
          var category_query={tags: { $exists: true } }
+           console.log(Activities.find( date_query, category_query ).fetch())
       } 
      // if this weekend is checked, get only events within the weekend
       else if ($("#weekend").checkbox('is checked')){
@@ -126,62 +115,19 @@ if (Meteor.isClient) {
 
       }
 
-      // ************CATEGORY QUERY SETUP************
-      category=Session.get('category' )
-      console.log(category)
-      //if the category is "surpiseme", get all activities, if  not, get just the specified type of act.
-      if(category=="surpriseme"){
-        //this is a cheat, currently doing this query when we know they exist
-        category_query={tags: { $exists: true } }
-      }
-      else{
-        category_query={tags: category}
-      }
 
-      // ************DISTANCE QUERY SETUP************
-    y= Session.get('lat')
-    x=Session.get('lng')
-    //need to add in something that sends warning if geolocation does work !!!!!!!! CHECK THIS print_eventually 
-
-      if ($("#five_mi").checkbox('is checked')){
-        var final_query= Activities.find({ location:
-                                           { $near :
-                                              {
-                                                $geometry: { type: "Point",  coordinates: [x, y ] },
-                                                $maxDistance: 8047
-                                              }
-                                           },
-                                            $and:[ date_query, category_query]
-                                          })
-
-      }
-
-      else if ($("#ten_mi").checkbox('is checked')){
-        var final_query= Activities.find({ location:
-                                           { $near :
-                                              {
-                                                $geometry: { type: "Point",  coordinates: [x, y ] },
-                                                $maxDistance: 16093
-                                              }
-                                           },
-                                            $and:[ date_query, category_query]
-                                          })
-
-
-      }
-
-      else{
-        //if you don't care about distance, query only date and category
-         var final_query= Activities.find({$and:[ date_query, category_query]})
-
-      }
-
-
+        category=Session.get('category' )
+        //if the category is "surpiseme", get all activities, if  not, get just the specified type of act.
+        if(category=="surpriseme"){
+          //this is a cheat, currently doing this query when we know they exist
+          category_query={tags: { $exists: true } }
+        }
+        else{
+          category_query={tags: category}
+        }
         //creates an array of the id's of all activities
-        var total= final_query.count();
-        console.log(total)
-        act_list=final_query.fetch();
-        console.log(act_list)
+        var total= Activities.find( date_query, category_query ).count();
+        act_list=Activities.find( date_query, category_query ).fetch();
 
         id_list=[]
         for (var i = 0; i < total; i++) {
@@ -248,7 +194,69 @@ if (Meteor.isClient) {
 Template.header.events({
   'click .heading': function(){
     Router.go('home');   
-         function geocode_update_db (elem) {   
+
+<<<<<<< HEAD
+    //testing maps
+    geocoder = new google.maps.Geocoder();
+    geocoder.geocode( { 'address': '5337 South Kimbark Avenue, Chicago, IL 60615'}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+            lat = results[0].geometry.location.lat();
+            lng = results[0].geometry.location.lng();
+            console.log(lat);
+            console.log(lng);
+        } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+        }
+      });
+
+
+//WHEN YOU ARE UNBLOCKED, RUN THIS TO GEOCODE ALL OF YOUR DB
+ // Activities.find().forEach( 
+
+ //    function (elem) {   
+ //        setTimeout(function(){
+ //        geocoder = new google.maps.Geocoder();
+ //        geocoder.geocode( { 'address': '5337 South Kimbark Avenue, Chicago, IL 60615'}, function(results, status) {
+ //        if (status == google.maps.GeocoderStatus.OK) {
+ //            lat = results[0].geometry.location.lat();
+ //            lng = results[0].geometry.location.lng();
+ //            console.log(lat);
+ //            console.log(lng);
+ //        } else {
+ //            alert('Geocode was not successful for the following reason: ' + status);
+ //        }
+
+
+ //      Activities.update({
+ //        loc: {
+ //          "type" : "Point",
+ //          "coordinates" : [ 
+ //            lng, 
+ //            lat
+ //          ]
+ //          }
+
+ //      });
+ //    });
+ //    }, 3000);
+ //    });
+=======
+    // //testing maps
+    // geocoder = new google.maps.Geocoder();
+    // geocoder.geocode( { 'address': '5337 South Kimbark Avenue, Chicago, IL 60615'}, function(results, status) {
+    // if (status == google.maps.GeocoderStatus.OK) {
+    //         lat = results[0].geometry.location.lat();
+    //         lng = results[0].geometry.location.lng();
+    //         console.log(lat);
+    //         console.log(lng);
+    //     } else {
+    //         alert('Geocode was not successful for the following reason: ' + status);
+    //     }
+    //   });
+
+>>>>>>> 8bae9b0d7a98de02633c070e367be985c4c28a97
+
+          function geocode_update_db (elem) {   
 
               geocoder = new google.maps.Geocoder();
               geocoder.geocode( { 'address': elem.address}, function(results, status) {
@@ -264,7 +272,7 @@ Template.header.events({
 
 
               Activities.update({_id: elem._id}, {$set: {
-                  location: {
+                  loc: {
                     "type" : "Point",
                     "coordinates" : [ 
                       lng, 
@@ -277,19 +285,22 @@ Template.header.events({
       }
 
 
+
+
+
       all_activities=Activities.find().fetch()
       //space out google maps api requests
-      // update_all_db(0);
-      // function update_all_db(i) {
-      //   if(all_activities.length > i) {
-      //       setTimeout(function() {
-      //            geocode_update_db(all_activities[i]);
-      //           i+=1;
-      //           update_all_db(i);
-      //           console.log(i);
-      //       }, 4500);
-      //   }
-      // } 
+      update_all_db(670);
+      function update_all_db(i) {
+        if(all_activities.length > i) {
+            setTimeout(function() {
+                 geocode_update_db(all_activities[i]);
+                i+=1;
+                update_all_db(i);
+                console.log(i);
+            }, 8000);
+        }
+      } 
 
 
 
@@ -438,6 +449,7 @@ Template.invite_modal.events({
     }
   });
 
+
     Template.dashboard.events({ 
     'click #activity': function(){
       var act_id = this._id;
@@ -447,13 +459,19 @@ Template.invite_modal.events({
     'click #remove': function(){
       var act_id = this._id;
       var user_id =Meteor.user()._id
+
       Meteor.users.update({_id: user_id}, {$pull: {'profile.favorites': {_id: act_id}}});
+
     },
 
     'click #remove_invite': function(){
       var user_id =Meteor.user()._id
       Invites.update({_id: user_id}, {$pull: {'activity_inviter': {activity: this.activity,inviter: this.inviter}}});
+
     }
+
+
+
   });
 
 
@@ -473,6 +491,7 @@ Template.invite_modal.events({
                     return activities;
                 }
             }
+
   }
 
           
@@ -553,66 +572,37 @@ Meteor.startup(function() {
 // trying to fix weird _id in imported mongo docs
 // // also turned dates into real java dates
 
-//1204 is num of activities from the calendar and from the library
-//452 from just lib
-  if ((Activities.find().count())<452){
+  if ((Activities.find().count())<752){
+    console.log('r u doing anything')
     Pre_activities.find().forEach(     
     function (elem) {     
 
-      if(elem.source=="library"){
-        var start_date = new Date(elem.start_date_f);
-        var dd = start_date.getDate();
-        var mm = start_date.getMonth();
-        var yr = start_date.getFullYear();
-        start_date1= new Date(yr,mm,dd);
-        var end_date = new Date(elem.end_date_f);
-        var dd = end_date.getDate();
-        var mm = end_date.getMonth();
-        var yr = end_date.getFullYear();
-        end_date1= new Date(yr,mm,dd);
         
-        lat=elem.lat
-        lng=elem.lng
-        source="library"
 
-        tags_array=elem.tags.split("/")
-        tags=[]
-        for (i=0;i<tags_array.length; i++){
-          tags.push(tags_array[i])
-        }
-        
-      }
-      else{
-        //split the dates into arrays that can be used later
-        var start_date_array=elem.start_date.split("/");
-        var end_date_array=elem.end_date.split("/");
+      //split the dates into arrays that can be used later
+      var start_date_array=elem.start_date.split("/");
+      var end_date_array=elem.end_date.split("/");
 
-        //create javascript date objects from these arrays, subtracting 1 from the month (january is 0)
-        start_date1=new Date(Number(start_date_array[2]), Number(start_date_array[0])-1, Number(start_date_array[1]))
-        end_date1=new Date(Number(end_date_array[2]), Number(end_date_array[0])-1, Number(end_date_array[1]))
-
-        // these events coming from the calendar need to be geocoded, so for now we set lat lng as 0,0
-        lat=0
-        lng=0
-        source= "calendar"
-        tags=elem.tags
-      }
+      //create javascript date objects from these arrays, subtracting 1 from the month (january is 0)
+      start_date1=new Date(Number(start_date_array[2]), Number(start_date_array[0])-1, Number(start_date_array[1]))
+      end_date1=new Date(Number(end_date_array[2]), Number(end_date_array[0])-1, Number(end_date_array[1]))
 
       Activities.insert({
         title: elem.title,
         start_time: elem.start_time,
         end_time: elem.end_time,
+        start_date_a: {day: Number(start_date_array[1]),month:Number(start_date_array[0]),year:Number(start_date_array[2])},
+        end_date_a: {day:Number(end_date_array[1]),month: Number(end_date_array[0]),year: Number(end_date_array[2])},
         start_date: start_date1,
         end_date: end_date1,
-        address:elem.address,
+        address:elem.location,
         description: elem.description,
-        tags:tags,
-        source: source,
-        location: {
+        tags:elem.tags,
+        loc: {
               "type" : "Point",
               "coordinates" : [ 
-                lng, 
-                lat
+                0, 
+                0
               ]
               }
       });
