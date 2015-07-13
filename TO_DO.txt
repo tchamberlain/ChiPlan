@@ -1,45 +1,63 @@
-TO DO:
+
+BIG stuff:
+-fix ui
+-finalize and encode all data
+	-need to geocode everything
+	-includes list of things to populate stay-in with
+-make mobile ui better
 
 
-TONIGHT:
-  	-when I refresh an activity page, the current activity goes away, but maybe if i make current activity a global variable??	
-  			-need to fix add back button on info, make sure your spot shows up
-  	-make it so you can check multiple radios
-  	-BEGIN: calender
-  	-BEGIN : google maps api show directions on info page
-  	-can't invite w/o email + twitter name form
+
+Now:	
+
+	-add end of activities slide for when no more activities in that category
+	-determine how to deploy database
+	-input parks data read in with csv
+	-change buttons to pictures
+	-fix weird header starts down the page, make it maatch deployed version
+	-make font bigger on all pages
 
 
-NON APP TODO:
-	-send check to t_greg
-	-make lunch
-	-get car
-	-put away laundry
+
+Mobile related:
+
+
+	-get bubbles showing home page mobile
+	-get accordion formatted mobile
+	-make dash button smaller for mobile
+	-implement swiping?
+
+
+
+
+if time:
+	-add back buttons
+	-get map going
+	-get calendar going
+	-make so if you've added an activity, you can't add it a second time//	-allow someone invite to event somehwere OTHER than directly after info page
+
+
+
 
 
 
 REAL PROBLEMS:
-  	-when I refresh an activity page, the current activity goes away, but maybe if i make current activity a global variable??	
+  	-when I refresh an activity page, the current activity goes away, but maybe if i make current activity a global variable??		-if i feed it in thru the route, will this work????
   			-need to fix add back button on info, make sure your spot shows up
   	-modal is ugly, ask on stack overflow
-  	-can't invite w/o email + twitter name form
   	- front page buttons don't match
   	-front page buttons aren't reactive
   	-front page grid not lined up real nice with the five buttons
   	-facebook/ twitter buttons do not lead u to a status / tweet
+  	________________________________________
+  	________________________________________
   	-better designs for info page
   	-better designs for swipe page
   	-header doesn't hover not reactive
   	-need to learn to deploy data to meteor host
   	-display date in nicer form
   	-add feature that shows how many people are going!
-  	-implement something that removes past events upon startup
-
- BIG FEATURES to IMPLEMENT:
- 	-google maps api show directions on info page
- 	-no calendar
-
-
+  	-add picture to header, take away select category
 
 
 ERRORS TO FIX:
@@ -50,32 +68,30 @@ ERRORS TO FIX:
 
 
 
- CAN'T BE SOLVED TIL CRIME LABS MEETING:
- 	-hour---> how store? posssibly depends on data sources, if most data sources have the whole date object, then simply make that the standard and use functions to pull out the hour and the minute 
+should i do this????? need opinions:
+	-different check options, maybe add an any distance
+	-add "your next event is"
+	-currently show start time, show end time as well? what if multi day
+
+
+____________________________________________________
 
  BIG FUTURE CHANGES:
  	-clean code!!!! read about structure, drop everything in the correct directory
  	-security issues.............maybe save this one for later, or save for the weekend
+____________________________________________________
 
 
 
 
+to deploy the local db to the deployed db
+
+1. 
+meteor mongo --url chiplan.meteor.com
 
 
-_____________________
-FOR STACK OVERFLOW QUESTION:
-____________________________________________
-______________________
-_______
-
-Note: to get modals working, removed twitter bootstrap---- might cause other issues
-	packages:
-		mrt:jquery-ui-bootstrap 
-		ajduke:bootstrap-tagsinput
-		flemay:less-autoprefixer
-		accounts-ui 
-
-
+2. (change client -u and password -p)
+mongorestore -u 'client-3cfdf0ba' -p 'e401f370-f6e2-d586-72ec-7e0baf38cb13' -h production-db-c2.meteor.io:27017 -d chiplan_meteor_com dump/meteor/
 
 
 
@@ -83,4 +99,3 @@ Note: to get modals working, removed twitter bootstrap---- might cause other iss
 
 
 
-            

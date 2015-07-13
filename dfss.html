@@ -1,16 +1,18 @@
 <head>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-   
-  <!-- adding stuff to hopefully get maps working -->
-<!-- <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script> -->
-<!-- <script src='/path/to/underscore[.min].js'></script>
-<script src='/path/to/lodash.underscore[.min].js'></script>
-<script src='/path/to/angular-google-maps[.min].js'></script> -->
-
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
 
 </head>
 
 <body>
+    <!-- modal for adding name to user account -->
+<div class="ui small modal name_modal">
+    {{>name_modal}}
+ </div>
+
+
+
+
+
 <script>
   window.fbAsyncInit = function() {
     FB.init({
@@ -28,7 +30,27 @@
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
 </script>
+
+
+
+
 </body>
+
+
+<template name="name_modal">
+    <div class="header"><h2>Please enter your name</h2> </div>
+    <div id="invite_form" class="ui input">
+        <p> <h5>First Name:</h5> <input class="first_name" id="invite_form" type="text" ></p>
+         <p><h5>Last Name:</h5><input class="last_name" id="invite_form" type="text" ></p>
+    </div>
+    <div class="actions">
+        <div id="name_enter" class="ui center aligned positive right labeled icon button">
+          Ok
+          <i class="checkmark icon"></i>
+        </div>
+    </div>
+</template>
+
 
 
 
@@ -48,133 +70,138 @@
       {{/each}}
 
       </div>
-
-	<!-- {{#each get_act_list}}
-	 <li class="activity">{{title}}</li>
-	 {{/each}} -->
 </template>
 
 <!-- provides a home page, also sets up list of activty ids -->
 <template name="home">
     {{set_act_index}}
 
+    <div class="ui two column grid">
       <!--grid -->
-    <div class="ui page grid">
-        <div class="left floated three wide column">
+    <div class="two wide column">
+        <div class="ui  grid">
 
-<!-- START ACCORDION -->
-                <div class="ui vertical accordion menu">
-                    <div class="item">
-                      <a class="active title">
-                        <!-- <i class="dropdown icon"></i> -->
-                        When do you want to go?
-                      </a>
-                      <div class="active content">
-                        <div class="ui form">
-                          <div class="grouped fields">
-                            <div class="field">
-                              <div id= "today" class="ui radio checkbox">
-                                <input type="radio" name="size" value="today">
-                                <label> Today</label>
-                              </div>
-                            </div>
-                            <div class="field">
-                              <div id= "tomorrow" class="ui radio checkbox">
-                                <input type="radio" name="size" value="tomorrow">
-                                <label>Tomorrow</label>
-                              </div>
-                            </div>
-                            <div class="field">
-                              <div id= "weekend" class="ui radio checkbox">
-                                <input type="radio" name="size" value="weekend">
-                                <label>This weekend</label>
-                              </div>
-                            </div>
-                            <div class="field">
-                              <div id= "week" class="ui radio checkbox">
-                                <input type="radio" name="size" value="week">
-                                <label>This week</label>
-                              </div>
-                            </div>
-<!--                             <div class="field">
-                              <div id= "month" class="ui radio checkbox">
-                                <input type="radio" name="size" value="month">
-                                <label>This month</label>
-                              </div>
-                            </div> -->
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-<div class="item">
-                      <a class="active title">
-                        <!-- <i class="dropdown icon"></i> -->
-                        How far do you want to go?
-                      </a>
-                      <div class="active content">
-                        <div class="ui form">
-                          <div class="grouped fields">
-                            <div class="field">
-                              <div id= "five_mi" class="ui radio checkbox">
-                                <input type="radio" name="size" value="Five_mi">
-                                <label> Less than 5 miles</label>
-                              </div>
-                            </div>
-                            <div class="field">
-                              <div id= "ten_mi" class="ui radio checkbox">
-                                <input type="radio" name="size" value="Five_mi">
-                                <label>Less than 10 miles</label>
+    <!-- START ACCORDION -->
+                    <div class="ui vertical accordion menu">
+                        <div class="item">
+                          <a class="active title">
+                            <!-- <i class="dropdown icon"></i> -->
+                            When do you want to go?
+                          </a>
+                          <div class="active content">
+                            <div class="ui form">
+                              <div class="grouped fields">
+                                <div class="field">
+                                  <div id= "today" class="ui checkbox checkbox">
+                                    <input type="checkbox" name="size" value="today">
+                                    <label> Today</label>
+                                  </div>
+                                </div>
+                                <div class="field">
+                                  <div id= "tomorrow" class="ui checkbox checkbox">
+                                    <input type="checkbox" name="size" value="tomorrow">
+                                    <label> Tomorrow</label>
+                                  </div>
+                                </div>
+                                <div class="field">
+                                  <div id= "weekend" class="ui checkbox checkbox">
+                                    <input type="checkbox" name="size" value="weekend">
+                                    <label> This weekend</label>
+                                  </div>
+                                </div>
+                                <div class="field">
+                                  <div id= "week" class="ui checkbox checkbox">
+                                    <input type="checkbox" name="size" value="week">
+                                    <label> This week</label>
+                                  </div>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
+    <div class="item">
+                          <a class="active title">
+                            <!-- <i class="dropdown icon"></i> -->
+                            How far do you want to go?
+                          </a>
+                          <div class="active content">
+                            <div class="ui form">
+                              <div class="grouped fields">
+                                <div class="field">
+                                  <div id= "five_mi" class="ui checkbox checkbox">
+                                    <input type="checkbox" name="size" value="Five_mi">
+                                    <label> Less than 5 miles</label>
+                                  </div>
+                                </div>
+                                <div class="field">
+                                  <div id= "ten_mi" class="ui checkbox checkbox">
+                                    <input type="checkbox" name="size" value="Five_mi">
+                                    <label>Less than 10 miles</label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                     
                       </div>
-                    </div>
-                 
-                  </div>
-                          <!-- END OF ACCORDION -->
-                          
-
-        </div>
-
-
-        <!-- attempt at activity buttons  -->
-        <div class="left floated left aligned three wide column">
-          <img class="B_sports" src=" https://im1.shutterfly.com/media/47a5d925b3127ccee9dd082ea70300000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150704150638530.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" style="width:222px;height:175px;">
-          <img class="B_art" src="https://im1.shutterfly.com/media/47a5d922b3127ccee9d2adf04dfc00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150703213654974.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" style="width:220px;height:170px;">
-        </div>
-       <div class="center aligned three wide column">
-            <div class="row">
+                              <!-- END OF ACCORDION -->
+                              
             </div>
-            <div class="row">
-                <img class="B_surpriseme" src=" https://im1.shutterfly.com/media/47a5d925b3127ccee9ddd28e26fe00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150704151623973.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" style="width:220px;height:170px;">
-            </div>
-       </div>
-       <div class="left floated left aligned three wide column">
-          <img class="B_art" src=" https://im1.shutterfly.com/media/47a5d811b3127ccee9287cdaf10300000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150630181916608.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" style="width:220px;height:170px;">
-          <img class="B_art" src=" https://im1.shutterfly.com/media/47a5d925b3127ccee9dcdbf5c76500000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150704144348399.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" style="width:220px;height:170px;">
         </div>
+        <div class="fourteen wide column">
+         <div class="ui three column centered grid">
 
 
-            
+            <!-- attempt at activity buttons  -->
+            <div class=" column">
+<!--               <img src="https://im1.shutterfly.com/media/47a5d932b3127ccee9ceddc845e800000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713180434028.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" onmouseover="this.src='https://im1.shutterfly.com/media/47a5d932b3127ccee9cf7ea7250200000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713180359558.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" onmouseout="this.src='https://im1.shutterfly.com/media/47a5d932b3127ccee9ceddc845e800000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713180434028.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" />
+ -->
 
+
+              <img id="B_sports" class="ui  medium image" src=" https://im1.shutterfly.com/media/47a5d932b3127ccee9ceddc845e800000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713180434028.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" >
+              <div class="row"> Right column, row 2</div>
+              <img id="B_art" class="ui  medium image" src="https://im1.shutterfly.com/media/47a5d932b3127ccee9cf7ea7250200000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713180359558.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" >
+            </div>
+           <div class=" column">
+                <img class="ui  small image" src=" https://im1.shutterfly.com/media/47a5d932b3127ccee9ce23c1459e00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713205651525.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" >
+                <img id="B_surpriseme" class="ui  medium  image" src="https://im1.shutterfly.com/media/47a5d932b3127ccee9cfff21655c00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713201916922.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" >
+
+
+           </div>
+           <div class="  column">
+              <img id="B_entertainment" class="ui  medium  image" src=" https://im1.shutterfly.com/media/47a5d932b3127ccee9cf64a9a43100000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713200921346.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" >
+              <div class="row"> Right column, row 2</div>
+              <img id="B_stayin" class="ui  medium  image" src=" https://im1.shutterfly.com/media/47a5d932b3127ccee9ceb617059a00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713192521570.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" >
+
+              <!-- style="width:280px;height:220px;" -->
+
+            </div>
+
+
+                
+
+        </div>
     </div>
-        <li align="center" class="B_sports">Sports</li>
-        <li align="center" class="B_art">Art</li>
-        <li align="center" class="B_entertainment">Entertainment</li>
-        <li align="center" class="B_surpriseme">Surprise Me</li>
-        <li align="center" class="B_stayin">Stay in</li>
+    </div>
+     
 </template>
 
 <!-- for the "swiping" screen, where you say yes or no to an activity -->
 <template name="swipe">
+    {{#HammerTouchArea gestureMap=templateGestures}}
     {{set_up_act_list "entertainment"}}
-    <h2 align="center" >{{> display_activity}}</h2>
+    <div id= "hammerDiv">
+        <h2 align="center" >{{> display_activity}}</h2>
 
-    <!-- tryna add nice button -->
-    <div id="nexter" class="ui left attached huge button">Next</div>
-    <div  id="info" class="ui right aligned huge button">See info</div>
-    <div  id="seeAll" class="ui center aligned huge button">See all</div>
+        <!-- tryna add nice button -->
+        <div id="nexter" class="ui left attached huge button">Next</div>
+        <div  id="info" class="ui right aligned huge button">See info</div>
+        <div  id="seeAll" class="ui center aligned huge button">See all</div>
+    </div>
+     {{/HammerTouchArea}}
+
+
 </template>
 
 
@@ -223,6 +250,9 @@
 
         <div  id="favorite" class="ui center aligned large button">Add Activity to Calendar</div>
     </div>
+
+
+
 </template>
 
 <template name="share">
@@ -264,7 +294,7 @@
       </div>
     </div>
 <!-- send invite modal -->
-     <div id="send" class="ui large modal send_modal">
+     <div id="send" class="ui medium modal send_modal">
         {{>invite_modal}}
     </div>
 
@@ -303,37 +333,41 @@
          </div>
     <div class="sixteen wide column">
         <div class="ui center aligned divided selection list">
-            {{#each get_fav_list}}
-          <div class="item">
-            <div class="content">
-                <div id="activity" class="header">{{title}}</div>
-                <div class="right floated content">
-                    <button class="ui labeled icon button" id="remove">
-                    <i class="remove icon"></i>
-                        Remove
-                        </button>
+            {{#if get_fav_list}}
+                {{#each get_fav_list}}
+              <div class="item">
+                <div class="content">
+                    <div id="activity" class="header">{{title}}</div>
+                    <div class="right floated content">
+                        <button class="ui labeled icon button" id="remove">
+                        <i class="remove icon"></i>
+                            Remove
+                            </button>
+                    </div>
                 </div>
-            </div>
-          </div>
-          {{/each}}
+              </div>
+              {{/each}}
+            {{else}}
+            <h4>You have no favorites, add an event!</h4>
+            {{/if}}
 
           </div>
         </div>
     </div>
 <!--  invited activities -->
-
+  {{#if get_fav_list}}
     <div class="ui page grid">
         <div class="row">
         <h2 class="  header">
-                Activites you were invited to
+                Events you were invited to
         </h2>
          </div>
     <div class="sixteen wide column">
         <div class="ui center aligned divided selection list">
-            {{#each get_invited_events}}
+            {{#each get_invited_events}} 
           <div class="item">
             <div class="content">
-                <div id="activity" class="header">{{inviter.name}} invited you to {{activity.title}}</div>
+                <div id="activity" class="header"> {{inviter.profile.name}} invited you to {{activity.title}}</div>
                 <div class="right floated content">
                     <button class="ui labeled icon button" id="remove_invite">
                     <i class="remove icon"></i>
@@ -347,7 +381,7 @@
           </div>
         </div>
     </div>
-
+ {{/if}}
 
 </template>
 
@@ -369,31 +403,16 @@
 <template name="header">
 	    <div class="ui segment">
         {{> loginButtons}}
+        {{#if currentUser}}
         <button id="dashboard" class="ui right floated labeled icon huge button">
             <i class="calendar icon"></i>
-            Calendar
+            Dashboard
         </button>
+         {{/if}}
          <h1 align="center" class="heading">
             ChiPlan
         </h1>
-        <div class="subtitle">Select a category</div>
+        <div class="subtitle">       </div>
     </div>
 
 </template>
-
-
-<template name="navigation">
-
-    <ul>
-        Navigation
-        <li><a href="{{pathFor route='sports'}}">sports</a></li>
-         <li><a href="{{pathFor route='art'}}">art</a></li>
-         <li><a href="{{pathFor route='entertainment'}}">entertainment</a></li>
-         <li><a href="{{pathFor route='stayin'}}">stayin</a></li>
-         <li><a href="{{pathFor route='surpriseme'}}">surpriseme</a></li>
-         <li><a href="{{pathFor route='dashboard'}}">dashboard</a></li>
-    </ul>
-</template>
-
-
-

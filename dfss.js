@@ -44,6 +44,17 @@ Router.route('/actInfo/:_id', {
       }
     });
 
+Router.route('/swipe/:_id', {
+    name: 'actInfo',
+    data: function(){
+        return {
+            act_list: Activities.findOne(this.params._id)
+        };
+      }
+    });
+
+
+
 
 
 
@@ -52,7 +63,50 @@ Router.route('/actInfo/:_id', {
 //*************************
 if (Meteor.isClient) {
 
+
+  //tryna check for this on login
+  Accounts.onLogin( function(){
+    Session.set('name_modal',1)
+    if(Session.get('name_modal')){
+      if(!Meteor.user().profile.name){
+        //does this search just within template? you want it to search whole doc
+         $('.ui.modal.name_modal')
+          .modal('show');
+    }
+  }
+  });
+
+
+Template.name_modal.events({
+  'click #name_enter': function(evt, template){
+    console.log("in the right function")
+    var first_name = template.find(".first_name").value;
+      var last_name = template.find(".last_name").value;
+      var full_name= first_name+" "+last_name
+      console.log(full_name)
+
+
+       Meteor.users.update({_id: Meteor.user()._id}, {$set: {
+                      'profile.name': full_name
+                      }});
+        console.log(Meteor.user().profile.name)
+          }
+
+
+});
+
+
+
+
+
+
+
+
+
+
   Meteor.startup(function() {
+    // set the name modal so it exists
+    Session.set('name_modal',0)
     GoogleMaps.load();
       // first get current location lat and lng
 
@@ -72,7 +126,25 @@ if (Meteor.isClient) {
 
 
   Template.swipe.helpers({
+   // tryna get swipe to work
+    templateGestures: {
+    'swipeleft #hammerDiv': function (event, templateInstance) {
+      console.log("You swiped left!!")
+      //increment index, so when funciton is called again, you retrieve subsequent activity
+         activity_index+=1;
+        //get current id, or id  of next activity
+        current_id=id_list[activity_index];
+        //get activity corresponds to current_id
+        current_act= Activities.findOne(current_id)
+        Session.set('current_activity', current_act);
+      
+    }
+  },
+
+
+
     'set_up_act_list': function(){
+      console.log("set up act list")
 
 
       // ************DATE QUERY SETUP************
@@ -84,8 +156,6 @@ if (Meteor.isClient) {
       var yr = today.getFullYear();
       today= new Date(yr,mm,dd);
       
-      console.log("are you called multiple times")
-
       //if tomorrow is checked, get only tom events
       if ($("#tomorrow").checkbox('is checked')){
         //get tomorrows date using today's date, however don't get hours, only day month and year
@@ -173,9 +243,7 @@ if (Meteor.isClient) {
       else{
         //if you don't care about distance, query only date and category
          var final_query= Activities.find({$and:[ date_query, category_query]})
-
       }
-
 
         //creates an array of the id's of all activities
         var total= final_query.count();
@@ -188,9 +256,10 @@ if (Meteor.isClient) {
           id_list[i]=act_list[i]._id;
         }
         //gets the very first element in the list, sets it as the current activity
-        current_act= Activities.findOne(id_list[activity_index])
-        Session.set('current_act_list',act_list)
-        Session.set('current_activity',current_act)
+        current_act= Activities.findOne(id_list[activity_index]);
+        Session.set('id_list',id_list);
+        Session.set('current_act_list',act_list);
+        Session.set('current_activity',current_act);
         }
     });
 
@@ -208,12 +277,13 @@ if (Meteor.isClient) {
 
 
 
-
   Template.swipe.events({
+
 
     'click .nexter': function(){
         //increment index, so when funciton is called again, you retrieve subsequent activity
          activity_index+=1;
+         id_list=Session.get(id_list);
         //get current id, or id  of next activity
         current_id=id_list[activity_index];
         //get activity corresponds to current_id
@@ -378,7 +448,8 @@ Template.invite_modal.events({
 
     //if the user has already been invited to something, we will do an update of their doc
     if (Invites.findOne(user_id)){
-        Invites.update({_id: user_id}, {$addToSet: {activity:invite_activity, inviter:inviter }});
+        //Invites.update({_id: user_id}, {$addToSet: {activity_inviter:{activity:invite_activity, inviter:inviter} }});
+        Invites.update({_id: user_id}, {$addToSet: {activity_inviter: {activity:invite_activity, inviter:inviter }}});
     }
 
     //currently using extra colllection for this(since client side cant update users --- not sure if necessary, 
@@ -388,6 +459,7 @@ Template.invite_modal.events({
       Invites.insert({
         _id: user_id,
         activity_inviter: [{activity:invite_activity, inviter:inviter }]
+        //activity_inviter: {activity:invite_activity, inviter:inviter }
       });
     }
   }
@@ -460,6 +532,8 @@ Template.invite_modal.events({
 
     Template.dashboard.helpers({ 
         'get_fav_list': function(category){
+            if (Meteor.user().profile.favorites.length==0)
+              return false;
             return Meteor.user().profile.favorites;
   },
         'get_invited_events': function(category){
@@ -469,8 +543,10 @@ Template.invite_modal.events({
                     user_entry= Invites.findOne(user_id)
                     console.log(user_entry)
                     activities= user_entry.activity_inviter
-                    console.log(activities)
                     return activities;
+                }
+                if (Invites.find({_id: user_id}).count() ==0){
+                  return false;
                 }
             }
   }
@@ -482,10 +558,20 @@ Template.invite_modal.events({
 
   Template.actInfo.events({
     'click #favorite': function(){
-      current_act=Session.get('current_activity')
-      Meteor.users.update({_id:Meteor.user()._id}, {$addToSet:{"profile.favorites":current_act}})
+      //if there is a user logged in, send them to the confirmation page
+      if( Meteor.user()){
+        current_act=Session.get('current_activity')
+        Meteor.users.update({_id:Meteor.user()._id}, {$addToSet:{"profile.favorites":current_act}})
 
-      Router.go('share',{_id: current_act._id});
+        Router.go('share',{_id: current_act._id});
+    }
+    //if there's no user, set up an error modal
+    else{
+      console.log('not logged innnnnnnn')
+      $('.ui.modal.not_logged_in_modal')
+        .modal('show');
+    }
+
   }
 
  });
@@ -497,35 +583,40 @@ Template.invite_modal.events({
 
 
   Template.home.events({
+  // "mouseenter #sports": (event, template) ->
+  //   return
+  //   //console.log "mousehover", event
+  // "mouseleave #sports": (event, template) ->
+  //   console.log "mouseout", event
 
-    'click .B_entertainment': function(){
+    'click #B_entertainment': function(){
       activity_index=0;
       Session.set('category', "entertainment" );
       Router.go('entertainment');
     },
-    'click .B_sports': function(){
+    'click #B_sports': function(){
       activity_index=0;
       Session.set('category', "sports" );
+      
       Router.go('sports');
     },
-    'click .B_art': function(){
+    'click #B_art': function(){
       activity_index=0
       Session.set('category', "art" )
       Router.go('art');
     },
-    'click .B_stayin': function(){
+    'click #B_stayin': function(){
       activity_index=0
       Session.set('category', "stayin" )
       Router.go('stayin');
     },
-    'click .B_surpriseme': function(){
+    'click #B_surpriseme': function(){
       activity_index=0
       Session.set('category', "surpriseme" )
       Router.go('surpriseme');
     }
 
  });
-
 
 }
 
@@ -544,7 +635,15 @@ Meteor.startup(function() {
     service: "facebook",
     appId: "1655047711391983",
     secret: "63d4d2c34e96b3765135c6e0f6d84979"
-  });
+  }); 
+
+  //this removes events that have already happened from the activity db
+  // today = new Date();
+  // remove_these=Activities.find({end_date: {$lt: today} })
+  // console.log(remove_these.fetch())
+  // Activities.remove({end_date: {$lt: today} })
+
+
 });
 
 
@@ -555,7 +654,7 @@ Meteor.startup(function() {
 
 //1204 is num of activities from the calendar and from the library
 //452 from just lib
-  if ((Activities.find().count())<452){
+  if (Activities.find().count()==0){
     Pre_activities.find().forEach(     
     function (elem) {     
 
@@ -571,6 +670,46 @@ Meteor.startup(function() {
         var yr = end_date.getFullYear();
         end_date1= new Date(yr,mm,dd);
         
+
+        var start_time= start_date.getHours()
+        am_pm= "am"
+        if(start_time>12){
+          am_pm="pm"
+          start_time=start_time-12
+
+        }
+       if(start_time==12){
+          am_pm="am"
+          start_time=12
+
+        }
+        minutes= start_date.getMinutes()
+        if (minutes<10){
+          minutes=minutes+"0"
+        }
+        var start_time= start_time+":"+minutes
+
+
+        var end_time= end_date.getHours()
+        am_pm= "am"
+        if(end_time>12){
+          am_pm="pm"
+          end_time=end_time-12
+
+        }
+       if(end_time==12){
+          am_pm="am"
+          end_time=12
+
+        }
+        minutes= end_date.getMinutes()
+        if (minutes<10){
+          minutes=minutes+"0"
+        }
+        var end_time= end_time+":"+minutes
+
+
+
         lat=elem.lat
         lng=elem.lng
         source="library"
@@ -596,12 +735,15 @@ Meteor.startup(function() {
         lng=0
         source= "calendar"
         tags=elem.tags
+        start_time=elem.start_time
+        end_time= elem.end_time
+
       }
 
       Activities.insert({
         title: elem.title,
-        start_time: elem.start_time,
-        end_time: elem.end_time,
+        start_time: start_time,
+        end_time: end_time,
         start_date: start_date1,
         end_date: end_date1,
         address:elem.address,
@@ -622,16 +764,31 @@ Meteor.startup(function() {
 }
 
 
+
+
   Accounts.onCreateUser(function(options, user) {
     // We're enforcing at least an empty profile object to avoid needing to check
     // for its existence later.
     user.profile = options.profile ? options.profile : {};
+
 
     if (options.profile)
        user.profile = options.profile;
 
     //attempt to add favorites section
      _.extend(user.profile, { favorites : [] });
+
+     Meteor.setTimeout(
+     function(){ if(user.profile.first-name){
+      var this_name= user.profile.first-name
+      if(!(user.profile.name)){
+     
+
+      _.extend(user.profile, { name : this_name });
+    } }},3000)
+
+     
+
     return user;
 
   });
