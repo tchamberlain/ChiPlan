@@ -2,150 +2,15 @@ Pre_activities = new Mongo.Collection('pre_activities');
 Activities = new Mongo.Collection('activities');
 Invites = new Mongo.Collection('invites');
 
+function random_function(){
+  console.log('yes this happened')
+}
 
-
-
-//*************************
-//ROUTER STUFF
-//*************************
-Router.route('/', function(){
-  this.render('home');
-},{
-  name: 'home'
-});
-Router.route('/entertainment');
-Router.route('/sports');
-Router.route('/art');
-Router.route('/stayin');
-Router.route('/surpriseme');
-Router.route('/seeAll');
-Router.configure({
-  layoutTemplate: 'main'
-});
-Router.route('/dashboard');
-Router.route('/actInfo/:_id/share', {
-    name: 'share',
-    data: function(){
-      current_act=Activities.findOne(this.params._id)
-     Session.set('current_activity',current_act )
-        return {
-            chosen_activity: current_act
-        };
-      }
-    });
-
-
-Router.route('/actInfo/:_id', {
-    name: 'actInfo',
-    data: function(){
-        return {
-            chosen_activity: Activities.findOne(this.params._id)
-        };
-      }
-    });
-
-Router.route('/swipe/:_id', {
-    name: 'actInfo',
-    data: function(){
-        return {
-            act_list: Activities.findOne(this.params._id)
-        };
-      }
-    });
-
-
-
-
-
-
-//*************************
-//CLIENT STUFF
-//*************************
-if (Meteor.isClient) {
-
-
-  //tryna check for this on login
-  Accounts.onLogin( function(){
-    Session.set('name_modal',1)
-    if(Session.get('name_modal')){
-      if(!Meteor.user().profile.name){
-        //does this search just within template? you want it to search whole doc
-         $('.ui.modal.name_modal')
-          .modal('show');
-    }
-  }
-  });
-
-
-Template.name_modal.events({
-  'click #name_enter': function(evt, template){
-    console.log("in the right function")
-    var first_name = template.find(".first_name").value;
-      var last_name = template.find(".last_name").value;
-      var full_name= first_name+" "+last_name
-      console.log(full_name)
-
-
-       Meteor.users.update({_id: Meteor.user()._id}, {$set: {
-                      'profile.name': full_name
-                      }});
-        console.log(Meteor.user().profile.name)
-          }
-
-
-});
-
-
-
-
-
-
-
-
-
-
-  Meteor.startup(function() {
-    // set the name modal so it exists
-    Session.set('name_modal',0)
-    GoogleMaps.load();
-      // first get current location lat and lng
-
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-    } else { 
-       print_eventually= "Geolocation is not supported by this browser.";
-    }
-
-    function showPosition(position) {
-       Session.set('lat',position.coords.latitude);
-       Session.set('lng',position.coords.longitude);
-    }
-
-  });
-
-
-
-  Template.swipe.helpers({
-   // tryna get swipe to work
-    templateGestures: {
-    'swipeleft #hammerDiv': function (event, templateInstance) {
-      console.log("You swiped left!!")
-      //increment index, so when funciton is called again, you retrieve subsequent activity
-         activity_index+=1;
-        //get current id, or id  of next activity
-        current_id=id_list[activity_index];
-        //get activity corresponds to current_id
-        current_act= Activities.findOne(current_id)
-        Session.set('current_activity', current_act);
-      
-    }
-  },
-
-
-
-    'set_up_act_list': function(){
-      console.log("set up act list")
-
+function set_up_act_list(){
+  console.log("random function, allowed?")
+   //we gonna set up the act list
+      console.log("setting up act list!!!!!!")
+      activity_index=0;
 
       // ************DATE QUERY SETUP************
       //here we get the current date and put it in a useable foramt
@@ -260,14 +125,308 @@ Template.name_modal.events({
         Session.set('id_list',id_list);
         Session.set('current_act_list',act_list);
         Session.set('current_activity',current_act);
-        }
+        
+
+
+       //we gonna route to the place
+       route = Session.get('category')
+       Router.go(route)
+
+
+
+}
+
+
+//*************************
+//ROUTER STUFF
+//*************************
+Router.route('/', function(){
+  this.render('home');
+},{
+  name: 'home'
+});
+
+
+Router.route('/entertainment', {
+    name: 'entertainment',
+    data: function(){
+      if(!Session.get('current_activity')){
+        //then call the act function
+      }
+      random_function();
+      act_list=Session.get('current_act_list')
+      current_act=Session.get('current_activity')
+        return {
+            current_activity: current_act
+        };
+      }
     });
 
-  Template.display_activity.helpers({
-    'current_activity': function(){
-          return Session.get('current_activity') 
-        }
+
+// Router.route('/entertainment');
+Router.route('/sports');
+Router.route('/art');
+Router.route('/stayin');
+Router.route('/surpriseme');
+Router.route('/seeAll');
+Router.configure({
+  layoutTemplate: 'main'
+});
+Router.route('/dashboard');
+Router.route('/actInfo/:_id/share', {
+    name: 'share',
+    data: function(){
+      current_act=Activities.findOne(this.params._id)
+     Session.set('current_activity',current_act )
+        return {
+            chosen_activity: current_act
+        };
+      }
+    });
+
+
+Router.route('/actInfo/:_id', {
+    name: 'actInfo',
+    data: function(){
+        return {
+            chosen_activity: Activities.findOne(this.params._id)
+        };
+      }
+    });
+
+
+Router.route('/events/:category/:date/:distance', {
+    name: 'events',
+    data: function(){
+      //if the page is refreshed, recreate the activity list
+       if(!Session.get('current_activity')){
+          set_up_act_list(this.params.category, this.params._date, this.params._distance);
+       }
+        return {
+            chosen_activity:  Session.get('current_activity')
+
+        };
+      }
+    });
+
+
+
+
+
+
+
+//*************************
+//CLIENT STUFF
+//*************************
+if (Meteor.isClient) {
+
+
+  //tryna check for this on login
+  Accounts.onLogin( function(){
+    Session.set('name_modal',1)
+    if(Session.get('name_modal')){
+      if(!Meteor.user().profile.name){
+        //does this search just within template? you want it to search whole doc
+         $('.ui.modal.name_modal')
+          .modal('show');
+    }
+  }
   });
+
+
+Template.name_modal.events({
+  'click #name_enter': function(evt, template){
+    console.log("in the right function")
+    var first_name = template.find(".first_name").value;
+      var last_name = template.find(".last_name").value;
+      var full_name= first_name+" "+last_name
+      console.log(full_name)
+
+
+       Meteor.users.update({_id: Meteor.user()._id}, {$set: {
+                      'profile.name': full_name
+                      }});
+        console.log(Meteor.user().profile.name)
+          }
+
+
+});
+
+
+
+
+
+
+
+
+
+
+  Meteor.startup(function() {
+    // set the name modal so it exists
+    Session.set('name_modal',0)
+    GoogleMaps.load();
+      // first get current location lat and lng
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else { 
+       print_eventually= "Geolocation is not supported by this browser.";
+    }
+
+    function showPosition(position) {
+       Session.set('lat',position.coords.latitude);
+       Session.set('lng',position.coords.longitude);
+    }
+
+  });
+
+
+
+  Template.swipe.helpers({
+   // tryna get swipe to work
+    templateGestures: {
+    'swipeleft #hammerDiv': function (event, templateInstance) {
+      console.log("You swiped left!!")
+      //increment index, so when funciton is called again, you retrieve subsequent activity
+         activity_index+=1;
+        //get current id, or id  of next activity
+        current_id=id_list[activity_index];
+        //get activity corresponds to current_id
+        current_act= Activities.findOne(current_id)
+        Session.set('current_activity', current_act);
+      
+    }
+  }
+
+});
+
+
+
+    // 'set_up_act_list': function(){
+  //     console.log("set up act list")
+
+
+  //     // ************DATE QUERY SETUP************
+  //     //here we get the current date and put it in a useable foramt
+  //     //we want these dates to not have times (hours or seconds)
+  //     var today = new Date();
+  //     var dd = today.getDate();
+  //     var mm = today.getMonth();
+  //     var yr = today.getFullYear();
+  //     today= new Date(yr,mm,dd);
+      
+  //     //if tomorrow is checked, get only tom events
+  //     if ($("#tomorrow").checkbox('is checked')){
+  //       //get tomorrows date using today's date, however don't get hours, only day month and year
+  //       tomorrow=new Date(yr,mm,dd);     
+  //       tomorrow.setDate(tomorrow.getDate() + 1); 
+  //       date_query= { "start_date": tomorrow }
+  //     } 
+
+  //     else if ($("#today").checkbox('is checked')){
+  //       date_query= { "start_date": today }
+  //     } 
+  
+  //   // if this week is checked, get only events within the week
+  //     else if ($("#week").checkbox('is checked')){
+  //       end =new Date(yr,mm,dd);    
+  //       end.setDate(end.getDate() + 7); 
+  //       date_query= { $and: [
+  //               {start_date: {$lt: end}},
+  //               {start_date: {$gte: today}}
+  //           ]}
+  //        var category_query={tags: { $exists: true } }
+  //     } 
+  //    // if this weekend is checked, get only events within the weekend
+  //     else if ($("#weekend").checkbox('is checked')){
+  //       day_of_week =today.getDay()
+  //       add_amount_start= 5-day_of_week
+  //       end =new Date(yr,mm,dd);   
+  //       start =new Date(yr,mm,dd);   
+  //       start.setDate(start.getDate() + add_amount_start); 
+  //       end.setDate(end.getDate() + add_amount_start+3); 
+  //       date_query= { $and: [
+  //               {start_date: {$lt: end}},
+  //               {start_date: {$gte: start}}
+  //           ]}
+  //     }
+  //     else{
+  //       date_query={tags: { $exists: true } }
+
+  //     }
+
+  //     // ************CATEGORY QUERY SETUP************
+  //     category=Session.get('category' )
+  //     console.log(category)
+  //     //if the category is "surpiseme", get all activities, if  not, get just the specified type of act.
+  //     if(category=="surpriseme"){
+  //       //this is a cheat, currently doing this query when we know they exist
+  //       category_query={tags: { $exists: true } }
+  //     }
+  //     else{
+  //       category_query={tags: category}
+  //     }
+
+  //     // ************DISTANCE QUERY SETUP************
+  //   y= Session.get('lat')
+  //   x=Session.get('lng')
+  //   //need to add in something that sends warning if geolocation does work !!!!!!!! CHECK THIS print_eventually 
+
+  //     if ($("#five_mi").checkbox('is checked')){
+  //       var final_query= Activities.find({ location:
+  //                                          { $near :
+  //                                             {
+  //                                               $geometry: { type: "Point",  coordinates: [x, y ] },
+  //                                               $maxDistance: 8047
+  //                                             }
+  //                                          },
+  //                                           $and:[ date_query, category_query]
+  //                                         })
+
+  //     }
+
+  //     else if ($("#ten_mi").checkbox('is checked')){
+  //       var final_query= Activities.find({ location:
+  //                                          { $near :
+  //                                             {
+  //                                               $geometry: { type: "Point",  coordinates: [x, y ] },
+  //                                               $maxDistance: 16093
+  //                                             }
+  //                                          },
+  //                                           $and:[ date_query, category_query]
+  //                                         })
+
+
+  //     }
+
+  //     else{
+  //       //if you don't care about distance, query only date and category
+  //        var final_query= Activities.find({$and:[ date_query, category_query]})
+  //     }
+
+  //       //creates an array of the id's of all activities
+  //       var total= final_query.count();
+  //       console.log(total)
+  //       act_list=final_query.fetch();
+  //       console.log(act_list)
+
+  //       id_list=[]
+  //       for (var i = 0; i < total; i++) {
+  //         id_list[i]=act_list[i]._id;
+  //       }
+  //       //gets the very first element in the list, sets it as the current activity
+  //       current_act= Activities.findOne(id_list[activity_index]);
+  //       Session.set('id_list',id_list);
+  //       Session.set('current_act_list',act_list);
+  //       Session.set('current_activity',current_act);
+  //       }
+  //   });
+
+  // Template.display_activity.helpers({
+  //   'current_activity': function(){
+  //         return Session.get('current_activity') 
+  //       }
+  // });
 
   Template.swipe.onRendered(function(){
     activity_index=0;
@@ -279,20 +438,7 @@ Template.name_modal.events({
 
   Template.swipe.events({
 
-
-    'click .nexter': function(){
-        //increment index, so when funciton is called again, you retrieve subsequent activity
-         activity_index+=1;
-         id_list=Session.get(id_list);
-        //get current id, or id  of next activity
-        current_id=id_list[activity_index];
-        //get activity corresponds to current_id
-        current_act= Activities.findOne(current_id)
-        Session.set('current_activity', current_act);
-
-      },
-
-          'click #nexter': function(){
+        'click #nexter': function(){
         //increment index, so when funciton is called again, you retrieve subsequent activity
          activity_index+=1;
         //get current id, or id  of next activity
@@ -381,6 +527,7 @@ Template.home.onRendered(function(){
 });
 
 Template.home.events({
+
   'click #activity': function(){
     console.log("hello")
 
@@ -592,28 +739,28 @@ Template.invite_modal.events({
     'click #B_entertainment': function(){
       activity_index=0;
       Session.set('category', "entertainment" );
-      Router.go('entertainment');
+      set_up_act_list();
+
     },
     'click #B_sports': function(){
       activity_index=0;
       Session.set('category', "sports" );
-      
-      Router.go('sports');
+
     },
     'click #B_art': function(){
       activity_index=0
       Session.set('category', "art" )
-      Router.go('art');
+      // Router.go('art');
     },
     'click #B_stayin': function(){
       activity_index=0
       Session.set('category', "stayin" )
-      Router.go('stayin');
+      // Router.go('stayin');
     },
     'click #B_surpriseme': function(){
       activity_index=0
       Session.set('category', "surpriseme" )
-      Router.go('surpriseme');
+      // Router.go('surpriseme');
     }
 
  });
@@ -638,10 +785,10 @@ Meteor.startup(function() {
   }); 
 
   //this removes events that have already happened from the activity db
-  // today = new Date();
-  // remove_these=Activities.find({end_date: {$lt: today} })
-  // console.log(remove_these.fetch())
-  // Activities.remove({end_date: {$lt: today} })
+  today = new Date();
+  remove_these=Activities.find({end_date: {$lt: today} })
+  console.log(remove_these.fetch())
+  Activities.remove({end_date: {$lt: today} })
 
 
 });
