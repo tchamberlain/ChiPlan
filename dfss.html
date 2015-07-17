@@ -1,16 +1,16 @@
 <head>
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
-
+    <meta name="viewport" content="width=320">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- <meta name="viewport" content="width=640, initial-scale=.5, user-scalable=no" /> -->
 </head>
 
 <body>
     <!-- modal for adding name to user account -->
-<div class="ui small modal name_modal">
+<div class="ui medium modal name_modal">
     {{>name_modal}}
  </div>
-
-
-
 
 
 <script>
@@ -34,14 +34,23 @@
 
 
 
+
+
+
 </body>
 
 
 <template name="name_modal">
-    <div class="header"><h2>Please enter your name</h2> </div>
-    <div id="invite_form" class="ui input">
+    <div class="header"><h3>To finish creating your account, please enter your name</h3> </div>
+    <div id="name" class="ui input">
         <p> <h5>First Name:</h5> <input class="first_name" id="invite_form" type="text" ></p>
          <p><h5>Last Name:</h5><input class="last_name" id="invite_form" type="text" ></p>
+    </div>
+    <div class="header"><h3>Please enter your date of birth</h3> </div>
+    <div id="DOB" class="ui input">
+     <p><h5>Month (MM):</h5> <input class="month" id="invite_form" type="text" > </p>
+     <p><h5>Day (DD):</h5> <input class="day" id="invite_form" type="text" > </p>
+     <p><h5>Year (YYYY):</h5> <input class="year" id="invite_form" type="text" > </p>
     </div>
     <div class="actions">
         <div id="name_enter" class="ui center aligned positive right labeled icon button">
@@ -52,23 +61,19 @@
 </template>
 
 
-
-
-
-
-
 <template name="seeAll">
-	<h2>All activities</h2>
-    
-    <div class="ui center aligned selection  list"> 
+	<h2>All events:</h2>
+    <div class="ui raised segment">
+    <div class="ui center aligned selection list"> 
         {{#each get_act_list}}
       <div class="item">
         <div class="content">
-            <div id="activity" class="header">{{title}}</div>
+            <div id="activity" class="header"><h4>{{title}}</h4></div>
         </div>
       </div>
       {{/each}}
 
+      </div>
       </div>
 </template>
 
@@ -76,18 +81,22 @@
 <template name="home">
     {{set_act_index}}
 
-    <div class="ui two column grid">
+    <!-- testing comp grid -->
+    <div class="ui grid">
+        <div class="computer only row">
+    <!-- testing comp grid -->
+
+    <div class="ui three column grid">
       <!--grid -->
+      <div class="one wide column"></div>
     <div class="two wide column">
-        <div class="ui  grid">
+        <!-- <div class="ui page grid"> -->
 
     <!-- START ACCORDION -->
                     <div class="ui vertical accordion menu">
-                        <div class="item">
-                          <a class="active title">
+                          <div class="item">
                             <!-- <i class="dropdown icon"></i> -->
-                            When do you want to go?
-                          </a>
+                            <h6> <b>When do you want to go?</b></h6>
                           <div class="active content">
                             <div class="ui form">
                               <div class="grouped fields">
@@ -120,10 +129,9 @@
                           </div>
                         </div>
     <div class="item">
-                          <a class="active title">
-                            <!-- <i class="dropdown icon"></i> -->
-                            How far do you want to go?
-                          </a>
+                          <!-- <a class="active title"> -->
+                           <h6> <b>How far do you want to go?</b></h6>
+                          <!-- </a> -->
                           <div class="active content">
                             <div class="ui form">
                               <div class="grouped fields">
@@ -147,95 +155,226 @@
                       </div>
                               <!-- END OF ACCORDION -->
                               
-            </div>
+            <!-- </div> -->
         </div>
-        <div class="fourteen wide column">
-         <div class="ui three column centered grid">
+        <div class="ten wide column">
+         <div class="ui three column grid">
 
 
             <!-- attempt at activity buttons  -->
-            <div class=" column">
-<!--               <img src="https://im1.shutterfly.com/media/47a5d932b3127ccee9ceddc845e800000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713180434028.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" onmouseover="this.src='https://im1.shutterfly.com/media/47a5d932b3127ccee9cf7ea7250200000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713180359558.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" onmouseout="this.src='https://im1.shutterfly.com/media/47a5d932b3127ccee9ceddc845e800000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713180434028.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" />
- -->
-
-
-              <img id="B_sports" class="ui  medium image" src=" https://im1.shutterfly.com/media/47a5d932b3127ccee9ceddc845e800000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713180434028.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" >
-              <div class="row"> Right column, row 2</div>
-              <img id="B_art" class="ui  medium image" src="https://im1.shutterfly.com/media/47a5d932b3127ccee9cf7ea7250200000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713180359558.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" >
+            <div class=" right aligned left floated column">
+              <img id="B_sports" class="ui large image" src="https://im1.shutterfly.com/media/47a5d934b3127ccee9ca00d156be00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715151455379.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" onmouseover="this.src='https://im1.shutterfly.com/media/47a5d934b3127ccee9cb881b767c00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715150335301.JPG/ps%3D50/r%3D0/rx%3D720/ry%3D480/'" onmouseout="this.src='https://im1.shutterfly.com/media/47a5d934b3127ccee9ca00d156be00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715151455379.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" />
+              <div class="row"> <img class="ui  mini image" src=" https://im1.shutterfly.com/media/47a5d932b3127ccee9ce23c1459e00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713205651525.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" ></div>
+               <img id="B_art" class="ui large image" src="https://im1.shutterfly.com/media/47a5d934b3127ccee9caa027561800000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715151644585.JPG/ps%3D50/r%3D0/rx%3D720/ry%3D480/" onmouseover="this.src='https://im1.shutterfly.com/media/47a5d934b3127ccee9cb69aab71500000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715151645025.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" onmouseout="this.src=' https://im1.shutterfly.com/media/47a5d934b3127ccee9caa027561800000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715151644585.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" />
             </div>
+
            <div class=" column">
                 <img class="ui  small image" src=" https://im1.shutterfly.com/media/47a5d932b3127ccee9ce23c1459e00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713205651525.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" >
-                <img id="B_surpriseme" class="ui  medium  image" src="https://im1.shutterfly.com/media/47a5d932b3127ccee9cfff21655c00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713201916922.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" >
+                 <img id="B_surpriseme" class="ui medium image" src="https://im1.shutterfly.com/media/47a5d932b3127ccee9cfff21655c00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713201916922.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" onmouseover="this.src='https://im1.shutterfly.com/media/47a5d934b3127ccee9ca056697a300000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715150332559.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" onmouseout="this.src=' https://im1.shutterfly.com/media/47a5d932b3127ccee9cfff21655c00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713201916922.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" />
 
 
            </div>
            <div class="  column">
-              <img id="B_entertainment" class="ui  medium  image" src=" https://im1.shutterfly.com/media/47a5d932b3127ccee9cf64a9a43100000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713200921346.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" >
-              <div class="row"> Right column, row 2</div>
-              <img id="B_stayin" class="ui  medium  image" src=" https://im1.shutterfly.com/media/47a5d932b3127ccee9ceb617059a00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713192521570.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" >
-
-              <!-- style="width:280px;height:220px;" -->
+                <img id="B_entertainment" class="ui large image" src="https://im1.shutterfly.com/media/47a5d932b3127ccee9cf64a9a43100000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713200921346.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" onmouseover="this.src='https://im1.shutterfly.com/media/47a5d935b3127ccee9c816900ed800000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150714144855929.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" onmouseout="this.src=' https://im1.shutterfly.com/media/47a5d932b3127ccee9cf64a9a43100000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713200921346.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" />
+              <div class="row"> <img class="ui  mini image" src=" https://im1.shutterfly.com/media/47a5d932b3127ccee9ce23c1459e00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713205651525.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" ></div>
+                <img id="B_stayin" class="ui large image" src="https://im1.shutterfly.com/media/47a5d934b3127ccee9cb0247f75500000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715150331494.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" onmouseover="this.src='https://im1.shutterfly.com/media/47a5d934b3127ccee9ca4c6d562400000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715150331715.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" onmouseout="this.src='https://im1.shutterfly.com/media/47a5d934b3127ccee9cb0247f75500000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715150331494.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" />
 
             </div>
+        </div> 
+    </div>
+        {{#if get_next_event}}
+        <!-- <div class="one wide column right attached" > -->
+        <div class="one wide column" >
+            <div class="ui compact segment">
+                <p><h5><b>You are next going to:</b></h5></p>
+                <!-- <p><h5><b>Y{{get_next_event.title}} </b></h5></p> -->
 
-
-                
-
+                <div id="next_event" class="ui massive label">
+                   <p> <i class="share icon"></i> {{get_next_event.title}} </p>
+                </div>
+            </div>
         </div>
+        {{/if}}
+    </div>
+
+    <!-- testing comp grid -->
     </div>
     </div>
-     
-</template>
+    <!-- testing comp grid -->
 
-<!-- for the "swiping" screen, where you say yes or no to an activity -->
-<template name="swipe">
-    {{#HammerTouchArea gestureMap=templateGestures}}
-    {{set_up_act_list "entertainment"}}
-    <div id= "hammerDiv">
-        <h2 align="center" >{{> display_activity}}</h2>
+    <div class="ui page grid">
+        <div class="mobile only row"> 
+            <div class="row"> 
+                <button id="sidebar_button" class="ui labeled icon button">
+                    <i class="sidebar icon"></i>
+                         Filters
+                </button></div>
+            </div>               
+            <!-- adding the sidbar -->
+            <div id="sidebar" class="ui left vertical inverted labeled icon sidebar menu">
+                {{>sidebarContents}}
+              </div>
+              <div class="pusher">
+                <!-- Site content !-->
+                <div class="mobile only row">
+                        <div class="column">
+                        <img id="B_entertainment" class="ui large image" src="https://im1.shutterfly.com/media/47a5d932b3127ccee9cf64a9a43100000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713200921346.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" onmouseover="this.src='https://im1.shutterfly.com/media/47a5d935b3127ccee9c816900ed800000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150714144855929.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" onmouseout="this.src=' https://im1.shutterfly.com/media/47a5d932b3127ccee9cf64a9a43100000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713200921346.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" />
+                        <img id="B_stayin" class="ui large image" src="https://im1.shutterfly.com/media/47a5d934b3127ccee9cb0247f75500000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715150331494.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" onmouseover="this.src='https://im1.shutterfly.com/media/47a5d934b3127ccee9ca4c6d562400000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715150331715.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" onmouseout="this.src='https://im1.shutterfly.com/media/47a5d934b3127ccee9cb0247f75500000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715150331494.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" />
+                        <img id="B_sports" class="ui large image" src="https://im1.shutterfly.com/media/47a5d934b3127ccee9ca00d156be00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715151455379.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" onmouseover="this.src='https://im1.shutterfly.com/media/47a5d934b3127ccee9cb881b767c00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715150335301.JPG/ps%3D50/r%3D0/rx%3D720/ry%3D480/'" onmouseout="this.src='https://im1.shutterfly.com/media/47a5d934b3127ccee9ca00d156be00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715151455379.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" />
+                       <img id="B_art" class="ui large image" src="https://im1.shutterfly.com/media/47a5d934b3127ccee9caa027561800000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715151644585.JPG/ps%3D50/r%3D0/rx%3D720/ry%3D480/" onmouseover="this.src='https://im1.shutterfly.com/media/47a5d934b3127ccee9cb69aab71500000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715151645025.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" onmouseout="this.src=' https://im1.shutterfly.com/media/47a5d934b3127ccee9caa027561800000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715151644585.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" />
+                        <img id="B_surpriseme" class="ui large image" src="https://im1.shutterfly.com/media/47a5d932b3127ccee9cfff21655c00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713201916922.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" onmouseover="this.src='https://im1.shutterfly.com/media/47a5d934b3127ccee9ca056697a300000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715150332559.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" onmouseout="this.src=' https://im1.shutterfly.com/media/47a5d932b3127ccee9cfff21655c00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713201916922.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" />
+                    </div>
 
-        <!-- tryna add nice button -->
-        <div id="nexter" class="ui left attached huge button">Next</div>
-        <div  id="info" class="ui right aligned huge button">See info</div>
-        <div  id="seeAll" class="ui center aligned huge button">See all</div>
+                </div>
+                <!-- mobile only row div above -->
+            </div>
+            <!-- adding the sidbar -->
     </div>
-     {{/HammerTouchArea}}
+
+</template>
+
+
+
+
+<template name="sidebarContents">
+<!--     <a id="when" class="item">
+      <i class="home icon"></i>
+      When do you want to go?
+    </a>
+    <a id="far" class="item">
+      <i class="block layout icon"></i>
+      How far do you want to go?
+    </a>
+    <a class="item">
+      <i class="smile icon"></i>
+      Friends
+    </a> -->
+
+
+
+
+<!-- tryna put accordion in sidebar -->
+<!-- START ACCORDION -->
+                    <div class="ui vertical accordion menu">
+                          <div class="item">
+                            <!-- <i class="dropdown icon"></i> -->
+                            <h6> <b>When do you want to go?</b></h6>
+                          <div class="active content">
+                            <div class="ui form">
+                              <div class="grouped fields">
+                                <div class="field">
+                                  <div id= "today" class="ui left aligned checkbox checkbox">
+                                    <input type="checkbox" name="size" value="today">
+                                    <label> Today</label>
+                                  </div>
+                                </div>
+                                <div class="field">
+                                  <div id= "tomorrow" class="ui checkbox checkbox">
+                                    <input type="checkbox" name="size" value="tomorrow">
+                                    <label> Tomorrow</label>
+                                  </div>
+                                </div>
+                                <div class="field">
+                                  <div id= "weekend" class="ui checkbox checkbox">
+                                    <input type="checkbox" name="size" value="weekend">
+                                    <label> This weekend</label>
+                                  </div>
+                                </div>
+                                <div class="field">
+                                  <div id= "week" class="ui checkbox checkbox">
+                                    <input type="checkbox" name="size" value="week">
+                                    <label> This week</label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+    <div class="item">
+                          <!-- <a class="active title"> -->
+                           <a id="when" class="item">
+                              <i class="home icon"></i>
+                              When do you want to go?
+                            </a>
+                             <label> Less than 5 miles</label>
+                           <!-- <h6> <b>How far do you want to go?</b></h6> -->
+                          <!-- </a> -->
+                          <div class="active content">
+                            <div class="ui form">
+                              <div class="grouped fields">
+                                <div class="field">
+                                  <div id= "five_mi" class="ui checkbox checkbox">
+                                    <input type="checkbox" name="size" value="Five_mi">
+                                    <label> Less than 5 miles</label>
+                                  </div>
+                                </div>
+                                <div class="field">
+                                  <div id= "ten_mi" class="ui checkbox checkbox">
+                                    <input type="checkbox" name="size" value="Five_mi">
+                                    <label>Less than 10 miles</label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                     
+                      </div>
+                              <!-- END OF ACCORDION -->
+
+
+<!-- tryna put accordion in sidebar -->
+
+
+
 
 
 </template>
 
 
-<template name="entertainment">
-    <ul>Activity type: entertainment</ul>
-    {{set_category "entertainment" }}
-    {{>swipe}}
-
-</template>
 
 <template name="sports">
     <ul>Activity type: sports</ul>
-    {{set_category "sports"}}
     {{>swipe}}
 </template>
 
 <template name="art">
-
     <h2>       How about....</h2>
-    {{set_category "art"}}
     {{>swipe}}
 </template>
 
 <template name="stayin">
     <ul>Activity type: stayin</ul>
-    {{set_category "stayin"}}
     {{>swipe}}
 
 </template>
 
 <template name="surpriseme">
     <ul>Surprise me</ul>
-    {{set_category "surpriseme"}}
     {{>swipe}}
+</template>
+
+
+<template name="eventsTemp">
+     <h6 > Category: {{category}} </h6>
+    <h4>How about...</h4>
+        {{#HammerTouchArea gestureMap=templateGestures}}
+    <!-- {{set_up_act_list "entertainment"}} -->
+    <div id= "hammerDiv">
+         <h2 align="center" >
+            <div id= "deck_slide" class="ui raised very padded text container segment">
+            <!-- <div id= "deck_slide" class="ui raised segment"> -->
+                <h2>{{current_activity.title}}</h2>
+            </div>
+        </h2>
+
+        <!-- tryna add nice button -->
+        <div id="nexter" class="ui left attached huge button">Next</div>
+        <div id="previous" class="ui left attached huge button">Previous</div>
+        <div  id="info" class="ui right aligned huge button">See info</div>
+        <div  id="seeAll" class="ui center aligned huge button">See all</div>
+    </div>
+     {{/HammerTouchArea}}
 </template>
 
 
@@ -248,7 +387,7 @@
         <ul><b>Address:</b> {{chosen_activity.address}}</ul>
         <ul><b>Description:</b> {{chosen_activity.description}}</ul>
 
-        <div  id="favorite" class="ui center aligned large button">Add Activity to Calendar</div>
+        <div  id="favorite" class="ui center aligned large button">Add Activity to Your Events</div>
     </div>
 
 
@@ -260,9 +399,9 @@
 
     <div class="ui very padded raised segment">
         <h3>Great Choice!</h3> 
-        <ul>How will you get there?</ul>
-        <ul> link to google maps/ google maps api for directions????</ul>
-        <ul>Invite a friend form</ul>
+        <!-- <ul>How will you get there?</ul> -->
+        <!-- <ul> link to google maps/ google maps api for directions????</ul> -->
+        <ul>Do you want to invite a friend to this event? Please search a ChiPlan user.</ul>
         <div id="invite_form" class="ui icon input">
           <input class="newLink" id="invite_form" type="text" placeholder="Search...">
           <i class="circular search link icon" id="search_button" ></i>
@@ -337,7 +476,7 @@
                 {{#each get_fav_list}}
               <div class="item">
                 <div class="content">
-                    <div id="activity" class="header">{{title}}</div>
+                    <div id="activity" class="header"><h5>{{title}}</h5></div>
                     <div class="right floated content">
                         <button class="ui labeled icon button" id="remove">
                         <i class="remove icon"></i>
@@ -355,7 +494,7 @@
         </div>
     </div>
 <!--  invited activities -->
-  {{#if get_fav_list}}
+  {{#if get_invited_events}}
     <div class="ui page grid">
         <div class="row">
         <h2 class="  header">
@@ -367,7 +506,7 @@
             {{#each get_invited_events}} 
           <div class="item">
             <div class="content">
-                <div id="activity" class="header"> {{inviter.profile.name}} invited you to {{activity.title}}</div>
+                <div id="invite_activity" class="header"> <h5>{{inviter.profile.name}} invited you to {{activity.title}}</h5></div>
                 <div class="right floated content">
                     <button class="ui labeled icon button" id="remove_invite">
                     <i class="remove icon"></i>
@@ -401,18 +540,23 @@
 </template>
 
 <template name="header">
+
 	    <div class="ui segment">
         {{> loginButtons}}
+
         {{#if currentUser}}
         <button id="dashboard" class="ui right floated labeled icon huge button">
             <i class="calendar icon"></i>
-            Dashboard
+            Your Events
         </button>
          {{/if}}
-         <h1 align="center" class="heading">
-            ChiPlan
+        <h1 align="center" class="heading active">
+            ChiPlan 
         </h1>
         <div class="subtitle">       </div>
     </div>
+
+
+
 
 </template>
