@@ -3,21 +3,35 @@ Activities = new Mongo.Collection('activities');
 Invites = new Mongo.Collection('invites');
 
 function get_search(){
+  console.log($("#date_dropdown").dropdown('get value'))
+
   //date search
     if ($("#tomorrow").checkbox('is checked')){ date="tomorrow"}
     else if ($("#today").checkbox('is checked')){date="today"}
     else if ($("#week").checkbox('is checked')){date="week"}
     else if ($("#weekend").checkbox('is checked')){date="weekend"}
+  //trying  to add drop down items, might not work if comp screen accordion also checkED??? by default
+    else if (($("#date_dropdown").dropdown('get text'))=="Tomorrow"){date="tomorrow"}
+    else if (($("#date_dropdown").dropdown('get text'))=="Today"){date="today"}
+    else if (($("#date_dropdown").dropdown('get text'))=="This week"){date="week"}
+    else if (($("#date_dropdown").dropdown('get text'))=="This weekend"){date="weekend"}
     else{date="any_date"}
+
 
   //distance search
   if ($("#five_mi").checkbox('is checked')){dist="five"}
   else if ($("#ten_mi").checkbox('is checked')){dist="ten"}
+  //trying  to add drop down items, might not work if comp screen accordion also checkED??? by default
+  else if (($("#dist_dropdown").dropdown('get text'))=="Within five miles"){dist="five"}
+  else if (($("#dist_dropdown").dropdown('get text'))=="Within ten miles"){dist="ten"}
   else{dist="any_dist"}
 
   search=[date, dist]
   return(search)
 }
+
+
+
 
 
 
@@ -332,8 +346,7 @@ Template.name_modal.events({
     },
 
     'doubletap #hammerDiv': function (event, templateInstance) {
-      console.log("You swiped down !!")
-      alert("hello")
+      console.log("You doubletapped !!")
       var the_id=Session.get('current_activity')._id
       Router.go('actInfo',{_id: the_id});
     }
@@ -467,10 +480,10 @@ Template.home.helpers({
 
 Template.home.onRendered(function(){
   this.$('.checkbox').checkbox();
-  this.$('#sidebar').sidebar('attach events','#sidebar_button');// if you want to push rather than overlay
-  // this.$('#sidebar').sidebar('attach events','#sidebar_button')
-  // .sidebar('setting','transition','overlay')
-  // .sidebar('toggle');
+  this.$('#sidebar').sidebar('attach events','#sidebar_button');
+  $('.ui.dropdown')
+  .dropdown()
+;
 
 });
 
@@ -482,7 +495,7 @@ Template.share.helpers({
 
 Template.sidebarContents.events({
   'click #when':function(){
-      
+
       console.log('when')
   },
   'click #far':function(){
@@ -638,20 +651,17 @@ Template.invite_modal.events({
 
   Template.home.events({
 
+    'click #stay_in_test': function(){
+      activity_index=0;
+      search=get_search();
+      set_up_act_list("entertainment",search[0],search[1]);
+      Router.go('eventsTemp',{category: "entertainment", date: search[0], distance: search[1]});
+  },  
+
     'click #next_event': function(){
       the_id = Session.get('next_event')._id
       Router.go('actInfo',{_id: the_id});
-  },
-
-      'click #sidebar': function(){
-           $('.left.demo.sidebar').first()
-        .sidebar('attach events', '.open.button', 'show')
-      ;
-      $('.open.button')
-        .removeClass('disabled')
-      ;
-  },
-  
+  },  
 
     'click #B_entertainment': function(){
       activity_index=0;

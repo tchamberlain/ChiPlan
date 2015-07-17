@@ -1,9 +1,10 @@
 <head>
-    <meta name="viewport" content="width=320">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <meta name="viewport" content="width=320"> -->
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
 <!-- <meta name="viewport" content="width=640, initial-scale=.5, user-scalable=no" /> -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 </head>
 
 <body>
@@ -11,6 +12,8 @@
 <div class="ui medium modal name_modal">
     {{>name_modal}}
  </div>
+
+
 
 
 <script>
@@ -201,7 +204,71 @@
     </div>
     <!-- testing comp grid -->
 
-    
+
+
+
+    <!-- testing dropdown mobile menu -->
+        <div class="ui page grid">
+            <div class="column"></div>
+
+            <div class="fifteen wide mobile only column">
+            <div class="mobile only row">
+
+                <div class=" mobile only row">
+                <!-- adding dropdown menu -->
+                <div id="date_dropdown" class="ui floating labeled icon dropdown large button">
+                  <i class="filter icon"></i>
+                  <span class="text">Day</span>
+                  <div class="menu">
+                    <div class="header">
+                      <i class="tags icon"></i>
+                      Filter events by day
+                    </div>
+                    <div id="today_selector" class="item" value="today">
+                      Today
+                    </div>
+                    <div id="tomorrow_selector" class="item" value="tomorrow">
+                      Tomorrow
+                    </div>
+                    <div id="weekend_selector" class="item" value="weekend">
+                      This weekend
+                    </div>
+                     <div id="week_selector" class="item" value="week">
+                      This week
+                    </div>
+                  </div>
+                </div>
+                 <div id="dist_dropdown" class="ui floating labeled icon dropdown large button">
+                  <i class="filter icon"></i>
+                  <span class="text">Distance</span>
+                  <div class="menu">
+                    <div class="header">
+                      <i class="tags icon"></i>
+                    Filter events by distance
+                    </div>
+                    <div id="five_mi" class="item">
+                      Within five miles
+                    </div>
+                    <div id="ten_mi" class="item">
+                      Within ten miles
+                    </div>
+                  </div>
+                </div>
+                <!-- end added drop down menu -->
+                <!-- added mini image for spacing -->
+                  <div class="row"> <img class="ui  mini image" src=" https://im1.shutterfly.com/media/47a5d932b3127ccee9ce23c1459e00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713205651525.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" ></div>
+            </div>
+        </div>
+        <div class="mobile only row">
+            <img id="B_entertainment" class="ui large image" src="https://im1.shutterfly.com/media/47a5d932b3127ccee9cf64a9a43100000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713200921346.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" onmouseover="this.src='https://im1.shutterfly.com/media/47a5d935b3127ccee9c816900ed800000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150714144855929.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" onmouseout="this.src=' https://im1.shutterfly.com/media/47a5d932b3127ccee9cf64a9a43100000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713200921346.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" />
+            <img id="B_surpriseme" class="ui large image" src="https://im1.shutterfly.com/media/47a5d932b3127ccee9cfff21655c00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713201916922.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" onmouseover="this.src='https://im1.shutterfly.com/media/47a5d934b3127ccee9ca056697a300000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715150332559.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" onmouseout="this.src=' https://im1.shutterfly.com/media/47a5d932b3127ccee9cfff21655c00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713201916922.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" />
+            <img id="B_sports" class="ui large image" src="https://im1.shutterfly.com/media/47a5d934b3127ccee9ca00d156be00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715151455379.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" onmouseover="this.src='https://im1.shutterfly.com/media/47a5d934b3127ccee9cb881b767c00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715150335301.JPG/ps%3D50/r%3D0/rx%3D720/ry%3D480/'" onmouseout="this.src='https://im1.shutterfly.com/media/47a5d934b3127ccee9ca00d156be00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715151455379.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" />
+            <img id="B_art" class="ui large image" src="https://im1.shutterfly.com/media/47a5d934b3127ccee9caa027561800000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715151644585.JPG/ps%3D50/r%3D0/rx%3D720/ry%3D480/" onmouseover="this.src='https://im1.shutterfly.com/media/47a5d934b3127ccee9cb69aab71500000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715151645025.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" onmouseout="this.src=' https://im1.shutterfly.com/media/47a5d934b3127ccee9caa027561800000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715151644585.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" />
+             <img id="stay_in_test" class="ui large image" src="https://im1.shutterfly.com/media/47a5d934b3127ccee9cb0247f75500000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715150331494.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" onmouseover="this.src='https://im1.shutterfly.com/media/47a5d934b3127ccee9ca4c6d562400000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715150331715.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" onmouseout="this.src='https://im1.shutterfly.com/media/47a5d934b3127ccee9cb0247f75500000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715150331494.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" />
+         </div>
+             </div>
+        </div>
+
 
 </template>
 
@@ -221,9 +288,6 @@
       <i class="smile icon"></i>
       Friends
     </a> -->
-
-
-
 
 <!-- tryna put accordion in sidebar -->
 <!-- START ACCORDION -->
