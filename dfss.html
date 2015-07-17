@@ -388,25 +388,69 @@
 
 
 <template name="eventsTemp">
-     <div class="ui small label"> <b>Category:</b> {{category}} </div>
-    <h4>How about...</h4>
-        {{#HammerTouchArea gestureMap=templateGestures}}
-    <!-- {{set_up_act_list "entertainment"}} -->
-    <div id= "hammerDiv">
-         <h2 align="center" >
-            <div id= "deck_slide" class="ui raised very padded text container segment">
-            <!-- <div id= "deck_slide" class="ui raised segment"> -->
-                <h2>{{current_activity.title}}</h2>
+        <div class="ui page grid">
+            <div class="row">
+                <div class="left floated four wide column">
+                    <div class="ui huge black label"> Category: </div><div class="ui huge white label"> {{category}} </div>
+                </div>
+                <div class="right floated three wide column">
+                    <div id="seeAll" class="ui huge icon labeled black button">
+                        <i class="list layout icon"></i>
+                        <b>See all events</b> 
+                    </div>
+                </div>
             </div>
-        </h2>
-
-        <!-- tryna add nice button -->
-        <div id="nexter" class="ui left attached huge button">Next</div>
-        <div id="previous" class="ui left attached huge button">Previous</div>
-        <div  id="info" class="ui right aligned huge button">See info</div>
-        <div  id="seeAll" class="ui center aligned huge button">See all</div>
     </div>
-     {{/HammerTouchArea}}
+
+     <div class="ui centered page grid">
+        
+        {{#HammerTouchArea gestureMap=templateGestures}}
+        <div class="fourteen wide center floated column">
+            <div id= "hammerDiv">
+                <div class="row">
+                    <div id= "deck_slide" class="ui raised very padded text container segment">
+                        <div class="row"> <img class="ui  tiny image" src=" https://im1.shutterfly.com/media/47a5d932b3127ccee9ce23c1459e00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713205651525.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" ></div>
+                        <h2 align= center>{{current_activity.title}}</h2>
+                        <div class="row"> <img class="ui  tiny image" src=" https://im1.shutterfly.com/media/47a5d932b3127ccee9ce23c1459e00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713205651525.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" ></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- <div class="two wide column"> HELLO????</div> -->
+                    <div class="five wide column">
+                        <div class=" ui buttons">
+                            <button id="previous" class="ui labeled icon huge button">
+                                <i class="left chevron icon"></i>
+                                    Previous
+                            </button>
+                            <button id="info" class="ui huge positive button">
+                                <i class="info icon"></i>
+                                    Event Info
+                            </button>
+                            <button id="nexter" class="ui right labeled icon huge button">
+                                     Next
+                                <i class="right chevron icon"></i>
+                            </button>
+                        </div>
+                    </div>
+             </div>
+        </div>
+        </div>
+             {{/HammerTouchArea}}
+        </div>
+
+
+
+
+
+
+                <!-- tryna add nice button -->
+<!--                 <div id="nexter" class="ui left attached huge button">Next</div>
+                <div id="previous" class="ui left attached huge button">Previous</div>
+                <div  id="info" class="ui right aligned huge button">See info</div>
+                
+
+                <div  id="seeAll" class="ui center aligned huge button">See all</div>
+ -->
 </template>
 
 
@@ -431,8 +475,6 @@
 
     <div class="ui very padded raised segment">
         <h3>Great Choice!</h3> 
-        <!-- <ul>How will you get there?</ul> -->
-        <!-- <ul> link to google maps/ google maps api for directions????</ul> -->
         <ul>Do you want to invite a friend to this event? Please search a ChiPlan user.</ul>
         <div id="invite_form" class="ui icon input">
           <input class="newLink" id="invite_form" type="text" placeholder="Search...">
@@ -497,12 +539,15 @@
 <template name="dashboard">
 	
     <div class="ui page grid">
+        <div class="one wide column"></div>
+    <div class="fifteen wide column">
         <div class="row">
+
         <h2 class="  header">
                 Your Events
         </h2>
          </div>
-    <div class="sixteen wide column">
+    
         <div class="ui center aligned divided selection list">
             {{#if get_fav_list}}
                 {{#each get_fav_list}}
@@ -521,19 +566,19 @@
             {{else}}
             <h4>You have no favorites, add an event!</h4>
             {{/if}}
-
           </div>
         </div>
     </div>
 <!--  invited activities -->
   {{#if get_invited_events}}
     <div class="ui page grid">
+    <div class="one wide column"></div>
+    <div class="fifteen wide column">
         <div class="row">
         <h2 class="  header">
                 Events you were invited to
         </h2>
          </div>
-    <div class="sixteen wide column">
         <div class="ui center aligned divided selection list">
             {{#each get_invited_events}} 
           <div class="item">
@@ -577,10 +622,32 @@
         {{> loginButtons}}
 
         {{#if currentUser}}
-        <button id="dashboard" class="ui right floated labeled icon huge button">
-            <i class="calendar icon"></i>
-            Your Events
-        </button>
+         <button id="dashboard" class="ui right floated labeled icon huge button">
+                        <i class="calendar icon"></i>
+                             Your Events
+                    </button>
+
+        <!--  <div class="ui grid">
+            <div class="computer only row">
+                <div class="right attached column">
+                    <button id="dashboard" class="ui right floated labeled icon huge button">
+                        <i class="calendar icon"></i>
+                             Your Events
+                    </button>
+                </div>
+            </div>
+        </div>
+
+         <div class="ui grid">
+            <div class="mobile only row">
+                <div class="right attached column">
+                    <button id="dashboard" class="ui right floated labeled icon small button">
+                        <i class="calendar icon"></i>
+                             Your Events
+                    </button>
+                </div>
+            </div>
+        </div> -->
          {{/if}}
         <h1 align="center" class="heading active">
             ChiPlan 
