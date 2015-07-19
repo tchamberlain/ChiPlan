@@ -1,7 +1,7 @@
 <head>
     <!-- <meta name="viewport" content="width=320"> -->
   <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
 <!-- <meta name="viewport" content="width=640, initial-scale=.5, user-scalable=no" /> -->
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -165,7 +165,7 @@
 
             <!-- attempt at activity buttons  -->
             <div class=" right aligned left floated column">
-              <img id="B_sports" class="ui large image" src="https://im1.shutterfly.com/media/47a5d934b3127ccee9ca00d156be00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715151455379.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" onmouseover="this.src='https://im1.shutterfly.com/media/47a5d934b3127ccee9cb881b767c00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715150335301.JPG/ps%3D50/r%3D0/rx%3D720/ry%3D480/'" onmouseout="this.src='https://im1.shutterfly.com/media/47a5d934b3127ccee9ca00d156be00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715151455379.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" />
+              <img id="B_sports" class="ui large image" src="https://im1.shutterfly.com/media/47a5d934b3127ccee9ca00d156be00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715151455379.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" onmouseover="this.src='https://im1.shutterfly.com/media/47a5d936b3127ccee9f72432476400000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150717215318547.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" onmouseout="this.src='https://im1.shutterfly.com/media/47a5d934b3127ccee9ca00d156be00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715151455379.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" />
               <div class="row"> <img class="ui  mini image" src=" https://im1.shutterfly.com/media/47a5d932b3127ccee9ce23c1459e00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713205651525.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" ></div>
                <img id="B_art" class="ui large image" src="https://im1.shutterfly.com/media/47a5d934b3127ccee9caa027561800000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715151644585.JPG/ps%3D50/r%3D0/rx%3D720/ry%3D480/" onmouseover="this.src='https://im1.shutterfly.com/media/47a5d934b3127ccee9cb69aab71500000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715151645025.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" onmouseout="this.src=' https://im1.shutterfly.com/media/47a5d934b3127ccee9caa027561800000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150715151644585.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/'" />
             </div>
@@ -388,23 +388,11 @@
 
 
 <template name="eventsTemp">
-        <div class="ui page grid">
-            <div class="row">
-                <div class="left floated four wide column">
-                    <div class="ui huge black label"> Category: </div><div class="ui huge white label"> {{category}} </div>
-                </div>
-                <div class="right floated three wide column">
-                    <div id="seeAll" class="ui huge icon labeled black button">
-                        <i class="list layout icon"></i>
-                        <b>See all events</b> 
-                    </div>
-                </div>
-            </div>
-    </div>
-
+        
      <div class="ui centered page grid">
         
         {{#HammerTouchArea gestureMap=templateGestures}}
+        <!-- <div class="one wide column"></div> -->
         <div class="fourteen wide center floated column">
             <div id= "hammerDiv">
                 <div class="row">
@@ -414,15 +402,14 @@
                         <div class="row"> <img class="ui  tiny image" src=" https://im1.shutterfly.com/media/47a5d932b3127ccee9ce23c1459e00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713205651525.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" ></div>
                     </div>
                 </div>
-                <div class="row">
-                    <!-- <div class="two wide column"> HELLO????</div> -->
+         <!--        <div class="row">
                     <div class="five wide column">
                         <div class=" ui buttons">
                             <button id="previous" class="ui labeled icon huge button">
                                 <i class="left chevron icon"></i>
                                     Previous
                             </button>
-                            <button id="info" class="ui huge positive button">
+                            <button id="info" class="ui huge labeled positive button">
                                 <i class="info icon"></i>
                                     Event Info
                             </button>
@@ -432,25 +419,51 @@
                             </button>
                         </div>
                     </div>
-             </div>
+                </div> -->
+                <div class="row">
+                    <!-- <div class="two wide column"> HELLO????</div> -->
+                    <div class="five wide column">
+                        <div class=" ui buttons">
+                            <button id="previous" class="ui huge button">
+                                    Previous
+                            </button>
+                            <button id="info" class="ui huge positive button">
+                                    Event Info
+                            </button>
+                            <button id="nexter" class="ui  huge button">
+                                     Next
+                            </button>
+                        </div>
+                    </div>
+                </div>
         </div>
         </div>
              {{/HammerTouchArea}}
+        <!-- <div class="one wide column"></div> -->
         </div>
 
 
 
 
 
+<div class="ui page stackable grid">
+            <div class="row">
+                <div class="one wide column"></div>
+                <div class="left floated four wide column">
+                    <div class="ui huge black label"> Category: </div><div class="ui huge white label"> {{category}} </div>
+                </div>
+                <div class="right floated three wide column">
+                    <div id="seeAll" class="ui huge icon labeled black button">
+                        <i class="list layout icon"></i>
+                        <b>See all events</b> 
+                    </div>
+                </div>
+            <div class="one wide column"></div>
+            </div>
+    </div>
 
-                <!-- tryna add nice button -->
-<!--                 <div id="nexter" class="ui left attached huge button">Next</div>
-                <div id="previous" class="ui left attached huge button">Previous</div>
-                <div  id="info" class="ui right aligned huge button">See info</div>
-                
 
-                <div  id="seeAll" class="ui center aligned huge button">See all</div>
- -->
+
 </template>
 
 
@@ -618,36 +631,14 @@
 
 <template name="header">
 
-	    <div class="ui segment">
+      <div class="ui segment">
         {{> loginButtons}}
 
         {{#if currentUser}}
-         <button id="dashboard" class="ui right floated labeled icon huge button">
-                        <i class="calendar icon"></i>
-                             Your Events
-                    </button>
-
-        <!--  <div class="ui grid">
-            <div class="computer only row">
-                <div class="right attached column">
-                    <button id="dashboard" class="ui right floated labeled icon huge button">
-                        <i class="calendar icon"></i>
-                             Your Events
-                    </button>
-                </div>
-            </div>
-        </div>
-
-         <div class="ui grid">
-            <div class="mobile only row">
-                <div class="right attached column">
-                    <button id="dashboard" class="ui right floated labeled icon small button">
-                        <i class="calendar icon"></i>
-                             Your Events
-                    </button>
-                </div>
-            </div>
-        </div> -->
+        <button id="dashboard" class="ui right floated labeled icon huge button">
+            <i class="calendar icon"></i>
+            Your Events
+        </button>
          {{/if}}
         <h1 align="center" class="heading active">
             ChiPlan 
