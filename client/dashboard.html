@@ -1,0 +1,67 @@
+
+<!-- created a page for user dashboard, display favorites -->
+<template name="dashboard">
+	
+    <div class="ui page grid">
+        <div class="one wide column"></div>
+    <div class="fifteen wide column">
+        <div class="row">
+
+        <h2 class="  header">
+                Your Events
+        </h2>
+         </div>
+    
+        <div class="ui center aligned divided selection list">
+            {{#if get_fav_list}}
+                {{#each get_fav_list}}
+              <div class="item">
+                <div class="content">
+                    <div id="activity" class="header"><h5>{{title}}</h5></div>
+                    <div class="right floated content">
+                        <button class="ui labeled icon button" id="remove">
+                        <i class="remove icon"></i>
+                            Remove
+                            </button>
+                    </div>
+                </div>
+              </div>
+              {{/each}}
+            {{else}}
+            <h4>You have no favorites, add an event!</h4>
+            {{/if}}
+          </div>
+        </div>
+    </div>
+<!--  invited activities -->
+  {{#if get_invited_events}}
+    <div class="ui page grid">
+    <div class="one wide column"></div>
+    <div class="fifteen wide column">
+        <div class="row">
+        <h2 class="  header">
+                Events you were invited to
+        </h2>
+         </div>
+        <div class="ui center aligned divided selection list">
+            {{#each get_invited_events}} 
+          <div class="item">
+            <div class="content">
+                <div id="invite_activity" class="header"> <h5>{{inviter.profile.name}} invited you to {{activity.title}}</h5></div>
+                <div class="right floated content">
+                    <button class="ui labeled icon button" id="remove_invite">
+                    <i class="remove icon"></i>
+                        Remove
+                        </button>
+                </div>
+            </div>
+          </div>
+          {{/each}}
+
+          </div>
+        </div>
+    </div>
+ {{/if}}
+
+</template>
+

@@ -1,0 +1,58 @@
+parks stuff to read in:
+
+ Art Fair
+ Art Exhibit
+ Movies
+ Sports
+ Theater
+ Other
+ Night Out in the Parks
+ Circus 
+ Dance in the Parks
+ Yoga
+ Theater on the Lake
+ Shakespeare in the Parks
+ teens in the park
+
+
+
+ ---> if it has theatre, performance etc in description then entertainment
+ ----> if it has art in the description than theatre?
+
+
+
+Categories to add back in:
+Teens in the Parks---<<<<<< ask rachel, feel like its relevant but we could take out teen from titles
+Tours <<< biking architecure n art, u might have to pay?
+
+
+Tomorrow at meeting:
+__________
+-ask how to tag events from parks
+-ask how to tag events from library
+	-stick with categories? almost no sports stuff
+	-music stuff under arts or entertainment?
+	-theater stuff? art or entertainment?
+-also, for libaray events take out teen? take out all events with red dash? 
+-for parks take out all events with teen?
+___
+
+____
+-what other stuff to add? young chicago authors
+-how helpful are the current distances?
+-need to come up with thing to populate sports
+	-say basketball/ soccer, when have it load? at all times?  i guess so
+	-say things like tennis, link to parks?
+
+-need to come up with thing to populate stay in
+
+
+
+
+
+
+
+
+
+
+

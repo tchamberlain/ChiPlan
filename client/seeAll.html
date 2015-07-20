@@ -1,0 +1,15 @@
+<template name="seeAll">
+	<h2>All events:</h2>
+    <div class="ui raised segment">
+    <div class="ui center aligned selection list"> 
+        {{#each get_act_list}}
+      <div class="item">
+        <div class="content">
+            <div id="activity" class="header"><h4>{{title}}</h4></div>
+        </div>
+      </div>
+      {{/each}}
+
+      </div>
+      </div>
+</template>

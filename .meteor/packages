@@ -7,13 +7,13 @@
 meteor-platform
 autopublish
 insecure
-iron:router
 accounts-facebook
 accounts-password
-accounts-twitter
 jquery
-semantic:ui
-semantic:ui-css
 dburles:google-maps
 aldeed:geocoder
+chriswessels:hammer
 accounts-ui
+iron:router@1.0.9
+semantic:ui
+semantic:ui-css
