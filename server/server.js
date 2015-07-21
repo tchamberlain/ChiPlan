@@ -21,8 +21,8 @@ Meteor.startup(function() {
   //this removes events that have already happened from the activity db
   yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1); 
-  remove_these=Activities.find({end_date: {$lt: yesterday} })
-  Activities.remove({end_date: {$lt: yesterday} })
+  remove_these=Activities.find({start_date: {$lt: yesterday} })
+  Activities.remove({start_date: {$lt: yesterday} })
 
 
 });
@@ -37,9 +37,15 @@ Meteor.startup(function() {
 //   }
 // });
 
-  if (Activities.find().count()==493){
+  if (Activities.find().count()==(876)){
     Pre_activities.find().forEach(    
     function (elem) {     
+      
+      // elem.title = elem.title.replace("&amp;", "&");
+      // elem.description = elem.description.replace("&amp;", "&");
+      // elem.description = elem.description.replace("This calendar is not affiliated with any section of the City of Chicago", "");
+      // elem.description = elem.description.replace("Calendar: http://www.thrillhouse.com","");
+      // elem.description = elem.description.replace("If you'd like to make a small donation to help keep the calendar running, you can Paypal chicagosummercalendar@gmail.com","");
 
       if(elem.source=="library"){
         title=elem.title
@@ -113,6 +119,8 @@ Meteor.startup(function() {
         for (i=0;i<tags_array.length; i++){
           tags.push(tags_array[i])
         }
+
+        address=elem.address;
         
       }
       else if (elem.source=="parks"){
@@ -120,6 +128,16 @@ Meteor.startup(function() {
         lng=0
         tags=elem.tags
         source=elem.source
+
+
+
+        //get in highschoolers tick marks --- since none, all zeros for now
+        black1=0;
+        black2=0;
+        red1=0;
+        red2=0;
+        strike1=0;
+        strike2=0;
 
         var start_date = new Date(elem.start_date_f);
         var dd = start_date.getDate();
@@ -171,6 +189,8 @@ Meteor.startup(function() {
         }
         var end_time= end_time+":"+minutes
 
+        address=elem.address;
+
       }
       //if events are from chi summer calendar
       else{
@@ -192,8 +212,21 @@ Meteor.startup(function() {
         start_time=elem.start_time
         end_time= elem.end_time
 
-        //get rid of description you don't like
 
+        //get in highschoolers tick marks
+        black1=elem.black1;
+        black2=elem.black2;
+        red1=elem.red1;
+        red2=elem.red2;
+        strike1=elem.strike1;
+        strike2=elem.strike2;
+
+
+
+        //location is now called address
+        address=elem.location;
+        console.log("hello")
+        console.log(address)
 
       }
 
@@ -203,9 +236,9 @@ Meteor.startup(function() {
         end_time: end_time,
         start_date: start_date1,
         end_date: end_date1,
-        address:elem.address,
+        address: address,
         description: elem.description,
-        tags:tags,
+        tags: tags,
         source: source,
         black1: black1,
         black2: black2,

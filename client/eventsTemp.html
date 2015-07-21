@@ -1,60 +1,59 @@
 
 
-
 <template name="eventsTemp">
-        
+
+
+<!-- other option for previous -->
+<!--     <div class="ui page grid">
+        <div class="one wide column"></div>
+                  <div class="left floated three wide column">
+                    <button class=" ui labeled icon button">
+                            Previous 
+                      <i class="icon reply"></i>
+                    </button>
+                </div>
+        </div>
+ -->
      <div class="ui centered page grid">
-        
+
+
         {{#HammerTouchArea gestureMap=templateGestures}}
-        <!-- <div class="one wide column"></div> -->
+        
         <div class="fourteen wide center floated column">
             <div id= "hammerDiv">
                 <div class="row">
                     <div id= "deck_slide" class="ui raised very padded text container segment">
                         <div class="row"> <img class="ui  tiny image" src=" https://im1.shutterfly.com/media/47a5d932b3127ccee9ce23c1459e00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713205651525.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" ></div>
+                        {{#if current_activity}}
                         <h2 align= center>{{current_activity.title}}</h2>
+                        {{else}}
+                        <h2 align= center>No more activities, please try a different search!</h2>
+                        {{/if}}
                         <div class="row"> <img class="ui  tiny image" src=" https://im1.shutterfly.com/media/47a5d932b3127ccee9ce23c1459e00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713205651525.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" ></div>
                     </div>
                 </div>
-         <!--        <div class="row">
-                    <div class="five wide column">
-                        <div class=" ui buttons">
-                            <button id="previous" class="ui labeled icon huge button">
-                                <i class="left chevron icon"></i>
-                                    Previous
-                            </button>
-                            <button id="info" class="ui huge labeled positive button">
-                                <i class="info icon"></i>
-                                    Event Info
-                            </button>
-                            <button id="nexter" class="ui right labeled icon huge button">
-                                     Next
-                                <i class="right chevron icon"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div> -->
+                
                 <div class="row">
-                    <!-- <div class="two wide column"> HELLO????</div> -->
-                    <div class="five wide column">
-                        <div class=" ui buttons">
-                            <button id="previous" class="ui huge button">
-                                    Previous
-                            </button>
-                            <button id="info" class="ui huge positive button">
-                                    Event Info
-                            </button>
-                            <button id="nexter" class="ui  huge button">
-                                     Next
-                            </button>
-                        </div>
-                    </div>
+                   <!--  <button id="previous" class=" ui massive labeled icon button">
+                            Previous 
+                      <i class="icon reply"></i>
+                    </button> -->
+                     <button id="discard" class=" ui massive negative left labeled icon button">
+                           <i class="icon remove"></i>
+                            I don't want to go
+                    </button>
+                    <button id="info" class=" ui massive positive labeled icon button">
+                            I want to go
+                      <i class="icon heart"></i>
+                    </button>
+
                 </div>
+
+            </div>
         </div>
-        </div>
+
              {{/HammerTouchArea}}
-        <!-- <div class="one wide column"></div> -->
-        </div>
+    </div>
 
 
 

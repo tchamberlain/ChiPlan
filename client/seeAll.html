@@ -1,9 +1,21 @@
 <template name="seeAll">
-	<h2>All events:</h2>
-    <div class="ui raised segment">
-    <div class="ui center aligned selection list"> 
+	
+    <div class="ui raised very padded text container segment">
+      <h2><b>All events:</b></h2>
+    <div class="ui center aligned selection divided relaxed list"> 
         {{#each get_act_list}}
       <div class="item">
+        {{#if get_heart_icon _id }}
+          <i class="large green heart middle aligned icon"></i>
+        {{else}}
+          {{#if get_x_icon _id }}
+            <i class="large red remove circle middle aligned icon"></i>
+          {{else}}
+            <i class="large radio middle aligned icon"></i>
+          {{/if}}
+        {{/if}}
+          
+
         <div class="content">
             <div id="activity" class="header"><h4>{{title}}</h4></div>
         </div>

@@ -37,6 +37,18 @@ Template.invite_modal.events({
 
   //tryna check for this on login
   Accounts.onLogin( function(){
+    //removing events from favorites and from discards that already occurred
+    //get yesterdays date, if the event was before yesterday, pull it
+    yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1); 
+    if(Meteor.user()){
+        user_id=Meteor.user()._id
+       Meteor.users.update({_id: user_id}, {$pull: {'profile.favorites': {start_date: {$lt: yesterday} }}});
+       console.log("pulled?")
+       //Meteor.users.update({_id: user_id}, {$pull: {'profile.discards': {start_date: {$lt: yesterday} }}});
+    }
+   
+
     Session.set('name_modal',1)
     if(Session.get('name_modal')){
       if(!Meteor.user().profile.DOB){

@@ -88,7 +88,7 @@ meteor mongo --url chiplan.meteor.com
 
 
 2. (change client -u and password -p)
-mongorestore -u ‘client-82af8d69’ -p '78aa5814-3e76-8f1d-b2ba-fc903e42c05c' -h production-db-d2.meteor.io:27017 -d chiplan_meteor_com dump/meteor/ 
+mongorestore -u ‘’ -p ‘’-h production-db-d2.meteor.io:27017 -d chiplan_meteor_com dump/meteor/ 
 
 
 
