@@ -2,57 +2,50 @@
 
 <template name="eventsTemp">
 
-
-<!-- other option for previous -->
-<!--     <div class="ui page grid">
-        <div class="one wide column"></div>
-                  <div class="left floated three wide column">
-                    <button class=" ui labeled icon button">
-                            Previous 
-                      <i class="icon reply"></i>
-                    </button>
-                </div>
-        </div>
- -->
      <div class="ui centered page grid">
-
-
-        {{#HammerTouchArea gestureMap=templateGestures}}
         
-        <div class="fourteen wide center floated column">
-            <div id= "hammerDiv">
-                <div class="row">
-                    <div id= "deck_slide" class="ui raised very padded text container segment">
-                        <div class="row"> <img class="ui  tiny image" src=" https://im1.shutterfly.com/media/47a5d932b3127ccee9ce23c1459e00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713205651525.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" ></div>
-                        {{#if current_activity}}
-                        <h2 align= center>{{current_activity.title}}</h2>
-                        {{else}}
-                        <h2 align= center>No more activities, please try a different search!</h2>
-                        {{/if}}
-                        <div class="row"> <img class="ui  tiny image" src=" https://im1.shutterfly.com/media/47a5d932b3127ccee9ce23c1459e00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713205651525.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" ></div>
+        <div class="fourteen wide center aligned floated column">
+            <div class="row">
+                {{#HammerTouchArea gestureMap=templateGestures}}
+                    <div id= "hammerDiv">
+                        <div id= "deck_slide" class="ui raised very padded text container segment">
+                            <div class="row"> <img class="ui  tiny image" src=" https://im1.shutterfly.com/media/47a5d932b3127ccee9ce23c1459e00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713205651525.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" ></div>
+                            {{#if current_activity}}
+                            <h2 align= center>{{current_activity.title}}</h2>
+                            {{else}}
+                            <h2 align= center>No more activities, please try a different search!</h2>
+                            {{/if}}
+                            <div class="row"> <img class="ui  tiny image" src=" https://im1.shutterfly.com/media/47a5d932b3127ccee9ce23c1459e00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713205651525.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" ></div>
+                        </div>
                     </div>
-                </div>
-                
+             {{/HammerTouchArea}}
+            </div>
+    
                 <div class="row">
-                   <!--  <button id="previous" class=" ui massive labeled icon button">
+ <!--                    <button id="previous" class=" ui massive labeled icon button">
                             Previous 
                       <i class="icon reply"></i>
                     </button> -->
+                     {{#if 1}}
                      <button id="discard" class=" ui massive negative left labeled icon button">
                            <i class="icon remove"></i>
                             I don't want to go
                     </button>
+                    {{else}}
+                    {{/if}}
+                    {{#if 1}}
                     <button id="info" class=" ui massive positive labeled icon button">
                             I want to go
                       <i class="icon heart"></i>
                     </button>
+                    {{else}}
+
+                    {{/if}}
 
                 </div>
 
             </div>
-        </div>
-
-             {{/HammerTouchArea}}
+    
     </div>
 
 

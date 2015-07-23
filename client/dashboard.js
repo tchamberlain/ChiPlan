@@ -1,3 +1,11 @@
+Router.route('/dashboard',{
+   waitOn: function(){
+          return Meteor.subscribe('get_user_invites',Meteor.user()._id);
+        }
+  });
+
+
+
 Template.dashboard.events({ 
     'click #activity': function(){
       var act_id = this._id;

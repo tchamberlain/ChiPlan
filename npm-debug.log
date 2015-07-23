@@ -1,0 +1,203 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', '-g', 'demeteorizer' ]
+2 info using npm@2.7.4
+3 info using node@v0.12.2
+4 silly cache add args [ 'demeteorizer', null ]
+5 verbose cache add spec demeteorizer
+6 silly cache add parsed spec { raw: 'demeteorizer',
+6 silly cache add   scope: null,
+6 silly cache add   name: 'demeteorizer',
+6 silly cache add   rawSpec: '',
+6 silly cache add   spec: '*',
+6 silly cache add   type: 'range' }
+7 verbose addNamed demeteorizer@*
+8 silly addNamed semver.valid null
+9 silly addNamed semver.validRange *
+10 silly addNameRange { name: 'demeteorizer', range: '*', hasData: false }
+11 silly mapToRegistry name demeteorizer
+12 silly mapToRegistry using default registry
+13 silly mapToRegistry registry https://registry.npmjs.org/
+14 silly mapToRegistry uri https://registry.npmjs.org/demeteorizer
+15 verbose addNameRange registry:https://registry.npmjs.org/demeteorizer not in flight; fetching
+16 verbose request uri https://registry.npmjs.org/demeteorizer
+17 verbose request no auth needed
+18 info attempt registry request try #1 at 8:19:52 PM
+19 verbose request id a8fb9181d2590103
+20 http request GET https://registry.npmjs.org/demeteorizer
+21 http 200 https://registry.npmjs.org/demeteorizer
+22 silly get cb [ 200,
+22 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+22 silly get     etag: '"6MIWWKJJKT4RSMIYBDWQJ3S5D"',
+22 silly get     'content-type': 'application/json',
+22 silly get     'cache-control': 'max-age=60',
+22 silly get     'content-length': '68931',
+22 silly get     'accept-ranges': 'bytes',
+22 silly get     date: 'Wed, 22 Jul 2015 01:19:53 GMT',
+22 silly get     via: '1.1 varnish',
+22 silly get     age: '0',
+22 silly get     connection: 'keep-alive',
+22 silly get     'x-served-by': 'cache-dfw1826-DFW',
+22 silly get     'x-cache': 'MISS',
+22 silly get     'x-cache-hits': '0',
+22 silly get     'x-timer': 'S1437527993.195981,VS0,VE189',
+22 silly get     vary: 'Accept' } ]
+23 verbose get saving demeteorizer to /Users/taylorchamberlain/.npm/registry.npmjs.org/demeteorizer/.cache.json
+24 silly addNameRange number 2 { name: 'demeteorizer', range: '*', hasData: true }
+25 silly addNameRange versions [ 'demeteorizer',
+25 silly addNameRange   [ '0.1.0',
+25 silly addNameRange     '0.2.0',
+25 silly addNameRange     '0.2.1',
+25 silly addNameRange     '0.2.2',
+25 silly addNameRange     '0.2.3',
+25 silly addNameRange     '0.2.4',
+25 silly addNameRange     '0.2.5',
+25 silly addNameRange     '0.2.6',
+25 silly addNameRange     '0.2.7',
+25 silly addNameRange     '0.2.8',
+25 silly addNameRange     '0.2.9',
+25 silly addNameRange     '0.3.0',
+25 silly addNameRange     '0.3.1',
+25 silly addNameRange     '0.3.2',
+25 silly addNameRange     '0.4.0',
+25 silly addNameRange     '0.5.0',
+25 silly addNameRange     '0.6.0',
+25 silly addNameRange     '0.6.1',
+25 silly addNameRange     '0.7.0',
+25 silly addNameRange     '0.8.0',
+25 silly addNameRange     '0.8.1',
+25 silly addNameRange     '0.9.0',
+25 silly addNameRange     '1.0.0',
+25 silly addNameRange     '1.0.1',
+25 silly addNameRange     '1.0.2',
+25 silly addNameRange     '1.0.3',
+25 silly addNameRange     '2.0.0',
+25 silly addNameRange     '2.0.1',
+25 silly addNameRange     '2.0.2',
+25 silly addNameRange     '2.0.3',
+25 silly addNameRange     '2.0.4',
+25 silly addNameRange     '2.0.5',
+25 silly addNameRange     '2.0.6',
+25 silly addNameRange     '2.1.0',
+25 silly addNameRange     '2.1.1',
+25 silly addNameRange     '2.1.2',
+25 silly addNameRange     '2.1.3',
+25 silly addNameRange     '2.2.0',
+25 silly addNameRange     '2.2.1',
+25 silly addNameRange     '2.2.2',
+25 silly addNameRange     '2.2.3',
+25 silly addNameRange     '2.2.4',
+25 silly addNameRange     '2.2.5',
+25 silly addNameRange     '2.2.6',
+25 silly addNameRange     '2.2.7' ] ]
+26 verbose addNamed demeteorizer@2.2.7
+27 silly addNamed semver.valid 2.2.7
+28 silly addNamed semver.validRange 2.2.7
+29 silly mapToRegistry name demeteorizer
+30 silly mapToRegistry using default registry
+31 silly mapToRegistry registry https://registry.npmjs.org/
+32 silly mapToRegistry uri https://registry.npmjs.org/demeteorizer
+33 verbose addRemoteTarball https://registry.npmjs.org/demeteorizer/-/demeteorizer-2.2.7.tgz not in flight; adding
+34 verbose addRemoteTarball [ 'https://registry.npmjs.org/demeteorizer/-/demeteorizer-2.2.7.tgz',
+34 verbose addRemoteTarball   '6915f5a81b28d8ef6c4c95b5b69a0933c5cdd171' ]
+35 info retry fetch attempt 1 at 8:19:54 PM
+36 info attempt registry request try #1 at 8:19:54 PM
+37 http fetch GET https://registry.npmjs.org/demeteorizer/-/demeteorizer-2.2.7.tgz
+38 http fetch 200 https://registry.npmjs.org/demeteorizer/-/demeteorizer-2.2.7.tgz
+39 silly fetchAndShaCheck shasum 6915f5a81b28d8ef6c4c95b5b69a0933c5cdd171
+40 verbose addTmpTarball /var/folders/5w/qytz90w915d0vfplj32481k00000gn/T/npm-57885-ce2ba6f0/registry.npmjs.org/demeteorizer/-/demeteorizer-2.2.7.tgz not in flight; adding
+41 verbose addTmpTarball already have metadata; skipping unpack for demeteorizer@2.2.7
+42 silly cache afterAdd demeteorizer@2.2.7
+43 verbose afterAdd /Users/taylorchamberlain/.npm/demeteorizer/2.2.7/package/package.json not in flight; writing
+44 verbose afterAdd /Users/taylorchamberlain/.npm/demeteorizer/2.2.7/package/package.json written
+45 silly install resolved [ { name: 'demeteorizer',
+45 silly install resolved     description: 'Converts a Meteor app into a "standard" Node.js application.',
+45 silly install resolved     keywords: [ 'meteor' ],
+45 silly install resolved     version: '2.2.7',
+45 silly install resolved     author: { name: 'Modulus', email: 'support@modulus.io' },
+45 silly install resolved     maintainers: [ [Object], [Object], [Object] ],
+45 silly install resolved     contributors: [ [Object], [Object], [Object], [Object], [Object] ],
+45 silly install resolved     license: 'MIT',
+45 silly install resolved     repository:
+45 silly install resolved      { type: 'git',
+45 silly install resolved        url: 'git+https://github.com/OnModulus/demeteorizer.git' },
+45 silly install resolved     dependencies:
+45 silly install resolved      { async: '0.2.10',
+45 silly install resolved        commander: '1.1.1',
+45 silly install resolved        rimraf: '2.3.2',
+45 silly install resolved        semver: '3.0.1' },
+45 silly install resolved     devDependencies:
+45 silly install resolved      { istanbul: '0.3.2',
+45 silly install resolved        jshint: '2.5.5',
+45 silly install resolved        mocha: '1.21.4',
+45 silly install resolved        proxyquire: '1.0.1',
+45 silly install resolved        should: '4.0.4',
+45 silly install resolved        sinon: '1.10.3' },
+45 silly install resolved     scripts: { test: 'make test' },
+45 silly install resolved     main: './lib/demeteorizer',
+45 silly install resolved     bin: { demeteorizer: './bin/demeteorizer' },
+45 silly install resolved     preferGlobal: true,
+45 silly install resolved     engines: { node: '>= 0.8.0' },
+45 silly install resolved     gitHead: '17ecc2cc1f44704c1a0f1a09c8b7686609da6f10',
+45 silly install resolved     bugs: { url: 'https://github.com/OnModulus/demeteorizer/issues' },
+45 silly install resolved     homepage: 'https://github.com/OnModulus/demeteorizer#readme',
+45 silly install resolved     _id: 'demeteorizer@2.2.7',
+45 silly install resolved     _shasum: '6915f5a81b28d8ef6c4c95b5b69a0933c5cdd171',
+45 silly install resolved     _from: 'demeteorizer@*',
+45 silly install resolved     _npmVersion: '2.11.3',
+45 silly install resolved     _nodeVersion: '2.3.1',
+45 silly install resolved     _npmUser: { name: 'fiveisprime', email: 'matt@modulus.io' },
+45 silly install resolved     dist:
+45 silly install resolved      { shasum: '6915f5a81b28d8ef6c4c95b5b69a0933c5cdd171',
+45 silly install resolved        tarball: 'http://registry.npmjs.org/demeteorizer/-/demeteorizer-2.2.7.tgz' },
+45 silly install resolved     directories: {},
+45 silly install resolved     _resolved: 'https://registry.npmjs.org/demeteorizer/-/demeteorizer-2.2.7.tgz' } ]
+46 info install demeteorizer@2.2.7 into /usr/local/lib
+47 info installOne demeteorizer@2.2.7
+48 verbose installOne of demeteorizer to /usr/local/lib not in flight; installing
+49 verbose lock using /Users/taylorchamberlain/.npm/_locks/demeteorizer-f37730763b2a28ab.lock for /usr/local/lib/node_modules/demeteorizer
+50 silly install write writing demeteorizer 2.2.7 to /usr/local/lib/node_modules/demeteorizer
+51 silly cache addNamed cb demeteorizer@2.2.7
+52 verbose unbuild lib/node_modules/demeteorizer
+53 silly gentlyRm /usr/local/lib/node_modules/demeteorizer is being purged from base /usr/local
+54 verbose gentlyRm don't care about contents; nuking /usr/local/lib/node_modules/demeteorizer
+55 verbose tar unpack /Users/taylorchamberlain/.npm/demeteorizer/2.2.7/package.tgz
+56 verbose tar unpacking to /usr/local/lib/node_modules/demeteorizer
+57 silly gentlyRm /usr/local/lib/node_modules/demeteorizer is being purged
+58 verbose gentlyRm don't care about contents; nuking /usr/local/lib/node_modules/demeteorizer
+59 silly gunzTarPerm modes [ '755', '644' ]
+60 error tar.unpack untar error /Users/taylorchamberlain/.npm/demeteorizer/2.2.7/package.tgz
+61 verbose unlock done using /Users/taylorchamberlain/.npm/_locks/demeteorizer-f37730763b2a28ab.lock for /usr/local/lib/node_modules/demeteorizer
+62 verbose fstream_path /usr/local/lib/node_modules/demeteorizer
+63 verbose fstream_type Directory
+64 verbose fstream_class DirWriter
+65 verbose stack Error: EACCES, mkdir '/usr/local/lib/node_modules/demeteorizer'
+65 verbose stack     at Error (native)
+66 verbose fstream_stack /usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23
+66 verbose fstream_stack /usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:46:53
+66 verbose fstream_stack FSReqWrap.oncomplete (fs.js:95:15)
+67 verbose cwd /Users/taylorchamberlain/meteor/dfss
+68 error Darwin 14.0.0
+69 error argv "node" "/usr/local/bin/npm" "install" "-g" "demeteorizer"
+70 error node v0.12.2
+71 error npm  v2.7.4
+72 error path /usr/local/lib/node_modules/demeteorizer
+73 error code EACCES
+74 error errno -13
+75 error Error: EACCES, mkdir '/usr/local/lib/node_modules/demeteorizer'
+75 error     at Error (native)
+75 error  { [Error: EACCES, mkdir '/usr/local/lib/node_modules/demeteorizer']
+75 error   errno: -13,
+75 error   code: 'EACCES',
+75 error   path: '/usr/local/lib/node_modules/demeteorizer',
+75 error   fstream_type: 'Directory',
+75 error   fstream_path: '/usr/local/lib/node_modules/demeteorizer',
+75 error   fstream_class: 'DirWriter',
+75 error   fstream_stack:
+75 error    [ '/usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23',
+75 error      '/usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:46:53',
+75 error      'FSReqWrap.oncomplete (fs.js:95:15)' ] }
+76 error Please try running this command again as root/Administrator.
+77 verbose exit [ -13, true ]
+78 verbose unbuild lib/node_modules/demeteorizer
+79 silly gentlyRm /usr/local/lib/node_modules/demeteorizer is being purged from base /usr/local
+80 verbose gentlyRm don't care about contents; nuking /usr/local/lib/node_modules/demeteorizer

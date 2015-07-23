@@ -1,3 +1,18 @@
+Router.route('/actInfo/:_id/share', {
+    name: 'share',
+        waitOn: function(){
+          return [Meteor.subscribe('event_by_id',this.params._id),Meteor.subscribe('get_user_names')];
+        }
+    });
+
+
+Template.share.onRendered(function(){
+    //not sure if a session variable is the right way to do this page
+      Session.set('current_activity', Activities.findOne());
+      console.log(Session.get('current_activity'))
+      console.log(Meteor.users)
+   });
+
 
 Template.share.helpers({
     'get_person': function(){
@@ -6,18 +21,14 @@ Template.share.helpers({
 
    'get_link_fb':function(){
       act_id= Session.get('current_activity')._id;
-      //link="https://www.facebook.com/sharer/sharer.php?u="+"localhost:3000/actInfo/"+act_id
       link="https://www.facebook.com/sharer/sharer.php?u="+"chiplan.meteor.com/actInfo/"+act_id
-      //link= 
       console.log(link)
       return link;
    },
 
    'get_link_twitter':function(){
       act_id= Session.get('current_activity')._id;
-      //link="https://www.facebook.com/sharer/sharer.php?u="+"localhost:3000/actInfo/"+act_id
       link="https://twitter.com/intent/tweet?text="+"https://chiplan.meteor.com/actInfo/"+act_id
-      //console.log(link)
       return link;
    }
 

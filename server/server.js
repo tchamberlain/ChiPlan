@@ -37,7 +37,7 @@ Meteor.startup(function() {
 //   }
 // });
 
-  if (Activities.find().count()==(876)){
+  if (Activities.find().count()==(99999999)){
     Pre_activities.find().forEach(    
     function (elem) {     
       

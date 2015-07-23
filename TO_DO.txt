@@ -83,15 +83,39 @@ ____________________________________________________
 
 to deploy the local db to the deployed db
 
-1. 
-meteor mongo --url chiplan.meteor.com
+1. /Users/taylorchamberlain/meteor/dfss/TO_DO.txt
+meteor mongo --url chiplan2.meteor.com
 
 
 2. (change client -u and password -p)
-mongorestore -u ‘’ -p ‘’-h production-db-d2.meteor.io:27017 -d chiplan_meteor_com dump/meteor/ 
+mongorestore -u ‘’ -p '' -h production-db-d2.meteor.io:27017 -d chiplan2_meteor_com dump/meteor/ 
+
+
+mongorestore -u client-83cf1940 -p 1d7d804b-510c-0557-c0a7-26b419780b1a -h production-db-d2.meteor.io:27017 -d chiplan2_meteor_com
 
 
 
+
+
+
+
+tester::
+meteor mongo --url testthis1234.meteor.com
+
+mongorestore -u ‘client-77b47fec’ -p 'c1c3d63c-3b19-b911-5514-1b9461465ac5' -h production-db-d2.meteor.io:27017 -db chiplan2_meteor_com 
+
+mongorestore -u #USERNAME# -p #PASSWORD# -h #HOSTNAMEANDPORT# -db _com dump/meteor/
+
+mongorestore -u  -p  -h production-db-d2.meteor.io:27017 -db chiplan2_meteor_com 
+
+
+
+mondump -h 127.0.0.1 --port 3001 -d meteor
+
+mongorestore -u  client-4c352f2f -p 189e5642-116d-c9ac-7b0e-d9eed3d03f39  -h production-db-d2.meteor.io:27017 -d chiplan2_meteor_com dump/meteor/
+
+
+mongorestore -u client-23eb9aad  -p dccffacb-bfa7-7400-b3e8-82a8f5af99ae  -h production-db-d2.meteor.io:27017
 
 
 
