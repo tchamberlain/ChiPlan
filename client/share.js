@@ -1,4 +1,4 @@
-Router.route('/actInfo/:_id/share', {
+Router.route('/share/:_id', {
     name: 'share',
         waitOn: function(){
           return [Meteor.subscribe('event_by_id',this.params._id),Meteor.subscribe('get_user_names')];

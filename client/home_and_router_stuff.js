@@ -12,6 +12,28 @@ Template.home.onRendered(function(){
 });
 
 
+function is_discard(act_id){
+    user_id=Meteor.user()._id;
+    if(Meteor.users.find({_id:user_id, 'profile.discards._id':act_id}).count()){
+      return 1;
+    }
+    else{
+      return 0;
+    }
+  };
+
+function is_favorite (act_id){
+    user_id=Meteor.user()._id;
+    if(Meteor.users.find({_id:user_id, 'profile.favorites._id':act_id}).count()){
+      return 1;
+    }
+   
+    else{
+    return 0;
+    }
+  };
+
+
 Template.home.helpers({
   'get_next_event': function(){
     //First manually sort all favorites (change this later when server side $sort is implemented)
@@ -51,7 +73,8 @@ Template.home.helpers({
 
     'click #next_event': function(){
       the_id = Session.get('next_event')._id
-      Router.go('actInfo',{_id: the_id});
+      Router.go('actInfo',{_id: the_id, button_info:[is_discard(the_id),is_favorite(the_id)]} );
+
   },  
 
     'click #B_entertainment': function(){
