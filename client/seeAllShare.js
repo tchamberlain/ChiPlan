@@ -1,5 +1,5 @@
-Router.route('/share/:_id', {
-    name: 'share',
+Router.route('/seeAllShare/:_id', {
+    name: 'seeAllShare',
         waitOn: function(){
           return [Meteor.subscribe('event_by_id',this.params._id),Meteor.subscribe('get_user_names')];
         }
@@ -95,4 +95,3 @@ Template.share.events = {
 
 
 };
-

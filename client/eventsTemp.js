@@ -2,10 +2,6 @@
 Router.route('/events/:category/:date/:distance', {
     name: 'eventsTemp',
     data: function(){
-
-      console.log(this.params.category)
-      console.log(this.params.date)
-      console.log(this.params.distance)
       return {
             category:  this.params.category
 
@@ -102,14 +98,28 @@ Template.eventsTemp.onRendered( function(){
             discard_ids[i]=discards[i]._id;
           }
 
+
+          //get array of all favorite ids
+          favorite_ids=[];
+        favorites=Meteor.user().profile.favorites;
+        if(favorites){
+          favorite_ids=[];
+           for(i=0; i<favorites.length; i++){
+              favorite_ids[i]=favorites[i]._id;
+            }
+        }
+
+
           x=0;
           activity_list_new=[];
             for(i=0;i<activity_list.length;i++){
-              //if this id isn't in the list of discards, added it to the good list
-              if(discard_ids.indexOf(activity_list[i]._id)==-1){
+              //if this id isn't in the list of discards, or favorites added it to the good list
+              if((discard_ids.indexOf(activity_list[i]._id)==-1)&&(favorite_ids.indexOf(activity_list[i]._id)==-1)){
                 activity_list_new[x]=activity_list[i];
                 x+=1;
               }
+
+
             }
             activity_list=activity_list_new;
 
@@ -121,20 +131,15 @@ Template.eventsTemp.onRendered( function(){
       activity_index=0;
       current_activity= activity_list[activity_index];
       Session.set('current_activity',current_activity);
-      console.log(Session.get('current_activity').title)
+      //console.log(Session.get('current_activity').title)
 
 
       this.rendered = true;
-      favorite_ids=[];
-      favorites=Meteor.user().profile.favorites;
-      if(favorites){
-        favorite_ids=[];
-         for(i=0; i<favorites.length; i++){
-            favorite_ids[i]=favorites[i]._id;
-          }
+     
 
-    
-      }
+
+             console.log(activity_list)
+            console.log(activity_index)
 
       }
 });

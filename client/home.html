@@ -110,13 +110,16 @@
     </div>
         {{#if get_next_event}}
         <!-- <div class="one wide column right attached" > -->
-        <div class="one wide column" >
+        <div class="two wide column" >
             <div class="ui compact segment">
                 <p><h5><b>You are next going to:</b></h5></p>
                 <!-- <p><h5><b>Y{{get_next_event.title}} </b></h5></p> -->
 
-                <div id="next_event" class="ui massive label">
-                   <p> <i class="share icon"></i> {{get_next_event.title}} </p>
+         <!--        <div id="next_event" class="ui massive icon  button">
+                   <p> <h7>{{get_next_event.title}} </h7></p>
+                </div> -->
+                <div id="next_event" class="ui massive icon label button">
+                   <p> <i class="share icon"></i> <h7>{{get_next_event.title}} </h7></p>
                 </div>
             </div>
         </div>

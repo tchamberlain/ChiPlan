@@ -38,6 +38,35 @@ Router.route('/actInfo/:_id/:button_info', {
         }
     });
 
+// Template.actInfo.onRendered( function(){
+//   //this route. params
+//   discard_button_show=
+//   favorite_button_show=(favorite_ids.indexOf(activity_list[activity_index]._id)!=-1)
+
+//   if(only_info){
+//         Session.set('discard_button_show',0);
+//         Session.set('favorite_button_show',0);
+//         Session.set('both_buttons_show',0);
+//       }
+//       else if(discard_button_show){
+//         Session.set('discard_button_show',1);
+//         Session.set('favorite_button_show',0);
+//         Session.set('both_buttons_show',0);
+//       }
+//       else if(favorite_button_show){
+//         Session.set('discard_button_show',0);
+//         Session.set('favorite_button_show',1);
+//         Session.set('both_buttons_show',0);
+//       }
+//       else {
+//         Session.set('discard_button_show',0);
+//         Session.set('favorite_button_show',0);
+//         Session.set('both_buttons_show',1);
+//       }
+
+
+// });
+
 
 Template.actInfo.helpers({
    'chosen_activity': function(){
