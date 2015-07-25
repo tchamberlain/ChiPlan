@@ -16,15 +16,18 @@
             {{#if get_fav_list}}
                 {{#each get_fav_list}}
               <div class="item">
-                <div class="content">
-                    <div id="activity" class="header"><h5>{{title}}</h5></div>
-                    <div class="right floated content">
-                        <button class="ui labeled icon button" id="remove">
-                        <i class="remove icon"></i>
-                            Remove
-                            </button>
+                <div class="right floated content">
+                    <button class="ui labeled icon button" id="remove">
+                    <i class="remove icon"></i>
+                        Remove
+                        </button>
 
-                    </div>
+                </div>
+                <div class="left floated content">
+                    <i class="green heart icon"></i>
+                </div>
+                <div class="content">
+                    <div id="activity" class="ui header"><h4>{{title}}</h4></div>
                 </div>
               </div>
               {{/each}}
@@ -47,14 +50,17 @@
         <div class="ui center aligned divided selection list">
             {{#each get_invited_events}} 
           <div class="item">
-            <div class="content">
-                <div id="invite_activity" class="header"> <h5>{{inviter.profile.name}} invited you to {{activity.title}}</h5></div>
-                <div class="right floated content">
+             <div class="left floated content">
+                <i class="black mail outline icon"></i>
+            </div>
+             <div class="right floated content">
                     <button class="ui labeled icon button" id="remove_invite">
                     <i class="remove icon"></i>
                         Remove
-                        </button>
+                    </button>
                 </div>
+            <div class="content">
+                <div id="invite_activity" class="header"> <h5>{{inviter.profile.name}} invited you to {{activity.title}}</h5></div>
             </div>
           </div>
           {{/each}}
