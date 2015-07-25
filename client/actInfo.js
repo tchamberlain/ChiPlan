@@ -1,4 +1,3 @@
-
 Router.route('/actInfo/:_id/:button_info', {
     name: 'actInfo',
     data: function(){
@@ -38,34 +37,60 @@ Router.route('/actInfo/:_id/:button_info', {
         }
     });
 
-// Template.actInfo.onRendered( function(){
-//   //this route. params
-//   discard_button_show=
-//   favorite_button_show=(favorite_ids.indexOf(activity_list[activity_index]._id)!=-1)
-
-//   if(only_info){
-//         Session.set('discard_button_show',0);
-//         Session.set('favorite_button_show',0);
-//         Session.set('both_buttons_show',0);
-//       }
-//       else if(discard_button_show){
-//         Session.set('discard_button_show',1);
-//         Session.set('favorite_button_show',0);
-//         Session.set('both_buttons_show',0);
-//       }
-//       else if(favorite_button_show){
-//         Session.set('discard_button_show',0);
-//         Session.set('favorite_button_show',1);
-//         Session.set('both_buttons_show',0);
-//       }
-//       else {
-//         Session.set('discard_button_show',0);
-//         Session.set('favorite_button_show',0);
-//         Session.set('both_buttons_show',1);
-//       }
+Template.actInfo.onCreated( function(){
 
 
-// });
+    if(Meteor.user()){
+        discards=Meteor.user().profile.discards;
+        if(discards){
+          //get array of all discard ids
+          discard_ids=[];
+          for(i=0; i<discards.length; i++){
+            discard_ids[i]=discards[i]._id;
+          }
+        }
+
+
+          //get array of all favorite ids
+          favorite_ids=[];
+        favorites=Meteor.user().profile.favorites;
+        if(favorites){
+          favorite_ids=[];
+           for(i=0; i<favorites.length; i++){
+              favorite_ids[i]=favorites[i]._id;
+            }
+        }
+  //this route. params
+  discard_button_show=(favorite_ids.indexOf(activity_list[activity_index]._id)!=-1)
+  favorite_button_show=(discard_ids.indexOf(activity_list[activity_index]._id)!=-1)
+  if(only_info){
+        Session.set('discard_button_show',0);
+        Session.set('favorite_button_show',0);
+        Session.set('both_buttons_show',0);
+      }
+      else if(discard_button_show){
+        Session.set('discard_button_show',1);
+        Session.set('favorite_button_show',0);
+        Session.set('both_buttons_show',0);
+      }
+      else if(favorite_button_show){
+        Session.set('discard_button_show',0);
+        Session.set('favorite_button_show',1);
+        Session.set('both_buttons_show',0);
+      }
+      else {
+        Session.set('discard_button_show',0);
+        Session.set('favorite_button_show',0);
+        Session.set('both_buttons_show',1);
+      }
+    }
+
+    console.log(discard_button_show)
+    console.log(favorite_button_show)
+
+
+
+});
 
 
 Template.actInfo.helpers({
@@ -147,4 +172,3 @@ Template.actInfo.helpers({
   Deps.autorun(function(){
     Meteor.subscribe('userData');
 });
-

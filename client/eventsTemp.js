@@ -1,4 +1,3 @@
-
 Router.route('/events/:category/:date/:distance', {
     name: 'eventsTemp',
     data: function(){
@@ -288,8 +287,3 @@ Template.eventsTemp.helpers({
         }
       }
   });
-
-
-
-
-

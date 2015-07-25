@@ -1,6 +1,5 @@
 
 
-
 Router.route('/seeAll/:category/:date/:distance', {
    name: 'seeAll',
     data: function(){
