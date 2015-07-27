@@ -23,6 +23,31 @@ Router.route('/seeAll/:category/:date/:distance', {
 
           //do we need to set this as a reactive variable.... prolly not???? 
          Session.set('current_act_list', Activities.find().fetch());
+
+         if(Meteor.user()){
+        discards=Meteor.user().profile.discards;
+        if(discards){
+          //get array of all discard ids
+          discard_ids=[];
+          for(i=0; i<discards.length; i++){
+            discard_ids[i]=discards[i]._id;
+          }
+        }
+
+          //get array of all favorite ids
+          favorite_ids=[];
+        favorites=Meteor.user().profile.favorites;
+        if(favorites){
+          favorite_ids=[];
+           for(i=0; i<favorites.length; i++){
+              favorite_ids[i]=favorites[i]._id;
+            }
+        }
+      }
+
+
+
+
    }
   );
 
@@ -78,8 +103,40 @@ function is_favorite (act_id){
   };
 
   Template.seeAll.events({ 
-    'click #activity': function(){
-       the_id= this._id;
-      Router.go('actInfo',{_id: the_id, button_info:[is_discard(the_id),is_favorite(the_id)]} );
+    // 'click #activity': function(){
+    //    the_id= this._id;
+    //   Router.go('actInfo',{_id: the_id, button_info:[is_discard(the_id),is_favorite(the_id)]} );
+    // },
+
+       'click .icon': function(){
+      console.log("you clicked an icon")
+      console.log(this._id)
+      act_id=this._id;
+      current_act=Activities.findOne(act_id)
+
+      //if its a favorite, make it a discard
+      if(is_favorite (act_id)){
+        if( Meteor.user()){
+          Meteor.users.update({_id:Meteor.user()._id}, {$pull:{"profile.favorites":current_act}});
+          Meteor.users.update({_id:Meteor.user()._id}, {$addToSet:{"profile.discards":current_act}});
+       }
+      }
+     //if its a discard or a nothing, make it a favorite
+      else{
+         if( Meteor.user()){
+          Meteor.users.update({_id:Meteor.user()._id}, {$pull:{"profile.discards":current_act}});
+          Meteor.users.update({_id:Meteor.user()._id}, {$addToSet:{"profile.favorites":current_act}});
+       }
+
+      }
+
+
+
+
     }
+
+
+
+
+
   });

@@ -4,7 +4,7 @@
 
      <div class="ui centered page grid">
         
-        <div class="fourteen wide center aligned floated column">
+        <!-- <div class="fourteen wide center aligned floated column"> -->
             <div class="row">
                 {{#HammerTouchArea gestureMap=templateGestures}}
                     <div id= "hammerDiv">
@@ -21,10 +21,8 @@
              {{/HammerTouchArea}}
             </div>
 
-            <!-- add buttons class -->
-                <div class="row">
-
-                    <!-- <div class="ui buttons"> -->
+                <div class="computer only row">
+                    <div class="ui buttons">
                          <button id="discard" class=" ui massive negative left labeled icon button">
                                <i class="icon remove"></i>
                                 I don't want to go
@@ -33,24 +31,50 @@
                             Info 
                           <i class="icon info"></i>
                         </button>
-                    <!-- {{#if is_favorite}}
-                     <button id="next" class=" ui massive positive right labeled icon button">
-                               Next
-                          <i class="icon arrow right"></i>
-                        </button>
-                    {{else}} -->
+                        <!-- {{#if is_favorite}}
+                         <button id="next" class=" ui massive positive right labeled icon button">
+                                   Next
+                              <i class="icon arrow right"></i>
+                            </button>
+                        {{else}} -->
                         <button id="favorite" class=" ui massive positive right labeled icon button">
                                 I want to go
                           <i class="icon heart"></i>
                         </button>
-                          <!-- {{/if}} -->
-                   
-
-
+                        <!-- {{/if}} -->
+                    </div>
                 </div>
 
-            </div>
-    
+
+               
+
+<!-- col -->
+            <!-- </div> -->
+
+             <div class="mobile only row">
+                    <div class="ui buttons">
+                         <button id="discard" class=" ui medium negative left labeled icon button">
+                               <i class="icon remove"></i>
+                                I don't want to go
+                        </button>
+                        <button id="info" class=" ui medium left labeled icon button">
+                            Info 
+                          <i class="icon info"></i>
+                        </button>
+                        <!-- {{#if is_favorite}}
+                         <button id="next" class=" ui massive positive right labeled icon button">
+                                   Next
+                              <i class="icon arrow right"></i>
+                            </button>
+                        {{else}} -->
+                        <button id="favorite" class=" ui medium positive right labeled icon button">
+                                I want to go
+                          <i class="icon heart"></i>
+                        </button>
+                        <!-- {{/if}} -->
+                    </div>
+                </div>
+<!-- grid -->
     </div>
 
 

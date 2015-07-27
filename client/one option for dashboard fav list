@@ -42,11 +42,12 @@
       <!-- mobile fav events -->
     <div class="mobile only row">
         <div class="one wide mobile only column"></div>
-        <div class="ui center floated raised very padded text container segment">
+        <!-- <div class="ui padded text container"> -->
     <div class="mobile only sixteen wide column">
         <div class="mobile only row">
         <h2 class="  header">
-             Your Events
+          <!-- <span style="padding-left:68px;"></span> -->
+             {{get_string_title}}
         </h2>
          </div>
         <div class="ui center aligned divided selection list">
@@ -71,7 +72,7 @@
             <h4>You have no favorites, add an event!</h4>
             {{/if}}
           </div>
-        </div>
+        <!-- </div> -->
         </div>
  </div>
 
@@ -84,13 +85,12 @@
       <div class="computer only row">
         {{#if get_invited_events}}
        <div class="one wide computer only column"></div>
-        <div class="ui center floated padded text segment">
 
           <div class="fifteen wide computer only column">
               <div class="row">
-              <h2 class="  header">
-                      Events You Were Invited To
-              </h2>
+              <h3 class="  header">
+                      " ___          Events You Were Invited To ___"
+              </h3>
                </div>
               <div class="ui center aligned divided selection list">
                   {{#each get_invited_events}} 
@@ -110,7 +110,6 @@
                 {{/each}}
 
                 </div>
-              </div>
           </div>
           {{/if}}
       </div>
@@ -119,12 +118,11 @@
        <div class="mobile only row">
         {{#if get_invited_events}}
        <div class="two wide mobile only column"></div>
-        <div class="ui center floated padded text segment">
           <div class="fifteen wide mobile only column">
               <div class="row">
-              <h2 class="  header">
+              <h3 class="  header">
                       Events you were invited to
-              </h2>
+              </h3>
                </div>
               <div class="ui center aligned divided selection list">
                   {{#each get_invited_events}} 
@@ -145,7 +143,6 @@
                 {{/each}}
 
                 </div>
-              </div>
           </div>
           {{/if}}
       </div>

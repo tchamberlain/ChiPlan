@@ -59,7 +59,7 @@ Template.eventsTemp.onRendered( function(){
 
    //        all_activities=Activities.find().fetch()
    //    // space out google maps api requests
-   //    update_all_db(150);
+   //    update_all_db(852);
    //    function update_all_db(i) {
    //      if(all_activities.length > i) {
    //          setTimeout(function() {
@@ -190,12 +190,6 @@ Template.eventsTemp.helpers({
 
     'is_favorite': function(){
       return Session.get('is_favorite');
-    // if(Meteor.user().profile.favorites){
-    //   return (favorite_ids.indexOf(Session.get('current_activity')._id)!=-1);
-    // }
-    // else{
-    //   return 0;
-    // }
   },
 
 
@@ -252,6 +246,32 @@ Template.eventsTemp.helpers({
             }, 200);
           
 
+      },
+       'onkeydown textarea': function(evt, template){
+        console.log('left arrow')
+
+         if (evt.which === 37) {
+          console.log('left arrow')
+
+          $("#deck_slide")
+            .transition('fly right')
+          ;
+                              $("#deck_slide")
+            .transition('fly left')
+          ;
+
+          current_act=Session.get('current_activity')
+          if( Meteor.user()){
+            Meteor.users.update({_id:Meteor.user()._id}, {$addToSet:{"profile.discards":current_act}})
+            Meteor.users.update({_id:Meteor.user()._id}, {$pull:{"profile.favorites":current_act}})
+          }          
+                     setTimeout(function() {
+           activity_index+=1;
+          Session.set('current_activity', activity_list[activity_index]);
+
+            }, 200);
+          
+                    }
       },
 
         'click #previous': function(){
