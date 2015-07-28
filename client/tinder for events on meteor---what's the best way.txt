@@ -1,9 +1,0 @@
-tinder for events on meteor---what's the best way of setting this up?
-
-So I've been working on a project for a while with autopublish and insecure installed-- before I turn my app into a big-boy app I would  really appreciate some feedback on my plan for setting this up.
-
-So I've got a collection of ~2000 events that I would like to be able to swipe through and favorite similar to tinder. The user can specify a couple parameters that will limit the events they see (category, distance, date).
-
-For the page where you swipe through events, my plan was:
-	-subscribe to "events_query" with (category, distance, date) as parameters 
-	- "events_query" will call a server side function 

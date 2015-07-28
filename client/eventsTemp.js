@@ -148,6 +148,39 @@ Template.eventsTemp.onRendered( function(){
 
 
 Template.eventsTemp.helpers({
+  'get_when': function(){
+
+    start_time=Session.get('current_activity').start_time
+    start_date=Session.get('current_activity').start_date
+     var month_names = [
+        "January", "February", "March",
+        "April", "May", "June", "July",
+        "August", "September", "October",
+        "November", "December"
+    ];
+    var day_names=["Sunday","Monday", "Tuesday","Wednesday", "Thursday","Friday","Saturday"];
+
+    var dayIndex = start_date.getDay();
+    var monthIndex = start_date.getMonth();
+    var date = start_date.getDate();
+
+    
+    when=day_names[dayIndex]+", "+month_names[monthIndex]+"  "+date+ ", "+start_time;
+    return when;
+
+  },
+
+  'get_half_description': function(){
+    half_description=Session.get('current_activity').description.substring(0,100) + "...";
+    return half_description;
+
+  },
+    'more_info': function(){
+      return Session.get('more_info');
+
+  },
+
+
   templateGestures: {
     'swipeleft #hammerDiv': function (event, templateInstance) {
       //same as discard
@@ -194,12 +227,12 @@ Template.eventsTemp.helpers({
 
 
 
-    'doubletap #hammerDiv': function (event, templateInstance) {
-      console.log("You doubletapped more info!!")
-        var the_id=Session.get('current_activity')._id
-          Router.go('actInfo',{_id: the_id, button_info:[0,0,1]})
+  //   'doubletap #hammerDiv': function (event, templateInstance) {
+  //     console.log("You doubletapped more info!!")
+  //       var the_id=Session.get('current_activity')._id
+  //         Router.go('actInfo',{_id: the_id, button_info:[0,0,1]})
 
-  },
+  // },
     
   'current_activity': function(){
           return Session.get('current_activity');
@@ -210,7 +243,16 @@ Template.eventsTemp.helpers({
 
 
   Template.eventsTemp.events({
+    'click #more_info':function(){
+      Session.set('more_info',1);
+
+    },
+      'click #less_info':function(){
+      Session.set('more_info',0);
+
+    },
     'click #next':function(){
+      Session.set('more_info',0);
       Session.set('is_favorite',0);
      $("#deck_slide")
             .transition('fly right')
@@ -226,6 +268,7 @@ Template.eventsTemp.helpers({
         },
 
         'click #discard': function(){
+          Session.set('more_info',0);
 
           $("#deck_slide")
             .transition('fly right')
@@ -247,6 +290,7 @@ Template.eventsTemp.helpers({
           
 
       },
+      //trying to make swiping occur with the arrow keys
        'onkeydown textarea': function(evt, template){
         console.log('left arrow')
 
@@ -280,18 +324,20 @@ Template.eventsTemp.helpers({
       },
 
       'click #seeAll': function(){
+        Session.set('more_info',0);
          query_params=Router.current().params;
          Router.go('seeAll',{category: query_params.category, date: query_params.date, distance: query_params.distance});
        
       },
 
-      'click #info': function(){ 
-        var the_id=Session.get('current_activity')._id
-          Router.go('actInfo',{_id: the_id, button_info:[0,0,1]});
-      },
+      // 'click #info': function(){ 
+      //   var the_id=Session.get('current_activity')._id
+      //     Router.go('actInfo',{_id: the_id, button_info:[0,0,1]});
+      // },
 
 
       'click #favorite': function(){ 
+        Session.set('more_info',0);
           if( Meteor.user()){
             Session.set('is_favorite',1);
             current_act=Session.get('current_activity');

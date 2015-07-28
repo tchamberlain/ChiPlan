@@ -87,7 +87,7 @@ Meteor.startup(function() {
         if (minutes<10){
           minutes=minutes+"0"
         }
-        var start_time= start_time+":"+minutes
+        var start_time= start_time+":"+minutes+am_pm
 
 
         var end_time= end_date.getHours()
@@ -106,7 +106,7 @@ Meteor.startup(function() {
         if (minutes<10){
           minutes=minutes+"0"
         }
-        var end_time= end_time+":"+minutes
+        var end_time= end_time+":"+minutes+am_pm
 
 
 
@@ -168,7 +168,7 @@ Meteor.startup(function() {
         if (minutes<10){
           minutes=minutes+"0"
         }
-        var start_time= start_time+":"+minutes
+        var start_time= start_time+":"+minutes+am_pm
 
 
         var end_time= end_date.getHours()
@@ -187,7 +187,7 @@ Meteor.startup(function() {
         if (minutes<10){
           minutes=minutes+"0"
         }
-        var end_time= end_time+":"+minutes
+        var end_time= end_time+":"+minutes+am_pm
 
         address=elem.address;
 

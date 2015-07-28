@@ -4,22 +4,40 @@
 
      <div class="ui centered page grid">
         
-        <!-- <div class="fourteen wide center aligned floated column"> -->
+        <div class="fourteen wide center floated column">
             <div class="row">
                 {{#HammerTouchArea gestureMap=templateGestures}}
                     <div id= "hammerDiv">
-                        <div id= "deck_slide" class="ui raised very padded text container segment">
-                            <div class="row"> <img class="ui  tiny image" src=" https://im1.shutterfly.com/media/47a5d932b3127ccee9ce23c1459e00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713205651525.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" ></div>
+
+                        <div id= "deck_slide" class="ui very padded raised attached segment">
                             {{#if current_activity}}
-                            <h2 align= center>{{current_activity.title}}</h2>
+                            <!-- <h2 align= center>{{current_activity.title}}</h2> -->
+                              <h3><center>{{current_activity.title}}</center></h3> 
+                              <ul id="bigger_text"><h4><b>When:</b> {{get_when}}</h4></ul>
+                              <!-- <ul><b>Date:</b> {{current_activity.start_date}}</ul> -->
+                              <ul id="bigger_text"><b>Where:</b> {{current_activity.address}}</ul>
+                              {{#if more_info}}
+                              <ul id="bigger_text"><b>Description:</b> {{current_activity.description}}</ul>
+                              {{else}}
+                              <ul id="bigger_text">Description: {{get_half_description}}</ul>
+                              {{/if}}
+
+
                             {{else}}
                             <h2 align= center>No more activities, please try a different search!</h2>
                             {{/if}}
-                            <div class="row"> <img class="ui  tiny image" src=" https://im1.shutterfly.com/media/47a5d932b3127ccee9ce23c1459e00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713205651525.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" ></div>
+
+
                         </div>
+                        {{#if more_info}}
+                        <div id="less_info" class="ui large bottom attached button" tabindex="0"><i class="black chevron up icon "></i>Less info</div>
+                        {{else}}
+                        <div id="more_info" class="ui large bottom attached button" tabindex="0"><i class="black chevron down icon "></i>More info</div>
+                        {{/if}}
                     </div>
              {{/HammerTouchArea}}
             </div>
+          </div>
 
                 <div class="computer only row">
                     <div class="ui buttons">
@@ -27,21 +45,10 @@
                                <i class="icon remove"></i>
                                 I don't want to go
                         </button>
-                        <button id="info" class=" ui massive left labeled icon button">
-                            Info 
-                          <i class="icon info"></i>
-                        </button>
-                        <!-- {{#if is_favorite}}
-                         <button id="next" class=" ui massive positive right labeled icon button">
-                                   Next
-                              <i class="icon arrow right"></i>
-                            </button>
-                        {{else}} -->
                         <button id="favorite" class=" ui massive positive right labeled icon button">
                                 I want to go
                           <i class="icon heart"></i>
                         </button>
-                        <!-- {{/if}} -->
                     </div>
                 </div>
 
@@ -61,20 +68,13 @@
                             Info 
                           <i class="icon info"></i>
                         </button>
-                        <!-- {{#if is_favorite}}
-                         <button id="next" class=" ui massive positive right labeled icon button">
-                                   Next
-                              <i class="icon arrow right"></i>
-                            </button>
-                        {{else}} -->
+
                         <button id="favorite" class=" ui medium positive right labeled icon button">
                                 I want to go
                           <i class="icon heart"></i>
                         </button>
-                        <!-- {{/if}} -->
                     </div>
                 </div>
-<!-- grid -->
     </div>
 
 

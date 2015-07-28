@@ -68,6 +68,27 @@ Template.dashboard.events({
       var user_id =Meteor.user()._id
       Meteor.users.update({_id: user_id}, {$pull: {'profile.favorites': {_id: act_id}}});
     },
+    'click .icon': function(){
+      var act_id = this._id;
+      console.log("clicked icon")
+
+      Meteor.users.update({_id: user_id}, {$addToSet: {'profile.discarding': {_id: act_id}}});
+
+     setTimeout(function() {
+           Meteor.users.update({_id: user_id}, {$pull: {'profile.discarding': {_id: act_id}}});
+           Meteor.users.update({_id: user_id}, {$pull: {'profile.favorites': {_id: act_id}}});
+            Meteor.users.update({_id: user_id}, {$addToSet: {'profile.discards': {_id: act_id}}});
+
+            }, 880);
+
+    //   if (#icon.hasClass("green heart icon")) {
+    //     console.log("this class")
+    //      #icon.removeClass("green heart icon").addClass("remove icon");
+    // }
+
+      // Meteor.users.update({_id: user_id}, {$pull: {'profile.favorites': {_id: act_id}}});
+      // Meteor.users.update({_id: user_id}, {$addToSet: {'profile.discards': {_id: act_id}}});
+    },
 
     'click #remove_invite': function(){
       var user_id =Meteor.user()._id
@@ -82,10 +103,16 @@ Template.dashboard.events({
             return Meteor.user().profile.favorites;
   },
 
-        'get_string_title': function(category){
-          
-            return " ____            Your Events ___";
+    'get_heart_icon': function(act_id){
+          user_id=Meteor.user()._id;
+          if(Meteor.users.find({_id:user_id, 'profile.discarding._id':act_id}).count()){
+            return 0;
+          }
+          else{
+            return 1;
+          }
   },
+
         'get_invited_events': function(category){
             if(Meteor.user()){
                 user_id= Meteor.user()._id

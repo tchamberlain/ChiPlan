@@ -1,7 +1,10 @@
 <template name="seeAll">
   
     <div class="ui raised very padded text container segment">
-      <h2><b>All events:</b></h2>
+      
+      <h2><b>All events:</b>
+      <div  id="back" Type="button" class="ui right floated large left labeled icon button" onClick="history.go(-1);return true;"><i class="reply icon"></i>Back
+         </div></h2>
     <div class="ui center aligned selection divided relaxed list"> 
         {{#each get_act_list}}
       <div class="item">
@@ -23,7 +26,7 @@
       {{/each}}
 
       </div>
-          <div  id="back" Type="button" class="ui center aligned large left labeled icon button" onClick="history.go(-1);return true;"><i class="reply icon"></i>Back
+          <div  id="back" Type="button" class="ui right floated large left labeled icon button" onClick="history.go(-1);return true;"><i class="reply icon"></i>Back
          </div>
       </div>
 

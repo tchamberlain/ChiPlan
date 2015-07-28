@@ -103,10 +103,10 @@ function is_favorite (act_id){
   };
 
   Template.seeAll.events({ 
-    // 'click #activity': function(){
-    //    the_id= this._id;
-    //   Router.go('actInfo',{_id: the_id, button_info:[is_discard(the_id),is_favorite(the_id)]} );
-    // },
+    'click #activity': function(){
+       the_id= this._id;
+      Router.go('actInfo',{_id: the_id, button_info:[is_discard(the_id),is_favorite(the_id)]} );
+    },
 
        'click .icon': function(){
       console.log("you clicked an icon")
