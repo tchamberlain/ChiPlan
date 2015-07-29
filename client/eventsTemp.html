@@ -12,19 +12,18 @@
                         <div id= "deck_slide" class="ui very padded raised attached segment">
                             {{#if current_activity}}
                             <!-- <h2 align= center>{{current_activity.title}}</h2> -->
-                              <h3><center>{{current_activity.title}}</center></h3> 
-                              <ul id="bigger_text"><h4><b>When:</b> {{get_when}}</h4></ul>
-                              <!-- <ul><b>Date:</b> {{current_activity.start_date}}</ul> -->
-                              <ul id="bigger_text"><b>Where:</b> {{current_activity.address}}</ul>
+                              <h3 class="ui large header"><center>{{current_activity.title}}</center></h3> 
+                              <ul ><b>When:</b> {{get_when}}</ul>
+                              <ul ><b>Where:</b> {{current_activity.address}}</ul>
                               {{#if more_info}}
-                              <ul id="bigger_text"><b>Description:</b> {{current_activity.description}}</ul>
-                              {{else}}
-                              <ul id="bigger_text">Description: {{get_half_description}}</ul>
+                              <ul ><b>Description:</b> {{current_activity.description}}</ul>
+                               {{else}}
+                              <ul ><b>Description:</b> {{get_half_description}}</ul>
                               {{/if}}
 
 
                             {{else}}
-                            <h2 align= center>No more activities, please try a different search!</h2>
+                             <h3 class="ui large header"><center>No more activities, please try a different search!</center></h3>
                             {{/if}}
 
 
@@ -41,6 +40,10 @@
 
                 <div class="computer only row">
                     <div class="ui buttons">
+                          <button id="previous" class=" ui massive left labeled icon button">
+                               <i class="share icon"></i>
+                               Previous
+                        </button>   
                          <button id="discard" class=" ui massive negative left labeled icon button">
                                <i class="icon remove"></i>
                                 I don't want to go
@@ -48,7 +51,7 @@
                         <button id="favorite" class=" ui massive positive right labeled icon button">
                                 I want to go
                           <i class="icon heart"></i>
-                        </button>
+                        </button>                   
                     </div>
                 </div>
 

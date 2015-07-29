@@ -10,13 +10,11 @@ Router.route('/actInfo/:_id/:button_info', {
       discard_button_show= parseInt(this.params.button_info[2]);
       only_info= parseInt(this.params.button_info[4]);
 
-      //using 2 bc it is a string, not an actual arrays
-      if(only_info){
-        Session.set('discard_button_show',0);
-        Session.set('favorite_button_show',0);
+      Session.set('discard_button_show',0);
+       Session.set('favorite_button_show',0);
         Session.set('both_buttons_show',0);
-      }
-      else if(discard_button_show){
+
+     if(discard_button_show){
         Session.set('discard_button_show',1);
         Session.set('favorite_button_show',0);
         Session.set('both_buttons_show',0);
@@ -39,60 +37,6 @@ Router.route('/actInfo/:_id/:button_info', {
 
 Template.actInfo.onCreated( function(){
     Session.set('current_activity', Activities.findOne());
-
-
-    if(Meteor.user()){
-        discards=Meteor.user().profile.discards;
-        if(discards){
-          //get array of all discard ids
-          discard_ids=[];
-          for(i=0; i<discards.length; i++){
-            discard_ids[i]=discards[i]._id;
-          }
-        }
-
-
-          //get array of all favorite ids
-          favorite_ids=[];
-        favorites=Meteor.user().profile.favorites;
-        if(favorites){
-          favorite_ids=[];
-           for(i=0; i<favorites.length; i++){
-              favorite_ids[i]=favorites[i]._id;
-            }
-        }
-  //this route. params
-  if(favorites){
-    discard_button_show=(favorite_ids.indexOf(Session.get('current_activity')._id)!=-1)}
-  if(discards){
-    favorite_button_show=(discard_ids.indexOf(Session.get('current_activity')._id)!=-1)}
-  if(only_info){
-        Session.set('discard_button_show',0);
-        Session.set('favorite_button_show',0);
-        Session.set('both_buttons_show',0);
-      }
-      else if(discard_button_show){
-        Session.set('discard_button_show',1);
-        Session.set('favorite_button_show',0);
-        Session.set('both_buttons_show',0);
-      }
-      else if(favorite_button_show){
-        Session.set('discard_button_show',0);
-        Session.set('favorite_button_show',1);
-        Session.set('both_buttons_show',0);
-      }
-      else {
-        Session.set('discard_button_show',0);
-        Session.set('favorite_button_show',0);
-        Session.set('both_buttons_show',1);
-      }
-    }
-
-    console.log(discard_button_show)
-    console.log(favorite_button_show)
-
-
-
 });
 
 
@@ -126,7 +70,7 @@ Template.actInfo.helpers({
         current_act=Activities.findOne();
         Meteor.users.update({_id:Meteor.user()._id}, {$addToSet:{"profile.favorites":current_act}})
         Meteor.users.update({_id:Meteor.user()._id}, {$pull:{"profile.discards":current_act}})
-        Router.go('share',{_id: current_act._id});
+        Router.go('share',{_id: current_act._id, fromEvents:0});
     }
     //if there's no user, set up an error modal
     else{
@@ -153,6 +97,29 @@ Template.actInfo.helpers({
  });
 
 Template.actInfo.helpers({
+
+  'get_when': function(){
+
+    start_time=Session.get('current_activity').start_time
+    start_date=Session.get('current_activity').start_date
+     var month_names = [
+        "January", "February", "March",
+        "April", "May", "June", "July",
+        "August", "September", "October",
+        "November", "December"
+    ];
+    var day_names=["Sunday","Monday", "Tuesday","Wednesday", "Thursday","Friday","Saturday"];
+
+    var dayIndex = start_date.getDay();
+    var monthIndex = start_date.getMonth();
+    var date = start_date.getDate();
+
+    
+    when=day_names[dayIndex]+", "+month_names[monthIndex]+"  "+date+ ", "+start_time;
+    return when;
+
+  },
+  
   'favorite_button_show':function(){
     return(Session.get('favorite_button_show'));
   },

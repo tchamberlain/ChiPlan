@@ -69,17 +69,18 @@ Template.dashboard.events({
       Meteor.users.update({_id: user_id}, {$pull: {'profile.favorites': {_id: act_id}}});
     },
     'click .icon': function(){
+            var act_id = this._id;
+
+       Meteor.users.update({_id: user_id}, {$addToSet: {'profile.discarding': {_id: act_id}}});
       var act_id = this._id;
       console.log("clicked icon")
-
-      Meteor.users.update({_id: user_id}, {$addToSet: {'profile.discarding': {_id: act_id}}});
 
      setTimeout(function() {
            Meteor.users.update({_id: user_id}, {$pull: {'profile.discarding': {_id: act_id}}});
            Meteor.users.update({_id: user_id}, {$pull: {'profile.favorites': {_id: act_id}}});
             Meteor.users.update({_id: user_id}, {$addToSet: {'profile.discards': {_id: act_id}}});
 
-            }, 880);
+            }, 800);
 
     //   if (#icon.hasClass("green heart icon")) {
     //     console.log("this class")

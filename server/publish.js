@@ -3,8 +3,9 @@
 Meteor.publish('events_query', function(query_parameters){
     
 	//set up act list
+  console.log("user_loc?", query_parameters[3],query_parameters[4]);
 	
-    return set_up_act_list(query_parameters[0],query_parameters[1],query_parameters[2],query_parameters[3]);
+    return set_up_act_list(query_parameters[0],query_parameters[1],query_parameters[2],query_parameters[3],query_parameters[4]);
 
 });
 
@@ -28,7 +29,7 @@ Meteor.publish('get_user_names', function(id){
 
 
 
-function set_up_act_list(search_category, search_date, search_dist, user_loc){
+function set_up_act_list(search_category, search_date, search_dist, user_lng, user_lat){
    //we gonna set up the act list
       console.log("setting up act list")
       activity_index=0;
@@ -98,23 +99,39 @@ function set_up_act_list(search_category, search_date, search_dist, user_loc){
 
   
 
-
     //until you get the user's lng lat as a param
-    if(user_loc){
-      y= user_loc[1]
-      x=user_loc[0]
+    if(user_lng){
+
+      y= parseInt(user_lat);
+      x=parseInt(user_lng);
   
 
       if (search_dist=="five"){
-        var final_query= Activities.find({ location:
+        // debugging this function
+        console.log("were in the five")
+        console.log('test');
+test=Activities.find({ location:
                                            { $near :
                                               {
-                                                $geometry: { type: "Point",  coordinates: [x, y ] },
+                                                $geometry: { type: "Point",  coordinates: [41.88344, -87.6323986 ] },
                                                 $maxDistance: 8047
                                               }
-                                           },
-                                            $and:[ date_query, category_query]
-                                          })
+                                           }}).fetch()
+console.log('test',test);
+
+        // debugging this function
+
+
+        // var final_query= Activities.find({ location:
+        //                                    { $near :
+        //                                       {
+        //                                         $geometry: { type: "Point",  coordinates: [x, y ] },
+        //                                        $maxDistance: 8047
+        //                                       // $maxDistance: 0
+        //                                       }
+        //                                    },
+        //                                     $and:[ date_query, category_query]
+        //                                   })
 
       }
 

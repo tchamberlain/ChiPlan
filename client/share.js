@@ -1,12 +1,18 @@
-Router.route('/share/:_id', {
+//Router.route('/share/:_id/:category/:date/:distance/:fromEvents', {
+Router.route('/share/:_id/:fromEvents', {
+
     name: 'share',
+   data: function(){
+     Session.set('fromEvents',this.params.fromEvents);
+   },
         waitOn: function(){
-          return [Meteor.subscribe('event_by_id',this.params._id),Meteor.subscribe('get_user_names')];
+            return [Meteor.subscribe('event_by_id',this.params._id),Meteor.subscribe('get_user_names')];
         }
     });
 
 
 Template.share.onRendered(function(){
+   Session.set('fromEvents',Router.current().params.fromEvents);
     //not sure if a session variable is the right way to do this page
       Session.set('current_activity', Activities.findOne());
       console.log(Session.get('current_activity'))
@@ -15,6 +21,14 @@ Template.share.onRendered(function(){
 
 
 Template.share.helpers({
+  //used to determine which back button to show
+  'get_fromEvents': function(){
+        //return Session.get('fromEvents');
+        if (parseInt(Router.current().params.fromEvents)==1){ var fromEvents=true;}
+        else{ var fromEvents=false;}
+
+        return fromEvents;
+   },
     'get_person': function(){
       return Session.get('query_name');
    },
@@ -31,7 +45,6 @@ Template.share.helpers({
    'get_link_fb':function(){
       act_id= Session.get('current_activity')._id;
       link="https://www.facebook.com/sharer/sharer.php?u="+"chiplan.meteor.com/actInfo/"+act_id
-      console.log(link)
       return link;
    },
 
@@ -86,11 +99,28 @@ Template.share.events = {
       }
     },
 
-    'click #back': function (evt, template) {
+  'click #back_to_seeAll': function (evt, template) {
       var the_id=Session.get('current_activity')._id
-      Router.go('actInfo',{_id: the_id, button_info:[0,1,0]})
-    }
+        console.log("clicked back_to_eventsTemp");
 
+      //Router.go('actInfo',{_id: the_id, button_info:[0,1,0]})
+     Router.go('seeAll',{category:Session.get('category'),date:Session.get('date'),distance: Session.get('dist')})
+
+    },
+
+      'click #seeAll': function (evt, template) {
+        var the_id=Session.get('current_activity')._id
+        Router.go('actInfo',{_id: the_id, button_info:[0,1,0]})
+    },
+
+      'click #back_to_eventsTemp': function (evt, template) {
+        //update current activity
+        activity_index=Session.get('activity_index')+1;
+        Session.set('activity_index',activity_index );
+        Session.set('current_activity', activity_list[activity_index])
+        params=Router.current().params;
+        Router.go('eventsTemp',{category:Session.get('category'),date:Session.get('date'),distance: Session.get('dist')})
+    }
 
 
 

@@ -1,5 +1,13 @@
 // js for home page
+Router.route('/', function(){
+  this.render('home');
+},{
+  name: 'home'
+});
 
+Router.configure({
+  layoutTemplate: 'main'
+});
 
 
 Template.home.onRendered(function(){
@@ -8,30 +16,7 @@ Template.home.onRendered(function(){
   $('.ui.dropdown')
   .dropdown()
 ;
-
 });
-
-
-function is_discard(act_id){
-    user_id=Meteor.user()._id;
-    if(Meteor.users.find({_id:user_id, 'profile.discards._id':act_id}).count()){
-      return 1;
-    }
-    else{
-      return 0;
-    }
-  };
-
-function is_favorite (act_id){
-    user_id=Meteor.user()._id;
-    if(Meteor.users.find({_id:user_id, 'profile.favorites._id':act_id}).count()){
-      return 1;
-    }
-   
-    else{
-    return 0;
-    }
-  };
 
 
 Template.home.helpers({
@@ -59,6 +44,7 @@ Template.home.helpers({
   Template.home.events({
 
     'click #stay_in_test': function(){
+  
       activity_index=0;
       search=get_search();
       set_up_act_list("entertainment",search[0],search[1]);
@@ -78,6 +64,7 @@ Template.home.helpers({
   },  
 
     'click #B_entertainment': function(){
+  
       search=get_search();
       if(Session.get('lng')){
          user_loc=[Session.get('lng'),Session.get('lng') ];
@@ -85,11 +72,13 @@ Template.home.helpers({
       else{
         user_loc=0;
       }
+
       Router.go('eventsTemp',{category: "entertainment", date: search[0], distance: search[1],user_loc:user_loc})
     },
 
 
     'click #B_sports': function(){
+  
       search=get_search();
       if(Session.get('lng')){
          user_loc=[Session.get('lng'),Session.get('lng') ];
@@ -102,6 +91,7 @@ Template.home.helpers({
 
 
     'click #B_art': function(){
+  
       search=get_search();
       if(Session.get('lng')){
          user_loc=[Session.get('lng'),Session.get('lng') ];
@@ -114,6 +104,7 @@ Template.home.helpers({
 
 
     'click #B_stayin': function(){
+  
       search=get_search();
       if(Session.get('lng')){
          user_loc=[Session.get('lng'),Session.get('lng') ];
@@ -126,6 +117,8 @@ Template.home.helpers({
 
 
     'click #B_surpriseme': function(){
+  
+
       search=get_search();
       if(Session.get('lng')){
          user_loc=[Session.get('lng'),Session.get('lng') ];
@@ -133,6 +126,7 @@ Template.home.helpers({
       else{
         user_loc=0;
       }
+     Session.set('make_act_list',1)
       Router.go('eventsTemp',{category: "surpriseme", date: search[0], distance: search[1],user_loc:user_loc})
     }
 
@@ -234,46 +228,26 @@ function get_id_list(act_list){
 }
 
 
+function is_discard(act_id){
+    user_id=Meteor.user()._id;
+    if(Meteor.users.find({_id:user_id, 'profile.discards._id':act_id}).count()){
+      return 1;
+    }
+    else{
+      return 0;
+    }
+  };
 
-
-
-
-
-
-
-//*************************
-//ROUTER STUFF
-//*************************
-Router.route('/', function(){
-  this.render('home');
-},{
-  name: 'home'
-});
-
-
-Router.route('/entertainment', {
-    name: 'entertainment',
-    data: function(){
-      if(!Session.get('current_activity')){
-        //then call the act function
-      }
-      random_function();
-      act_list=Session.get('current_act_list')
-      current_act=Session.get('current_activity')
-        return {
-            dontneedthis: current_act
-        };
-      }
-    });
-
-
-Router.route('/sports');
-Router.route('/art');
-Router.route('/stayin');
-Router.route('/surpriseme');
-Router.configure({
-  layoutTemplate: 'main'
-});
+function is_favorite (act_id){
+    user_id=Meteor.user()._id;
+    if(Meteor.users.find({_id:user_id, 'profile.favorites._id':act_id}).count()){
+      return 1;
+    }
+   
+    else{
+    return 0;
+    }
+  };
 
 
 

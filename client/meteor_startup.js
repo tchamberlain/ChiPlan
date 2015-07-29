@@ -14,5 +14,7 @@
     function showPosition(position) {
        Session.set('lat',position.coords.latitude);
        Session.set('lng',position.coords.longitude);
+       console.log("users loc", Session.get('lat'),Session.get('lng'));
+
     }
   });

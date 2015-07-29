@@ -4,10 +4,6 @@ Router.route('/seeAll/:category/:date/:distance', {
    name: 'seeAll',
     data: function(){
 
-      console.log(this.params.category)
-      console.log(this.params.date)
-      console.log(this.params.distance)
-
         },
 
         waitOn: function(){
@@ -16,13 +12,10 @@ Router.route('/seeAll/:category/:date/:distance', {
     });
   
    Template.seeAll.onRendered( function(){
-             //LATER LOOK you will want to move this so it doesn't keep calling it (only need to call it once after your subscriptions have come)
-          //ALSO LATER, make this sort by highschoolers tick marks, so that you get the good items first
-          // activity_list= Activities.find().fetch();
-          // current_activity= activity_list[activity_index];
-
-          //do we need to set this as a reactive variable.... prolly not???? 
          Session.set('current_act_list', Activities.find().fetch());
+
+
+
 
          if(Meteor.user()){
         discards=Meteor.user().profile.discards;
@@ -56,6 +49,11 @@ Router.route('/seeAll/:category/:date/:distance', {
   Template.seeAll.helpers({
   'get_act_list': function(category){
     return Session.get('current_act_list')
+  },
+
+    'get_favorites': function(category){
+      
+    return Meteor.user().profile.favorites;
   },
 
   'get_heart_icon': function(act_id){
@@ -108,7 +106,18 @@ function is_favorite (act_id){
       Router.go('actInfo',{_id: the_id, button_info:[is_discard(the_id),is_favorite(the_id)]} );
     },
 
-       'click .icon': function(){
+        'click #back': function(){
+       the_id= this._id;
+      params=Router.current().params;
+      category=params.category;
+      distance=params.distance;
+      date=params.date;
+      console.log("from see all to eventsTemp???")
+      Router.go('eventsTemp',{category:category,date:date,distance: distance})
+
+    },
+
+       'click #icon_label': function(){
       console.log("you clicked an icon")
       console.log(this._id)
       act_id=this._id;
@@ -127,15 +136,10 @@ function is_favorite (act_id){
           Meteor.users.update({_id:Meteor.user()._id}, {$pull:{"profile.discards":current_act}});
           Meteor.users.update({_id:Meteor.user()._id}, {$addToSet:{"profile.favorites":current_act}});
        }
+     }
+   }
 
-      }
-
-
-
-
-    }
-
-
+      
 
 
 

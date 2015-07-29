@@ -40,8 +40,18 @@
        </a>
         </ul>
            <div class="row"> <img class="ui  mini image" src=" https://im1.shutterfly.com/media/47a5d932b3127ccee9ce23c1459e00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713205651525.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" ></div>
-            <ul><div  id="back" Type="button" class="ui center aligned large left labeled icon button" onClick="history.go(-1);return true;"><i class="reply icon"></i>Back
-         </div></ul>
+           
+           {{#if get_fromEvents}}
+                <div  id="back_to_eventsTemp"  class="ui center aligned large left labeled icon button"><i class="reply icon"></i>Back
+         </div>
+
+          {{else}}
+             <div  id="back_to_seeAll"  class="ui center aligned large left labeled icon button"><i class="reply icon"></i>Back to Events List
+         </div>
+          {{/if}}
+
+
+
  
 
     </div>

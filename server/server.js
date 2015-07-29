@@ -1,13 +1,8 @@
-// Pre_activities = new Mongo.Collection('pre_activities');
-// Activities = new Mongo.Collection('activities');
-// Invites = new Mongo.Collection('invites');
-
 //*************************
 //SERVER STUFF
 //*************************
 
-
-//fixing fb and twitter login
+//On start up, add fblogin
 Meteor.startup(function() {
   Accounts.loginServiceConfiguration.remove({
     service: "facebook"
@@ -28,19 +23,11 @@ Meteor.startup(function() {
 });
 
 
-////ATTEMPT AT METEOR METHODS
-// Meteor.methods({
-//    tryna_sort: function (user_id) {
-//     console.log("in the sort test function");
-//     Meteor.users.update({_id:user_id}, {'profile.favorites': {$sort: { score: 1 }}})
-  
-//   }
-// });
 
   if (Activities.find().count()==(99999999)){
     Pre_activities.find().forEach(    
     function (elem) {     
-      
+      //you prolly wanna add this back in?
       // elem.title = elem.title.replace("&amp;", "&");
       // elem.description = elem.description.replace("&amp;", "&");
       // elem.description = elem.description.replace("This calendar is not affiliated with any section of the City of Chicago", "");
@@ -279,10 +266,10 @@ Meteor.startup(function() {
       _.extend(user.profile, { name : this_name });
     } }},3000)
     return user;
-
   });
 
 
+//unclear what this does, I think just publishes this specific user's data?
 Meteor.publish('userData', function() {
   if(!this.userId) return null;
   return Meteor.users.find(this.userId, {fields: {
