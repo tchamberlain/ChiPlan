@@ -14,8 +14,7 @@ Template.home.onRendered(function(){
   this.$('.checkbox').checkbox();
   this.$('#weekend').checkbox('check');
   $('.ui.dropdown')
-  .dropdown()
-;
+  .dropdown();
 });
 
 

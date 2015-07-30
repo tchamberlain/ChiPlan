@@ -94,76 +94,12 @@ function set_up_act_list(search_category, search_date, search_dist, user_lng, us
         category_query={tags: category}
       }
 
-      // ************DISTANCE QUERY SETUP************
-
-
-  
-
-    //until you get the user's lng lat as a param
-    if(user_lng){
-
-      y= parseInt(user_lat);
-      x=parseInt(user_lng);
-  
-
-      if (search_dist=="five"){
-        // debugging this function
-        console.log("were in the five")
-        console.log('test');
-test=Activities.find({ location:
-                                           { $near :
-                                              {
-                                                $geometry: { type: "Point",  coordinates: [41.88344, -87.6323986 ] },
-                                                $maxDistance: 8047
-                                              }
-                                           }}).fetch()
-console.log('test',test);
-
-        // debugging this function
-
-
-        // var final_query= Activities.find({ location:
-        //                                    { $near :
-        //                                       {
-        //                                         $geometry: { type: "Point",  coordinates: [x, y ] },
-        //                                        $maxDistance: 8047
-        //                                       // $maxDistance: 0
-        //                                       }
-        //                                    },
-        //                                     $and:[ date_query, category_query]
-        //                                   })
-
-      }
-
-      else if (search_dist=="ten"){
-        var final_query= Activities.find({ location:
-                                           { $near :
-                                              {
-                                                $geometry: { type: "Point",  coordinates: [x, y ] },
-                                                $maxDistance: 16093
-                                              }
-                                           },
-                                            $and:[ date_query, category_query]
-                                          })
-
-
-      }
-
-        else{
-          //if you don't care about distance, query only date and category
-           var final_query= Activities.find({$and:[ date_query, category_query]})
-        }
-
-      }
-  else{
-       var final_query= Activities.find({$and:[ date_query, category_query]})
-    }
-        //creates an array of the id's of all activities
-        var total= final_query.count();
-        console.log(total)
-        //act_list=final_query.fetch();
-        //console.log(act_list)
-        return final_query;
+      
+      
+      var final_query= Activities.find({$and:[ date_query, category_query]})
+      var total= final_query.count();
+      console.log(total)
+      return final_query;
 
 
 }

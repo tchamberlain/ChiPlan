@@ -6,6 +6,15 @@ Router.route('/actInfo/:_id/:button_info', {
       console.log('button_info');
       console.log(this.params.button_info[0]);
       console.log(this.params.button_info[2]);
+      Session.set('BacktoMyEvents',0);
+      //adding in condition for coming from "My Events" ---have the favorite button on, and also, make the back button route to my events
+      if(button_info=="fromYourEvents"){
+        Session.set('BacktoMyEvents',1);
+        Session.set('discard_button_show',1);
+        Session.set('favorite_button_show',0);
+        Session.set('both_buttons_show',0);
+      }
+      else{
       favorite_button_show= parseInt(this.params.button_info[0]);
       discard_button_show= parseInt(this.params.button_info[2]);
       only_info= parseInt(this.params.button_info[4]);
@@ -29,6 +38,9 @@ Router.route('/actInfo/:_id/:button_info', {
         Session.set('favorite_button_show',0);
         Session.set('both_buttons_show',1);
       }
+
+    }
+
     },
         waitOn: function(){
           return Meteor.subscribe('event_by_id',this.params._id);
@@ -44,6 +56,10 @@ Template.actInfo.helpers({
    'chosen_activity': function(){
       return Activities.findOne();
    },
+    'BacktoMyEvents': function(){
+      return Session.get('BacktoMyEvents');
+   },
+
 
      'is_favorite': function(){
           if(favorite_ids){
@@ -137,8 +153,6 @@ Template.actInfo.helpers({
 
 });
 
-
-//WHY IS THIS HERE... DO I NEED IT...?
-  Deps.autorun(function(){
+Deps.autorun(function(){
     Meteor.subscribe('userData');
 });

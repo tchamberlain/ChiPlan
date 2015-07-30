@@ -1,54 +1,20 @@
 <template name="header">
-
-
- <div class="ui centered grid">
-    <!-- <div class="row computer only"> -->
+    <div class="ui centered grid">
         <div class="sixteen wide column">
-          <div class="ui segment">
+            <div class="ui segment">
                 {{> loginButtons}}
 
                 {{#if currentUser}}
-                <button id="dashboard" class="ui right floated labeled icon large button">
-                    <i class="user icon"></i>
-                    Your Events
-                </button>
-                 {{/if}}
-                <h1 align="center" class="heading active">
+                    <button id="dashboard" class="ui right floated labeled icon large button">
+                        <i class="user icon"></i>
+                        Your Events
+                    </button>
+                {{/if}}
+                 <h1 align="center" class="heading active">
                     ChiPlan 
                 </h1>
-                <div class="subtitle">       </div>
-            </div>
-        </div>
-    <!-- </div> -->
-</div>
-
- <!-- <div class="ui centered grid">
-    <div class="row mobile only">
-        <div class="sixteen wide column">
-          <div class="ui segment">
-                {{> loginButtons}}
-
-                {{#if currentUser}}
-                <button id="dashboard" class="ui right floated labeled icon large button">
-                    <i class="user icon"></i>
-                    Your Events
-                </button>
-                 {{/if}}
-                <h1 align="center" class="heading active">
-                    ChiPlan 
-                </h1>
-                <div class="subtitle">       </div>
+                <div class="subtitle">     </div>
             </div>
         </div>
     </div>
-</div>
-
- -->
-
-
-
-
-
-
-
 </template>

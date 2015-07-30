@@ -3,7 +3,11 @@ Router.route('/share/:_id/:fromEvents', {
 
     name: 'share',
    data: function(){
-     Session.set('fromEvents',this.params.fromEvents);
+     Session.set('get_fromYourEvents',0);
+      if(this.params.fromEvents=="YourEvents"){
+        Session.set('get_fromYourEvents',1);
+      }
+       Session.set('fromEvents',this.params.fromEvents);
    },
         waitOn: function(){
             return [Meteor.subscribe('event_by_id',this.params._id),Meteor.subscribe('get_user_names')];
@@ -23,6 +27,20 @@ Template.share.onRendered(function(){
 Template.share.helpers({
   //used to determine which back button to show
   'get_fromEvents': function(){
+        //return Session.get('fromEvents');
+        if (parseInt(Router.current().params.fromEvents)==1){ var fromEvents=true;}
+        else{ var fromEvents=false;}
+
+        return fromEvents;
+   },
+     'get_fromYourEvents': function(){
+        //return Session.get('fromEvents');
+        if ((Router.current().params.fromEvents)=="YourEvents"){ var YourEvents=true;}
+        else{ var YourEvents=false;}
+
+        return YourEvents;
+   },
+     'get_back_button': function(){
         //return Session.get('fromEvents');
         if (parseInt(Router.current().params.fromEvents)==1){ var fromEvents=true;}
         else{ var fromEvents=false;}
@@ -102,8 +120,6 @@ Template.share.events = {
   'click #back_to_seeAll': function (evt, template) {
       var the_id=Session.get('current_activity')._id
         console.log("clicked back_to_eventsTemp");
-
-      //Router.go('actInfo',{_id: the_id, button_info:[0,1,0]})
      Router.go('seeAll',{category:Session.get('category'),date:Session.get('date'),distance: Session.get('dist')})
 
     },

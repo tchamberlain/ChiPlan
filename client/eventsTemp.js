@@ -22,15 +22,25 @@ Template.eventsTemp.onRendered( function(){
     //geocode_all_activites();
 
     //tryna make it so the act_list is only made once
-    if(Session.get('make_act_list'))
+    if(Session.get('make_act_list')||(!Session.get('activity_list')))
     {
         create_act_list();
-    }    
+    } 
+
 });
 
 //********************** HELPERS **********************//
 //********************** HELPERS **********************//
 Template.eventsTemp.helpers({
+    'split_description': function(){
+        num_characters=72;
+        descrption=Session.get('current_activity').descrption;
+        part1=descrption.substring(0,num_characters);
+        part2=descrption.substring(num_characters,num_characters*2);
+        part3=descrption.substring(num_characters*2,num_characters*3);
+        rest=descrption.substring(num_characters*3,descrption.length);
+    return [part1,part2,part3,rest];
+  },
   'get_when': function(){
     return get_when();
   },
@@ -49,7 +59,6 @@ Template.eventsTemp.helpers({
     'swipeleft #hammerDiv': function (event, templateInstance) {
       //same as discard
       discard();
-       
     },
     'swiperight #hammerDiv': function (event, templateInstance) {
          //same as favorite
@@ -220,17 +229,19 @@ favorite =function(){
 
 
 
-create_act_list= function(){
+create_act_list= function(for_see_all){
 
     console.log("in create_act_list");
 
+    //activity_list= Activities.find().fetch();
     //getting all of the activities, returns an array of events within the user specified distance
     activity_list=distance_query();
-    //activity_list= Activities.find().fetch();
 
+    console.log("for_see_all",for_see_all);
 
     //taking out discards and favorites from what you display
     //first check if there is a meteor user who has favorites
+    if(!for_see_all){
     if(Meteor.user()){
         discards=Meteor.user().profile.discards;
         if(discards){
@@ -246,15 +257,30 @@ create_act_list= function(){
           activity_list_new=[];
             for(i=0;i<activity_list.length;i++){
               //if this id isn't in the list of discards, or favorites added it to the good list
-              if((discard_ids.indexOf(activity_list[i]._id)==-1)&&(favorite_ids.indexOf(activity_list[i]._id)==-1)){
-                activity_list_new[x]=activity_list[i];
-                x+=1;
+              if(favorites&&discards){
+                    if((discard_ids.indexOf(activity_list[i]._id)==-1)&&(favorite_ids.indexOf(activity_list[i]._id)==-1)){
+                      activity_list_new[x]=activity_list[i];
+                      x+=1;
+                    }                
+              }
+              //if there are no discards, just take out favorites
+              else if (favorites){
+                if(favorite_ids.indexOf(activity_list[i]._id)==-1){
+                      activity_list_new[x]=activity_list[i];
+                      x+=1;
+                    }         
+              }
+             //if there are no favorites, just take out discards
+              else{
+                if(discard_ids.indexOf(activity_list[i]._id)==-1){
+                      activity_list_new[x]=activity_list[i];
+                      x+=1;
+                    }                
               }
             }
             activity_list=activity_list_new;
-
         }
-
+      }
       
       //set the first activity
       activity_index=0;
@@ -262,10 +288,47 @@ create_act_list= function(){
       Session.set('activity_list',activity_list);
       Session.set('current_activity',current_activity);
       Session.set('activity_index',activity_index);
-    
     //set this variable to 0, so you know you have already created the activity list
       Session.set('make_act_list',0);
+      console.log("the list in create_act_list", Session.get('activity_list'));
 };
+
+
+distance_query=function(){
+  
+  distance_param= Router.current().params.distance;
+  x=Session.get('lng');
+  y=Session.get('lat');
+
+  //if the user's loc doesn't exist, or they don't specify a distance, return all activities
+  if(distance_param=="any_dist"||(!x)){
+    act_list=Activities.find({}).fetch();
+  }
+  else if(distance_param=="five"){
+    act_list=Activities.find({ location:
+                                           { $near :
+                                              {
+                                                $geometry: { type: "Point",  coordinates: [x, y ] },
+                                                $maxDistance: 8047
+                                              }
+                                           }}).fetch();
+
+  }
+  else if(distance_param=="ten"){
+    act_list=Activities.find({ location:
+                                           { $near :
+                                              {
+                                                $geometry: { type: "Point",  coordinates: [x, y ] },
+                                                $maxDistance: 16093
+                                              }
+                                           }}).fetch();
+  }
+
+  console.log("how many activiites (in dist_query)",act_list.length);
+  return act_list;
+
+}
+
 
 
 //takes an array of event objects, returns array of ids
@@ -277,3 +340,34 @@ get_list_of_ids =function(event_array){
     }
     return ids;
 }
+
+
+
+get_fav_and_discard_ids= function(){
+   if(Meteor.user()){
+        discards=Meteor.user().profile.discards;
+        if(discards){
+          //get array of all discard ids
+
+
+          discard_ids=[];
+          for(i=0; i<discards.length; i++){
+            discard_ids[i]=discards[i]._id;
+          }
+        }
+
+          //get array of all favorite ids
+          favorite_ids=[];
+        favorites=Meteor.user().profile.favorites;
+        if(favorites){
+          favorite_ids=[];
+           for(i=0; i<favorites.length; i++){
+              favorite_ids[i]=favorites[i]._id;
+            }
+        }
+      }
+
+      return [favorite_ids, discard_ids];
+}
+
+

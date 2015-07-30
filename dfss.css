@@ -1,6 +1,20 @@
 
 /*tryna make cursor a hand for header*/
 
+/*#blur_description {
+	color: transparent;
+	text-shadow: 0 0 5px #000;
+	text-shadow: 0 0 5px #000;
+}
+*/
+#blur_description {
+	color: transparent;
+	text-shadow: 0 0 2px #000;
+	text-shadow: 0 0 2px #000;
+}
+
+
+
 h1 { cursor: pointer; }
 img { cursor: pointer; }
 #next_event { cursor: pointer; }
@@ -91,12 +105,18 @@ body {
    background-color: green !important;
 }
 
+.ul
+{
+	color: transparent;
+	text-shadow: 0 0 5px #000;
+	text-shadow: 0 0 5px #000;
+}
 
-#bigger_text{
-
-	font-size: 5em;
-	font-color: green;
-
+.ul
+{
+	color: #fefff4;
 
 }
+
+
 

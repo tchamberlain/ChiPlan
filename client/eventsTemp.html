@@ -12,13 +12,15 @@
                         <div id= "deck_slide" class="ui very padded raised attached segment">
                             {{#if current_activity}}
                             <!-- <h2 align= center>{{current_activity.title}}</h2> -->
-                              <h3 class="ui large header"><center>{{current_activity.title}}</center></h3> 
+                              <h3 class="ui large header" id="blur"><center>{{current_activity.title}}</center></h3> 
                               <ul ><b>When:</b> {{get_when}}</ul>
                               <ul ><b>Where:</b> {{current_activity.address}}</ul>
                               {{#if more_info}}
                               <ul ><b>Description:</b> {{current_activity.description}}</ul>
+                              <ul ><b>Description:</b> {{current_activity.description}}</ul>
                                {{else}}
                               <ul ><b>Description:</b> {{get_half_description}}</ul>
+                              <ul id="blur_description"><b>Description:</b> {{get_half_description}}</ul>
                               {{/if}}
 
 
@@ -56,26 +58,20 @@
                 </div>
 
 
-               
-
-<!-- col -->
-            <!-- </div> -->
-
              <div class="mobile only row">
-                    <div class="ui buttons">
-                         <button id="discard" class=" ui medium negative left labeled icon button">
+                   <div class="ui buttons">
+                          <button id="previous" class=" ui massive left labeled icon button">
+                               <i class="share icon"></i>
+                               Previous
+                        </button>   
+                         <button id="discard" class=" ui massive negative left labeled icon button">
                                <i class="icon remove"></i>
                                 I don't want to go
                         </button>
-                        <button id="info" class=" ui medium left labeled icon button">
-                            Info 
-                          <i class="icon info"></i>
-                        </button>
-
-                        <button id="favorite" class=" ui medium positive right labeled icon button">
+                        <button id="favorite" class=" ui massive positive right labeled icon button">
                                 I want to go
                           <i class="icon heart"></i>
-                        </button>
+                        </button>                   
                     </div>
                 </div>
     </div>
