@@ -38,9 +38,9 @@ Template.eventsTemp.helpers({
         part1=description.substring(0,num_characters-13);
         part2=description.substring(num_characters,num_characters*2);
         part3=description.substring(num_characters*2,num_characters*3);
-        part4=description.substring(num_characters*2,num_characters*3);
-        rest=description.substring(num_characters*3,description.length);
-        description_pieces={part1:part1,part2:part2,part3:part3,rest:rest};
+        part4=description.substring(num_characters*3,num_characters*4);
+        rest=description.substring(num_characters*4,description.length);
+        description_pieces={part1:part1,part2:part2,part3:part3,part4:part4,rest:rest};
         console.log(description_pieces);
     return description_pieces;
   },
@@ -212,6 +212,15 @@ discard= function(){
 };
 
 favorite =function(){
+          //make the deck move to indicate previous is coming
+      $("#deck_slide")
+        .transition('fly left')
+      ;
+     $("#deck_slide")
+        .transition('fly right')
+      ;
+     
+
           if( Meteor.user()){
             //update favorites and discards
             current_act=Session.get('current_activity');
@@ -222,6 +231,9 @@ favorite =function(){
             params=Router.current().params;
 
             Router.go('share',{_id: current_act._id, fromEvents:1});
+            activity_index=Session.get('activity_index')+1;
+        Session.set('activity_index',activity_index );
+        Session.set('current_activity', activity_list[activity_index])
             
             //update activity index 
             Session.set('activity_index',activity_index );

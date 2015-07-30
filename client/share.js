@@ -9,6 +9,7 @@ Router.route('/share/:_id/:fromEvents', {
       }
        Session.set('fromEvents',this.params.fromEvents);
    },
+        
         waitOn: function(){
             return [Meteor.subscribe('event_by_id',this.params._id),Meteor.subscribe('get_user_names')];
         }
@@ -131,9 +132,15 @@ Template.share.events = {
 
       'click #back_to_eventsTemp': function (evt, template) {
         //update current activity
-        activity_index=Session.get('activity_index')+1;
+        if(Session.get('activity_list')){
+           activity_index=Session.get('activity_index')+1;
         Session.set('activity_index',activity_index );
         Session.set('current_activity', activity_list[activity_index])
+        }
+        else{
+          Session.set('create_act_list',1);
+        }
+       
         params=Router.current().params;
         Router.go('eventsTemp',{category:Session.get('category'),date:Session.get('date'),distance: Session.get('dist')})
     }

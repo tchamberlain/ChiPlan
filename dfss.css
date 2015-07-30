@@ -22,7 +22,7 @@
 
 #blur_heavier {
 	  color: transparent;
-   text-shadow: 0 0px rgba(0,0,0,0.1);
+   text-shadow: 0 1px rgba(0,0,0,0.1);
 }
 
 
