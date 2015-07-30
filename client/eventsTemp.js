@@ -20,10 +20,10 @@ Router.route('/events/:category/:date/:distance', {
 Template.eventsTemp.onRendered( function(){
     //geocodes the current db, use when you've clicked on surprise me to update all events
     //geocode_all_activites();
-
+    console.log("when does it render??")
     //tryna make it so the act_list is only made once
     if(Session.get('make_act_list')||(!Session.get('activity_list')))
-    {
+    { console.log("should create the act list now")
         create_act_list();
     } 
 
@@ -33,22 +33,25 @@ Template.eventsTemp.onRendered( function(){
 //********************** HELPERS **********************//
 Template.eventsTemp.helpers({
     'split_description': function(){
-        num_characters=72;
-        descrption=Session.get('current_activity').descrption;
-        part1=descrption.substring(0,num_characters);
-        part2=descrption.substring(num_characters,num_characters*2);
-        part3=descrption.substring(num_characters*2,num_characters*3);
-        rest=descrption.substring(num_characters*3,descrption.length);
-    return [part1,part2,part3,rest];
+        num_characters=73;
+        description=Session.get('current_activity').description;
+        part1=description.substring(0,num_characters-13);
+        part2=description.substring(num_characters,num_characters*2);
+        part3=description.substring(num_characters*2,num_characters*3);
+        part4=description.substring(num_characters*2,num_characters*3);
+        rest=description.substring(num_characters*3,description.length);
+        description_pieces={part1:part1,part2:part2,part3:part3,rest:rest};
+        console.log(description_pieces);
+    return description_pieces;
   },
   'get_when': function(){
     return get_when();
   },
   //getting half the activity descrption to show as default
-  'get_half_description': function(){
-    half_description=Session.get('current_activity').description.substring(0,100) + "...";
-    return half_description;
-  },
+  // 'get_half_description': function(){
+  //   half_description=Session.get('current_activity').description.substring(0,100) + "...";
+  //   return half_description;
+  // },
   //lets template know if the user has clicked more info, so full description can be shown
     'more_info': function(){
       return Session.get('more_info');
@@ -199,6 +202,7 @@ discard= function(){
             Meteor.users.update({_id:Meteor.user()._id}, {$pull:{"profile.favorites":current_act}})
           }          
           setTimeout(function() {
+            activity_index=Session.get('activity_index')
             activity_index+=1;
             Session.set('activity_index', activity_index);
             Session.set('current_activity', activity_list[activity_index]);

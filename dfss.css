@@ -7,11 +7,24 @@
 	text-shadow: 0 0 5px #000;
 }
 */
-#blur_description {
+
+
+
+#blur_light {
 	color: transparent;
-	text-shadow: 0 0 2px #000;
-	text-shadow: 0 0 2px #000;
+   text-shadow: 0 0 0px rgba(0,0,0,0.8);
 }
+
+#blur_heavy {
+	  color: transparent;
+   text-shadow: 0 0 0px rgba(0,0,0,0.5);
+}
+
+#blur_heavier {
+	  color: transparent;
+   text-shadow: 0 0px rgba(0,0,0,0.1);
+}
+
 
 
 
