@@ -7,18 +7,23 @@ Router.route('/seeAll/:category/:date/:distance', {
         },
 
         waitOn: function(){
-        return Meteor.subscribe('events_query', [this.params.category, this.params.date, this.params.distance]);
+           //set parameters as session variables to use in share page 
+           Session.set('dist_param',this.params.distance);
+           Session.set('date_param',this.params.date);
+           Session.set('category_param',this.params.category);
+          return Meteor.subscribe('events_query', [this.params.category, this.params.date, this.params.distance]);
     }
     });
 
 
 //want to get user's favorites and non-favorites only at the begining of the session
-//Template.seeAll.onRendered( function(){
-Template.seeAll.onCreated( function(){
-
+Template.seeAll.onRendered( function(){
+        // if(Session.get('activity_list')==null){
+        //    create_act_list(1);
+        // }
         create_act_list(1);
-
        activity_list=Session.get('activity_list');
+
 
     if(Meteor.user()){
           //get the user's favorites and discards in a list
@@ -166,7 +171,6 @@ get_shared_ids = function(our_list,comp_list){
 get_objects_off_list = function(our_objs,comp_list){
   new_list=[];
   for(i=0;i<our_objs.length; i++){
-    console.log(comp_list.indexOf(our_objs[i]._id),our_objs[i].title)
     //if this item from our list not in our comp list, then add it
     if(comp_list.indexOf(our_objs[i]._id)==-1){
       new_list.push(our_objs[i]);

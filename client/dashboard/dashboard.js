@@ -26,6 +26,8 @@ Template.dashboard.onRendered( function(){
               favorite_ids[i]=favorites[i]._id;
             }
         }
+
+        Session.set('current_activity', Activities.findOne());
       }
 
 });
@@ -56,12 +58,12 @@ function is_favorite (act_id){
 Template.dashboard.events({ 
     'click #activity': function(){
       var the_id = this._id;
-      Router.go('actInfo',{_id: the_id, button_info:[is_discard(the_id),is_favorite(the_id)]});
+      Router.go('yourEventsActInfo',{_id: the_id});
     },
-      'click #invite_activity': function(){
-      var act_id = this.activity._id;
-      Router.go('actInfo',{_id: act_id});
-    },
+    //   'click #invite_activity': function(){
+    //   var act_id = this.activity._id;
+    //   Router.go('actInfo',{_id: act_id});
+    // },
 
     'click #remove': function(){
       var act_id = this._id;

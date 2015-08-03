@@ -1,43 +1,39 @@
+
 <template name="seeAll">
   
     <div class="ui raised very padded text container segment">
         <h2><b>All events:</b>
-        <div  id="back" Type="button" class="ui right floated large left labeled icon button" onClick="history.go(-1);return true;"><i class="reply icon"></i>Back</div></h2>
+        <div  id="back" class="ui right floated large left labeled icon button" ><i class="reply icon"></i>Back</div></h2>
             <div class="ui center aligned selection divided relaxed list"> 
-                {{#each get_act_list}}
-                    {{#if get_heart_icon _id }}
+                {{#each get_favorites}}
                       <div class="item">
-                          <i class="large green heart middle aligned icon"></i>
+                          <i id="icon_label" class="large green heart middle aligned icon"></i>
                          <div class="content">
                             <div id="activity" class="header"><h4>{{title}}</h4></div>
                         </div>
                       </div>
-                      {{/if}}
                 {{/each}}
 
-                {{#each get_act_list}}
-                    {{#if get_x_icon _id }}
+                {{#each get_discards}}
                         <div class="item">
-                                <i class="large red remove circle middle aligned icon"></i>
+                                <i id="icon_label" class="large red remove circle middle aligned icon"></i>
                              <div class="content">
                                 <div id="activity" class="header"><h4>{{title}}</h4></div>
                             </div>
                           </div>
-                    {{else}}
-                        {{#if get_heart_icon _id }}
-                        {{else}}
+                  {{/each}}
+
+                  {{#each get_unseens}}
                         <div class="item">
-                                <i class="large red remove circle middle aligned icon"></i>
+                                <i  id="icon_label" class="large radio middle aligned icon"></i>
                              <div class="content">
                                 <div id="activity" class="header"><h4>{{title}}</h4></div>
                             </div>
                           </div>
-                        {{/if}}
-                    {{/if}}
-                {{/each}}
+                  {{/each}}
       
       </div>
-          <div  id="back" Type="button" class="ui right floated large left labeled icon button" onClick="history.go(-1);return true;"><i class="reply icon"></i>Back
+          <div  id="back" class="ui right floated large left labeled icon button"><i class="reply icon"></i>Back
          </div>
       </div>
 

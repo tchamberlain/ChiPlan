@@ -58,12 +58,12 @@ Template.home.helpers({
 
     'click #next_event': function(){
       the_id = Session.get('next_event')._id
-      Router.go('actInfo',{_id: the_id, button_info:[is_discard(the_id),is_favorite(the_id)]} );
+      Router.go('actInfo',{_id: the_id, button_info:[0,0,1]} );
 
   },  
 
     'click #B_entertainment': function(){
-  
+      Session.set('make_act_list',1)
       search=get_search();
       if(Session.get('lng')){
          user_loc=[Session.get('lng'),Session.get('lng') ];
@@ -77,7 +77,7 @@ Template.home.helpers({
 
 
     'click #B_sports': function(){
-  
+      Session.set('make_act_list',1)
       search=get_search();
       if(Session.get('lng')){
          user_loc=[Session.get('lng'),Session.get('lng') ];
@@ -90,7 +90,7 @@ Template.home.helpers({
 
 
     'click #B_art': function(){
-  
+      Session.set('make_act_list',1)
       search=get_search();
       if(Session.get('lng')){
          user_loc=[Session.get('lng'),Session.get('lng') ];
@@ -103,7 +103,7 @@ Template.home.helpers({
 
 
     'click #B_stayin': function(){
-  
+      Session.set('make_act_list',1)
       search=get_search();
       if(Session.get('lng')){
          user_loc=[Session.get('lng'),Session.get('lng') ];
@@ -125,7 +125,7 @@ Template.home.helpers({
       else{
         user_loc=0;
       }
-     Session.set('make_act_list',1)
+     Session.set('make_act_list',1);
       Router.go('eventsTemp',{category: "surpriseme", date: search[0], distance: search[1],user_loc:user_loc})
     }
 

@@ -1,4 +1,4 @@
-<template name="actInfo">
+<template name="yourEventsActInfo">
     <div class="ui very padded raised container segment">
 
         <h3>{{chosen_activity.title}}</h3> 
@@ -11,7 +11,7 @@
          </div>
          {{#if currentUser}}
              {{#if favorite_button_show}}
-            <div  id="favorite" class="ui right floated aligned large left positive labeled icon button"><i class="add circle icon"></i>Add Activity to Your Events</div>
+            <div  id="favorite" class="ui right floated aligned large left positive labeled icon button"><i class="heart icon"></i>Add Activity to Your Events</div>
             {{/if}}
             {{#if discard_button_show}}
             <div  id="discard" class="ui right floated aligned large left negative labeled icon button"><i class="remove icon"></i>Discard Event</div>

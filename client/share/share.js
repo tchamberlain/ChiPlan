@@ -1,10 +1,10 @@
 //Router.route('/share/:_id/:category/:date/:distance/:fromEvents', {
-Router.route('/share/:_id/:fromEvents', {
+Router.route('/share/:_id/:fromEvents/:fromYourEvents', {
 
     name: 'share',
    data: function(){
      Session.set('get_fromYourEvents',0);
-      if(this.params.fromEvents=="YourEvents"){
+      if(this.params.fromEvents=="fromYourEvents"){
         Session.set('get_fromYourEvents',1);
       }
        Session.set('fromEvents',this.params.fromEvents);
@@ -20,29 +20,56 @@ Template.share.onRendered(function(){
    Session.set('fromEvents',Router.current().params.fromEvents);
     //not sure if a session variable is the right way to do this page
       Session.set('current_activity', Activities.findOne());
-      console.log(Session.get('current_activity'))
-      console.log(Meteor.users)
+
+      //get the parameters in case you need to re-populate the act_list 
+      dist_param=Session.get('dist_param');
+      date_param=Session.get('date_param');
+      category_param=Session.get('category_param');
+      console.log(category_param);
+      console.log(category_param);
+      console.log(category_param);
+
    });
 
 
 Template.share.helpers({
+
+  'get_when': function(){
+    start_time=Session.get('current_activity').start_time
+    start_date=Session.get('current_activity').start_date
+     var month_names = [
+        "January", "February", "March",
+        "April", "May", "June", "July",
+        "August", "September", "October",
+        "November", "December"
+    ];
+    var day_names=["Sunday","Monday", "Tuesday","Wednesday", "Thursday","Friday","Saturday"];
+
+    var dayIndex = start_date.getDay();
+    var monthIndex = start_date.getMonth();
+    var date = start_date.getDate();
+
+    
+    when=day_names[dayIndex]+", "+month_names[monthIndex]+"  "+date+ ", "+start_time;
+    return when;
+
+  },
+
+
   //used to determine which back button to show
   'get_fromEvents': function(){
-        //return Session.get('fromEvents');
         if (parseInt(Router.current().params.fromEvents)==1){ var fromEvents=true;}
         else{ var fromEvents=false;}
 
         return fromEvents;
    },
      'get_fromYourEvents': function(){
-        //return Session.get('fromEvents');
-        if ((Router.current().params.fromEvents)=="YourEvents"){ var YourEvents=true;}
+        if ((Router.current().params.fromYourEvents)==1){ var YourEvents=true;}
         else{ var YourEvents=false;}
 
         return YourEvents;
    },
      'get_back_button': function(){
-        //return Session.get('fromEvents');
         if (parseInt(Router.current().params.fromEvents)==1){ var fromEvents=true;}
         else{ var fromEvents=false;}
 
@@ -120,8 +147,22 @@ Template.share.events = {
 
   'click #back_to_seeAll': function (evt, template) {
       var the_id=Session.get('current_activity')._id
-        console.log("clicked back_to_eventsTemp");
-     Router.go('seeAll',{category:Session.get('category'),date:Session.get('date'),distance: Session.get('dist')})
+      console.log("clicked back to see all");
+      if(Session.get('activity_list')!=null){
+      Router.go('seeAll',{category:Session.get('category'),date:Session.get('date'),distance: Session.get('dist')})
+      }
+      else{
+        console.log('are you here');
+        //create_act_list(1);
+        Router.go('seeAll',{category:category_param,date:date_param,distance: dist_param});
+      }
+
+    },
+
+      'click #back_to_yourEvents': function (evt, template) {
+        var the_id=Session.get('current_activity')._id
+        console.log("clicked back_to_actInfo");
+        Router.go('dashboard');
 
     },
 
@@ -132,19 +173,28 @@ Template.share.events = {
 
       'click #back_to_eventsTemp': function (evt, template) {
         //update current activity
-        if(Session.get('activity_list')){
+       console.log("act list", Session.get('activity_list'));
+        console.log('make it here.?')
+
+        if(Session.get('activity_list')!=null){
            activity_index=Session.get('activity_index')+1;
         Session.set('activity_index',activity_index );
         Session.set('current_activity', activity_list[activity_index])
-        }
-        else{
-          Session.set('create_act_list',1);
-        }
-       
+        params=Router.current().params;
         params=Router.current().params;
         Router.go('eventsTemp',{category:Session.get('category'),date:Session.get('date'),distance: Session.get('dist')})
+
+
+        }
+        else{
+          Session.set('create_act_list',0);
+          Router.go(history.back());
+        }
+       
     }
 
 
 
 };
+
+

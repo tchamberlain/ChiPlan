@@ -6,15 +6,8 @@ Router.route('/actInfo/:_id/:button_info', {
       console.log('button_info');
       console.log(this.params.button_info[0]);
       console.log(this.params.button_info[2]);
-      Session.set('BacktoMyEvents',0);
-      //adding in condition for coming from "My Events" ---have the favorite button on, and also, make the back button route to my events
-      if(button_info=="fromYourEvents"){
-        Session.set('BacktoMyEvents',1);
-        Session.set('discard_button_show',1);
-        Session.set('favorite_button_show',0);
-        Session.set('both_buttons_show',0);
-      }
-      else{
+      console.log(this.params.button_info[4]);
+
       favorite_button_show= parseInt(this.params.button_info[0]);
       discard_button_show= parseInt(this.params.button_info[2]);
       only_info= parseInt(this.params.button_info[4]);
@@ -23,7 +16,12 @@ Router.route('/actInfo/:_id/:button_info', {
        Session.set('favorite_button_show',0);
         Session.set('both_buttons_show',0);
 
-     if(discard_button_show){
+      if(only_info){
+        Session.set('discard_button_show',0);
+        Session.set('favorite_button_show',0);
+        Session.set('both_buttons_show',0);
+      }
+      else  if(discard_button_show){
         Session.set('discard_button_show',1);
         Session.set('favorite_button_show',0);
         Session.set('both_buttons_show',0);
@@ -39,7 +37,7 @@ Router.route('/actInfo/:_id/:button_info', {
         Session.set('both_buttons_show',1);
       }
 
-    }
+    // }
 
     },
         waitOn: function(){
@@ -86,11 +84,10 @@ Template.actInfo.helpers({
         current_act=Activities.findOne();
         Meteor.users.update({_id:Meteor.user()._id}, {$addToSet:{"profile.favorites":current_act}})
         Meteor.users.update({_id:Meteor.user()._id}, {$pull:{"profile.discards":current_act}})
-        Router.go('share',{_id: current_act._id, fromEvents:0});
+        Router.go('share',{_id: current_act._id, fromEvents:0,fromYourEvents:0 });
     }
     //if there's no user, set up an error modal
     else{
-      console.log('we made it ooo ooo')
       $('.ui.modal.not_logged_in_modal')
         .modal('show');
     }
