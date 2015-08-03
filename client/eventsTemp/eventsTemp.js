@@ -39,20 +39,6 @@ Template.eventsTemp.onRendered( function(){
 //********************** HELPERS **********************//
 //********************** HELPERS **********************//
 Template.eventsTemp.helpers({
-  //   'split_description': function(){
-  //       num_characters=73;
-  //       //console.log('mobile',mobile);
-  //       if (isMobile){num_characters=25;}
-  //       description=Session.get('current_activity').description;
-  //       part1=description.substring(0,num_characters-13);
-  //       part2=description.substring(num_characters,num_characters*2);
-  //       part3=description.substring(num_characters*2,num_characters*3);
-  //       part4=description.substring(num_characters*3,num_characters*4);
-  //       rest=description.substring(num_characters*4,description.length);
-  //       description_pieces={part1:part1,part2:part2,part3:part3,part4:part4,rest:rest};
-  //   return description_pieces;
-  // },
-
   'get_rest': function(){
     lines=split_description();
     lines=lines.slice(1,split_description().length+1);
@@ -77,6 +63,14 @@ Template.eventsTemp.helpers({
 
   'get_when': function(){
     return get_when();
+  },
+   'get_where': function(){
+    where=Session.get('current_activity').address;
+    if(where.length>40){
+      where=where.substring(0,40)+"..."
+
+    }
+    return where;
   },
     'setMobile': function(){
     Session.set('mobile',1);
@@ -444,25 +438,26 @@ get_fav_and_discard_ids= function(){
         num_pieces=0;
         this_piece="";
         pieces=[];
+        
 
         for(i=0;i<description.length;i++){
           if(num_pieces==0){num_characters=40}
           else{num_characters=55}
-          if(this_piece.length<num_characters){
-            this_piece+=" "+description[i];
-            pieces[num_pieces]=this_piece;
+          if (description[i].length<20){
+            if(this_piece.length<num_characters){
+              this_piece+=" "+description[i];
+              pieces[num_pieces]=this_piece;
 
-          }
-          else{
-            this_piece+=" "+description[i];
-            pieces[num_pieces]=this_piece;
-            this_piece="";
-            num_pieces+=1;
+            }
+            else{
+              this_piece+=" "+description[i];
+              pieces[num_pieces]=this_piece;
+              this_piece="";
+              num_pieces+=1;
 
+            }
           }
 
         }
         return pieces;
   }
-
-

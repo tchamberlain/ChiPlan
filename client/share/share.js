@@ -1,23 +1,30 @@
-//Router.route('/share/:_id/:category/:date/:distance/:fromEvents', {
 Router.route('/share/:_id/:fromEvents/:fromYourEvents', {
-
     name: 'share',
-   data: function(){
+    data: function(){
      Session.set('get_fromYourEvents',0);
+     Meteor.subscribe('event_by_id',Router.current().params._id);
       if(this.params.fromEvents=="fromYourEvents"){
         Session.set('get_fromYourEvents',1);
       }
        Session.set('fromEvents',this.params.fromEvents);
    },
-        
         waitOn: function(){
-            return [Meteor.subscribe('event_by_id',this.params._id),Meteor.subscribe('get_user_names')];
+          if(Session.get('current_activity'))
+            return;
+          else{
+            return Meteor.subscribe('event_by_id',Router.current().params._id); }
         }
     });
 
 
 Template.share.onRendered(function(){
-   Session.set('fromEvents',Router.current().params.fromEvents);
+
+
+
+    Meteor.subscribe('get_user_names');
+    Meteor.subscribe('event_by_id',Router.current().params._id);
+    Session.set('fromEvents',Router.current().params.fromEvents);
+    console.log("hello, actibities?",Activities.findOne());
     //not sure if a session variable is the right way to do this page
       Session.set('current_activity', Activities.findOne());
 
@@ -25,9 +32,6 @@ Template.share.onRendered(function(){
       dist_param=Session.get('dist_param');
       date_param=Session.get('date_param');
       category_param=Session.get('category_param');
-      console.log(category_param);
-      console.log(category_param);
-      console.log(category_param);
 
    });
 

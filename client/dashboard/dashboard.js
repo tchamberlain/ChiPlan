@@ -1,12 +1,9 @@
-Router.route('/dashboard',{
-   waitOn: function(){
-
-          return Meteor.subscribe('get_user_invites',Meteor.user()._id);
-        }
-  });
+Router.route('/dashboard');
 
 
 Template.dashboard.onRendered( function(){    
+  Meteor.subscribe('get_user_invites', Meteor.user()._id);
+
   if(Meteor.user()){
         discards=Meteor.user().profile.discards;
         if(discards){
@@ -58,12 +55,12 @@ function is_favorite (act_id){
 Template.dashboard.events({ 
     'click #activity': function(){
       var the_id = this._id;
-      Router.go('yourEventsActInfo',{_id: the_id});
+      Router.go('yourEventsActInfo',{_id: the_id, is_invite:0});
     },
-    //   'click #invite_activity': function(){
-    //   var act_id = this.activity._id;
-    //   Router.go('actInfo',{_id: act_id});
-    // },
+      'click #invite_activity': function(){
+      var the_id = this.activity._id;
+      Router.go('yourEventsActInfo',{_id: the_id, is_invite:1});
+    },
 
     'click #remove': function(){
       var act_id = this._id;

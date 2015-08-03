@@ -9,9 +9,7 @@
         <div class="ui raised very padded text container segment">
     <div class="fifteen wide computer only column">
         <div class="row">
-        <h2 class="  header">
-                Your Events
-        </h2>
+        <h2 class="header">Your Events</h2>
          </div>
         <div class="ui center aligned divided selection list">
             {{#if get_fav_list}}
@@ -88,15 +86,14 @@
       <div class="computer only row">
         {{#if get_invited_events}}
        <div class="one wide computer only column"></div>
-        <div class="ui center floated padded text segment">
+        <div  class="ui center floated raised very padded text container segment">
 
           <div class="fifteen wide computer only column">
               <div class="row">
-              <h2 class="  header">
-                      Events You Were Invited To
-              </h2>
+                      <h2 class="header">Events You're Invited to</h2>
+
                </div>
-              <div class="ui center aligned divided selection list">
+               <div class="ui center aligned divided selection list">
                   {{#each get_invited_events}} 
                 <div class="item">
                    <div class="left floated content">
@@ -105,7 +102,7 @@
                    <div class="right floated content">
                       </div>
                   <div class="content">
-                      <div id="invite_activity" class="header"> <h5>{{inviter.profile.name}} invited you to {{activity.title}}</h5></div>
+                      <div id="invite_activity" class="header"> <h4><div class="ui large label">{{inviter.profile.name}}</div> invited you to {{activity.title}}</h4></div>
                   </div>
                 </div>
                 {{/each}}

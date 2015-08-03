@@ -1,11 +1,18 @@
-Router.route('/yourEventsActInfo/:_id', {
+Router.route('/yourEventsActInfo/:_id/:is_invite', {
     name: 'yourEventsActInfo',
     data: function(){
 
+      if(this.params.is_invite){
+         Session.set('discard_button_show',0);
+        Session.set('favorite_button_show',0);
+        Session.set('both_buttons_show',0);
 
+      }
+      else{
         Session.set('discard_button_show',1);
         Session.set('favorite_button_show',0);
         Session.set('both_buttons_show',0);
+      }
     
 
     },
