@@ -39,19 +39,42 @@ Template.eventsTemp.onRendered( function(){
 //********************** HELPERS **********************//
 //********************** HELPERS **********************//
 Template.eventsTemp.helpers({
-    'split_description': function(){
-        num_characters=73;
-        //console.log('mobile',mobile);
-        if (isMobile){num_characters=25;}
-        description=Session.get('current_activity').description;
-        part1=description.substring(0,num_characters-13);
-        part2=description.substring(num_characters,num_characters*2);
-        part3=description.substring(num_characters*2,num_characters*3);
-        part4=description.substring(num_characters*3,num_characters*4);
-        rest=description.substring(num_characters*4,description.length);
-        description_pieces={part1:part1,part2:part2,part3:part3,part4:part4,rest:rest};
-    return description_pieces;
+  //   'split_description': function(){
+  //       num_characters=73;
+  //       //console.log('mobile',mobile);
+  //       if (isMobile){num_characters=25;}
+  //       description=Session.get('current_activity').description;
+  //       part1=description.substring(0,num_characters-13);
+  //       part2=description.substring(num_characters,num_characters*2);
+  //       part3=description.substring(num_characters*2,num_characters*3);
+  //       part4=description.substring(num_characters*3,num_characters*4);
+  //       rest=description.substring(num_characters*4,description.length);
+  //       description_pieces={part1:part1,part2:part2,part3:part3,part4:part4,rest:rest};
+  //   return description_pieces;
+  // },
+
+  'get_rest': function(){
+    lines=split_description();
+    lines=lines.slice(1,split_description().length+1);
+    line_obj=[];
+    for(i=0;i<lines.length; i++){
+      line_obj[i]={line:lines[i]}
+    }
+    return line_obj;
+  }, 
+  'get_first_line': function(){
+    line=split_description();
+    return line[0];
   },
+    'get_second_line': function(){
+    line=split_description();
+    return line[1];
+  },
+  'get_third_line': function(){
+    line=split_description();
+    return line[2];
+  },
+
   'get_when': function(){
     return get_when();
   },
@@ -205,6 +228,8 @@ get_when= function(){
 
 
 discard= function(){
+  if(Session.get('activity_list')){
+
    $("#deck_slide")
             .transition('fly right')
           ;
@@ -221,9 +246,19 @@ discard= function(){
             activity_index=Session.get('activity_index')
             activity_index+=1;
             Session.set('activity_index', activity_index);
+            activity_list=Session.get('activity_list');
             Session.set('current_activity', activity_list[activity_index]);
 
             }, 200);
+
+    }
+    else{
+      create_act_list();
+      activity_list=Session.get('activity_list');
+      discard();
+      // Session.set('activity_index',1);
+      // Session.set('current_activity',activity_list[1]);
+    }
 
 };
 
@@ -262,9 +297,6 @@ favorite =function(){
 
 
 create_act_list= function(for_see_all){
-
-    console.log("in create_act_list");
-
     //activity_list= Activities.find().fetch();
     //getting all of the activities, returns an array of events within the user specified distance
     activity_list=distance_query();
@@ -401,5 +433,36 @@ get_fav_and_discard_ids= function(){
 
       return [favorite_ids, discard_ids];
 }
+
+
+  split_description= function(){       
+        description=Session.get('current_activity').description;
+        if(description[description.length-1]=="]"){
+          description=description.substring(0,description.length-2);
+        }
+        description=description.split(" ");
+        num_pieces=0;
+        this_piece="";
+        pieces=[];
+
+        for(i=0;i<description.length;i++){
+          if(num_pieces==0){num_characters=40}
+          else{num_characters=55}
+          if(this_piece.length<num_characters){
+            this_piece+=" "+description[i];
+            pieces[num_pieces]=this_piece;
+
+          }
+          else{
+            this_piece+=" "+description[i];
+            pieces[num_pieces]=this_piece;
+            this_piece="";
+            num_pieces+=1;
+
+          }
+
+        }
+        return pieces;
+  }
 
 

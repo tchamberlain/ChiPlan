@@ -28,11 +28,11 @@ Meteor.startup(function() {
     Pre_activities.find().forEach(    
     function (elem) {     
       //you prolly wanna add this back in?
-      // elem.title = elem.title.replace("&amp;", "&");
-      // elem.description = elem.description.replace("&amp;", "&");
-      // elem.description = elem.description.replace("This calendar is not affiliated with any section of the City of Chicago", "");
-      // elem.description = elem.description.replace("Calendar: http://www.thrillhouse.com","");
-      // elem.description = elem.description.replace("If you'd like to make a small donation to help keep the calendar running, you can Paypal chicagosummercalendar@gmail.com","");
+      elem.title = elem.title.replace("&amp;", "&");
+      elem.description = elem.description.replace("&amp;", "&");
+      elem.description = elem.description.replace("This calendar is not affiliated with any section of the City of Chicago", "");
+      elem.description = elem.description.replace("Calendar: http://www.thrillhouse.com","");
+      elem.description = elem.description.replace("If you'd like to make a small donation to help keep the calendar running, you can Paypal chicagosummercalendar@gmail.com","");
 
       if(elem.source=="library"){
         title=elem.title

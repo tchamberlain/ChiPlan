@@ -173,11 +173,11 @@ Template.share.events = {
 
       'click #back_to_eventsTemp': function (evt, template) {
         //update current activity
-       console.log("act list", Session.get('activity_list'));
-        console.log('make it here.?')
+      
 
         if(Session.get('activity_list')!=null){
            activity_index=Session.get('activity_index')+1;
+           activity_list=Session.get('activity_list');
         Session.set('activity_index',activity_index );
         Session.set('current_activity', activity_list[activity_index])
         params=Router.current().params;

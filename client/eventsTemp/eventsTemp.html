@@ -1,8 +1,8 @@
 
 <template name="eventsTemp">
+
   <div class="ui centered page grid">
       <div class="computer only row">
-        <!-- <div class="twelve wide center floated column"> -->
           <div class="row">
               <div id= "deck_slide" class="ui padded raised attached segment">
                   {{#if current_activity}}
@@ -10,9 +10,12 @@
                       <ul align="left"><b>When:</b> {{get_when}}</ul>
                       <ul align="left" ><b>Where:</b> {{current_activity.address}}</ul>
                       {{#if more_info}}
-                        <ul align="left" ><p><b>Description:</b> {{split_description.part1}}</p>{{split_description.part2}}{{split_description.part3}}{{split_description.rest}}</ul>
+                            <ul align="left" ><b>Description:</b>{{get_first_line}}
+                       {{#each get_rest}}
+                         <div>{{line}}</div>
+                        {{/each}}</ul>
                       {{else}}
-                        <ul align="left" ><b>Description:</b> {{split_description.part1}}<div id="blur_light">{{split_description.part2}}</div><div id="blur_heavy">{{split_description.part3}}...</div></ul>
+                        <ul align="left" ><b>Description:</b> {{get_first_line}}<div id="blur_light">{{get_second_line}}</div><div id="blur_heavy">{{get_third_line}}...</div></ul>
                       {{/if}}
                     {{else}}
                      <h3 class="ui large header"><center>No more activities, please try a different search!</center></h3>
@@ -26,11 +29,11 @@
           </div>
         </div>
        <div class="computer only row">
-            <div class="ui buttons">
-                  <button id="previous" class=" ui massive left labeled icon button">
+            <div class="ui buttons">  
+                <button id="previous" class=" ui massive left labeled icon button">
                        <i class="share icon"></i>
                        Previous
-                </button>   
+                </button>               
                  <button id="discard" class=" ui massive negative left labeled icon button">
                        <i class="icon remove"></i>
                         I don't want to go
@@ -75,15 +78,15 @@
 
           <div class="mobile only row">
             <div class=" ui buttons">
-                  <button id="previous" class=" ui large left labeled icon button">
+                  <button id="previous" class=" ui medium left labeled icon button">
                        <i class="share icon"></i>
                        Previous
                 </button>   
-                 <button id="discard" class=" ui large negative left labeled icon button">
+                 <button id="discard" class=" ui medium negative left labeled icon button">
                        <i class="icon remove"></i>
                         I don't want to go
                 </button>
-                <button id="favorite" class=" ui large positive right labeled icon button">
+                <button id="favorite" class=" ui medium positive right labeled icon button">
                         I want to go
                   <i class="icon heart"></i>
                 </button>                   

@@ -1,14 +1,6 @@
 Template.header.events({
   'click .heading': function(){
     Router.go('home');   
-      //TESTING SORT, ATTEMPT AT METEOR METHODS
-          //tryna check if server side sort works
-      // if(Meteor.user()){
-      //   console.log("did we get here")
-      //   Meteor.call("tryna_sort", Meteor.user()._id);
-      // }
-      //TESTING SORT
-
 
          function geocode_update_db (elem) {   
             //check if it's coordinates are 0, only update if they are

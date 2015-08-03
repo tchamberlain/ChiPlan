@@ -30,6 +30,7 @@ Template.home.helpers({
         }
       }
       Session.set('next_event', next_event);
+    next_event=next_event.title.substring(0,18)+"...";
       return next_event;
     }
     else{
