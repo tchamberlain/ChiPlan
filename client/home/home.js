@@ -1,9 +1,7 @@
 // js for home page
 Router.route('/', function(){
   this.render('home');
-},{
-  name: 'home'
-});
+},{name: 'home'});
 
 Router.configure({
   layoutTemplate: 'main'
@@ -38,34 +36,29 @@ Template.home.helpers({
    }
 });
 
-  Template.home.events({
+Template.home.events({
     'click #next_event': function(){
       the_id = Session.get('next_event')._id
       Router.go('actInfo',{_id: the_id, button_info:[0,0,1]} );
-  },  
-
+    },  
     'click #B_entertainment': function(){
       set_up_deck("entertainment");
     },
-
 
     'click #B_sports': function(){
       set_up_deck("sports");
     },
 
-
     'click #B_art': function(){
       set_up_deck("art");
     },
 
-
     'click #B_stayin': function(){
-        set_up_deck("stayin");
+      set_up_deck("stayin");
     },
 
-
     'click #B_surpriseme': function(){
-         set_up_deck("surpriseme");
+      set_up_deck("surpriseme");
     }
 
  });
@@ -78,7 +71,6 @@ function get_search(){
     else if ($("#today").checkbox('is checked')){date="today"}
     else if ($("#week").checkbox('is checked')){date="week"}
     else if ($("#weekend").checkbox('is checked')){date="weekend"}
-  //trying  to add drop down items, might not work if comp screen accordion also checkED??? by default
     else if (($("#date_dropdown").dropdown('get text'))=="Tomorrow"){date="tomorrow"}
     else if (($("#date_dropdown").dropdown('get text'))=="Today"){date="today"}
     else if (($("#date_dropdown").dropdown('get text'))=="This week"){date="week"}
@@ -89,7 +81,6 @@ function get_search(){
   //distance search
   if ($("#five_mi").checkbox('is checked')){dist="five"}
   else if ($("#ten_mi").checkbox('is checked')){dist="ten"}
-  //trying  to add drop down items, might not work if comp screen accordion also checkED??? by default
   else if (($("#dist_dropdown").dropdown('get text'))=="Within five miles"){dist="five"}
   else if (($("#dist_dropdown").dropdown('get text'))=="Within ten miles"){dist="ten"}
   else{dist="any_dist"}
@@ -97,6 +88,26 @@ function get_search(){
   search=[date, dist]
   return(search)
 }
+
+
+//FUNCTIONS
+set_up_deck=function(category){
+    //reset the activity lists
+      Session.set('activity_list_all',null);
+      Session.set('activity_list',null);
+
+      //if user has location, get it
+      if(Session.get('lng')){
+         user_loc=[Session.get('lng'),Session.get('lng') ];
+      }
+      else{
+        user_loc=0;
+      }
+      //get users input parameters
+      search=get_search();
+      Router.go('eventsTemp',{category: category, date: search[0], distance: search[1],user_loc:user_loc})
+
+  }
 
 is_discard = function(act_id){
   user_id=Meteor.user()._id;
@@ -117,27 +128,6 @@ is_favorite =function (act_id){
   return 0;
   }
   };
-
-  set_up_deck=function(category){
-    //reset the activity lists
-      Session.set('activity_list_all',null);
-      Session.set('activity_list',null);
-
-      //if user has location, get it
-      if(Session.get('lng')){
-         user_loc=[Session.get('lng'),Session.get('lng') ];
-      }
-      else{
-        user_loc=0;
-      }
-
-      //get users input parameters
-      search=get_search();
-      Router.go('eventsTemp',{category: category, date: search[0], distance: search[1],user_loc:user_loc})
-
-  }
-
-
 
 
 

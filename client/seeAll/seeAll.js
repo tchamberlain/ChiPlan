@@ -1,9 +1,7 @@
 Router.route('/seeAll/:category/:date/:distance', {
    name: 'seeAll',
     data: function(){
-
         },
-
         waitOn: function(){
            //set parameters as session variables to use in share page 
            Session.set('dist_param',this.params.distance);
@@ -21,8 +19,6 @@ Router.route('/seeAll/:category/:date/:distance', {
     }
     });
 
-
-//want to get user's favorites and non-favorites only at the begining of the session
 Template.seeAll.onRendered( function(){
         if(subscribed){
            activity_list_all=create_act_list(1);
@@ -32,6 +28,8 @@ Template.seeAll.onRendered( function(){
 
 
     if(Meteor.user()){
+
+        //want to make lists of the users favorites/discards/ unseens that fall under the current query 
           //get the user's favorites and discards in a list
           discard_ids=get_list_of_ids(Meteor.user().profile.discards);
           favorite_ids=get_list_of_ids(Meteor.user().profile.favorites);
@@ -52,13 +50,10 @@ Template.seeAll.onRendered( function(){
       else {
         unseen_list=activity_ids;
         Session.set('unseen_list',unseen_list);
-
       }
   }
   );
   
-
-
   Template.seeAll.helpers({
     'get_favorites': function(category){
       return (Session.get('favorite_list'));
@@ -73,7 +68,7 @@ Template.seeAll.onRendered( function(){
  });
 
 
-  Template.seeAll.events({ 
+Template.seeAll.events({ 
     'click #activity': function(){
        the_id= this._id;
        Session.set('current_activity',this);
@@ -152,9 +147,6 @@ get_shared_ids = function(our_list,comp_list){
   return our_list;
 };
 
-
-
-// CHECK IF THIS WORKS
 get_objects_off_list = function(our_objs,comp_list){
   new_list=[];
   for(i=0;i<our_objs.length; i++){

@@ -63,24 +63,23 @@ Template.eventsTemp.helpers({
     return line[2];
   },
 
-  //gets when and where of event to print it nicely in the template
   'get_when': function(){
     return get_when();
   },
 
-   'get_where': function(){
-      where=Session.get('current_activity').address;
-      if(isMobile){num_char=30}
-      else{num_char=40}
+ 'get_where': function(){
+    where=Session.get('current_activity').address;
+    if(isMobile){num_char=30}
+    else{num_char=40}
 
-      if(where.length>num_char){
-        where=where.substring(0,num_char)+"..."
-      }
-      return where;
-    },
-      'more_info': function(){
-        return Session.get('more_info');
+    if(where.length>num_char){
+      where=where.substring(0,num_char)+"..."
+    }
+    return where;
   },
+    'more_info': function(){
+      return Session.get('more_info');
+},
 
 //gestures for phone swiping
   templateGestures: {
@@ -207,9 +206,7 @@ get_when= function(){
     
     when=day_names[dayIndex]+", "+month_names[monthIndex]+"  "+date+ ", "+start_time;
     return when;
-
   }
-
 
 discard= function(){
 
@@ -258,7 +255,6 @@ favorite =function(){
     Router.go('share',{_id: current_act._id, fromEvents:1, fromYourEvents:0});
 
     //update current activity
-    console.log('is this doing anything?');
     activity_index=Session.get('activity_index')+1;
     Session.set('activity_index', activity_index);
     Session.set('current_activity', activity_list[activity_index]);
@@ -269,8 +265,6 @@ else{
   }
 };
 
-
-
 create_act_list= function(for_see_all){
     //getting all of the activities, returns an array of events within the user specified distance
     activity_list=distance_query();
@@ -278,43 +272,20 @@ create_act_list= function(for_see_all){
     //taking out discards and favorites from what you display
     //first check if there is a meteor user who has favorites
     if(!for_see_all){
-    if(Meteor.user()){
+      if(Meteor.user()){
+
         discards=Meteor.user().profile.discards;
-        if(discards){
-            discard_ids=get_list_of_ids(discards);
-        }
         favorites=Meteor.user().profile.favorites;
-        if(favorites){
-            favorite_ids=get_list_of_ids(favorites);
-        }
 
         //x is a counter, allowing you to make a new, shorter activity list while you loop through the old one using i
           x=0;
           activity_list_new=[];
             for(i=0;i<activity_list.length;i++){
-              //if this id isn't in the list of discards, or favorites added it to the good list
-              if(favorites&&discards){
-                    if((discard_ids.indexOf(activity_list[i]._id)==-1)&&(favorite_ids.indexOf(activity_list[i]._id)==-1)){
-                      activity_list_new[x]=activity_list[i];
-                      x+=1;
-                    }                
-              }
-              //if there are no discards, just take out favorites
-              else if (favorites){
-                if(favorite_ids.indexOf(activity_list[i]._id)==-1){
-                      activity_list_new[x]=activity_list[i];
-                      x+=1;
-                    }         
-              }
-             //if there are no favorites, just take out discards
-              else{
-                if(discards){
-                  if(discard_ids.indexOf(activity_list[i]._id)==-1){
-                        activity_list_new[x]=activity_list[i];
-                        x+=1;
-                      }       
-                }         
-              }
+              this_act=activity_list[i];
+              if(!(is_discard(this_act._id))&&(!is_favorite(this_act._id))){
+                activity_list_new[x]=this_act;
+                x+=1;
+              }                
             }
             activity_list=activity_list_new;
         }
@@ -328,10 +299,7 @@ create_act_list= function(for_see_all){
         Session.set('current_activity',current_activity);
         Session.set('activity_index',activity_index);
       }
-
       return activity_list;
-
-
 };
 
 
@@ -370,8 +338,6 @@ distance_query=function(){
 
 }
 
-
-
 //takes an array of event objects, returns array of ids
 get_list_of_ids =function(event_array){
     ids=[];
@@ -380,32 +346,6 @@ get_list_of_ids =function(event_array){
         ids[i]=event_array[i]._id;
     }
     return ids;
-}
-
-
-
-get_fav_and_discard_ids= function(){
-   if(Meteor.user()){
-        discards=Meteor.user().profile.discards;
-        if(discards){
-          //get array of all discard ids
-
-          discard_ids=[];
-          for(i=0; i<discards.length; i++){
-            discard_ids[i]=discards[i]._id;
-          }
-        }
-          //get array of all favorite ids
-          favorite_ids=[];
-        favorites=Meteor.user().profile.favorites;
-        if(favorites){
-          favorite_ids=[];
-           for(i=0; i<favorites.length; i++){
-              favorite_ids[i]=favorites[i]._id;
-            }
-        }
-      }
-      return [favorite_ids, discard_ids];
 }
 
 //uses current activities description, returns an array with a line of the description in each element
@@ -458,7 +398,6 @@ get_fav_and_discard_ids= function(){
             .transition('fly left')
           ;
 }
-
 
 add_fav= function(user,activity){
   Meteor.users.update({_id:Meteor.user()._id}, {$addToSet:{"profile.favorites":current_act}})
