@@ -9,8 +9,9 @@ Router.route('/share/:_id/:fromEvents/:fromYourEvents', {
        Session.set('fromEvents',this.params.fromEvents);
    },
         waitOn: function(){
-          if(Session.get('current_activity'))
-            return;
+          if(Session.get('current_activity')){ 
+            return;}
+            
           else{
             return Meteor.subscribe('event_by_id',Router.current().params._id); }
         }
@@ -18,21 +19,21 @@ Router.route('/share/:_id/:fromEvents/:fromYourEvents', {
 
 
 Template.share.onRendered(function(){
-
-
-
+ 
+  //subscriptions
+    act_id=Router.current().params._id;
+    Meteor.subscribe('event_by_id',act_id);
     Meteor.subscribe('get_all_invites');
     Meteor.subscribe('get_user_names');
-    Meteor.subscribe('event_by_id',Router.current().params._id);
-    Session.set('fromEvents',Router.current().params.fromEvents);
-    console.log("hello, actibities?",Activities.findOne());
-    //not sure if a session variable is the right way to do this page
-      Session.set('current_activity', Activities.findOne());
 
-      //get the parameters in case you need to re-populate the act_list 
-      dist_param=Session.get('dist_param');
-      date_param=Session.get('date_param');
-      category_param=Session.get('category_param');
+
+    Session.set('fromEvents',Router.current().params.fromEvents);
+    Session.set('current_activity', Activities.findOne(act_id));
+
+    //get the parameters in case you need to re-populate the act_list 
+    dist_param=Session.get('dist_param');
+    date_param=Session.get('date_param');
+    category_param=Session.get('category_param');
 
    });
 
@@ -40,26 +41,8 @@ Template.share.onRendered(function(){
 Template.share.helpers({
 
   'get_when': function(){
-    start_time=Session.get('current_activity').start_time
-    start_date=Session.get('current_activity').start_date
-     var month_names = [
-        "January", "February", "March",
-        "April", "May", "June", "July",
-        "August", "September", "October",
-        "November", "December"
-    ];
-    var day_names=["Sunday","Monday", "Tuesday","Wednesday", "Thursday","Friday","Saturday"];
-
-    var dayIndex = start_date.getDay();
-    var monthIndex = start_date.getMonth();
-    var date = start_date.getDate();
-
-    
-    when=day_names[dayIndex]+", "+month_names[monthIndex]+"  "+date+ ", "+start_time;
-    return when;
-
+    return get_when();
   },
-
 
   //used to determine which back button to show
   'get_fromEvents': function(){
@@ -104,9 +87,6 @@ Template.share.helpers({
       link="https://twitter.com/intent/tweet?text="+"https://chiplan.meteor.com/actInfo/"+act_id
       return link;
    }
-
-
-
 });
 
 
@@ -114,40 +94,15 @@ Template.share.events = {
 //if they press enter on the form, we save the name they have entered
   'keypress input.newLink': function (evt, template) {
     if (evt.which === 13) {
-      var input_name = template.find(".newLink").value;
-      //check for name in user DB
-      query_name= Meteor.users.findOne({'profile.name': input_name})
-      //if this query doesn't exist (this user not in DB), show modal saying so
-      if(!query_name){
-        $('.ui.modal.error_modal')
-        .modal('show');
-      }
-      else{
-        Session.set('query_name',query_name)
-        $('.ui.modal.send_modal')
-        .modal('show');
-        return query_name;
-      }
+     call_invite_modal();
     }
   },
 
 //if they press the search button on the form, we save the name they have entered
   'click #search_button': function (evt, template) {
     console.log("search_buttoned")
-    var input_name = template.find(".newLink").value;
-      //check for name in user DB
-      query_name= Meteor.users.findOne({'profile.name': input_name})
-      //if this query doesn't exist (this user not in DB), show modal saying so
-      if(!query_name){
-        $('.ui.modal.error_modal')
-        .modal('show');
-      }
-      else{
-        Session.set('query_name',query_name)
-        $('.ui.modal.send_modal')
-        .modal('show');
-        return query_name;
-      }
+    call_invite_modal();
+
     },
 
   'click #back_to_seeAll': function (evt, template) {
@@ -158,13 +113,12 @@ Template.share.events = {
       }
       else{
         console.log('are you here');
-        //create_act_list(1);
         Router.go('seeAll',{category:category_param,date:date_param,distance: dist_param});
       }
 
     },
 
-      'click #back_to_yourEvents': function (evt, template) {
+    'click #back_to_yourEvents': function (evt, template) {
         var the_id=Session.get('current_activity')._id
         console.log("clicked back_to_actInfo");
         Router.go('dashboard');
@@ -192,13 +146,30 @@ Template.share.events = {
 
         }
         else{
-          Session.set('create_act_list',0);
+          //Session.set('create_act_list',0);
           Router.go(history.back());
         }
        
     }
 
 
+};
+
+call_invite_modal =function(){
+   var input_name = template.find(".newLink").value;
+      //check for name in user DB
+      query_name= Meteor.users.findOne({'profile.name': input_name})
+      //if this query doesn't exist (this user not in DB), show modal saying so
+      if(!query_name){
+        $('.ui.modal.error_modal')
+        .modal('show');
+      }
+      else{
+        Session.set('query_name',query_name)
+        $('.ui.modal.send_modal')
+        .modal('show');
+        return query_name;
+      }
 
 };
 

@@ -39,18 +39,30 @@ Router.route('/actInfo/:_id/:button_info', {
 
     },
         waitOn: function(){
-          return Meteor.subscribe('event_by_id',this.params._id);
+          if(Session.get('current_activity')){
+            subscribed=0;
+            console.log('current_act in route',Session.get('current_activity'));
+            return;
+          }
+          else{
+            subscribed=1;
+            return Meteor.subscribe('event_by_id',this.params._id);
+        }
         }
     });
 
 Template.actInfo.onCreated( function(){
-    Session.set('current_activity', Activities.findOne());
+    if(subscribed){
+      console.log("are tyou heere? in created")
+      Session.set('current_activity', Activities.findOne());
+    }
+    
 });
 
 
 Template.actInfo.helpers({
    'chosen_activity': function(){
-      return Activities.findOne();
+      return Session.get('current_activity');
    },
     'BacktoMyEvents': function(){
       return Session.get('BacktoMyEvents');
@@ -79,7 +91,7 @@ Template.actInfo.helpers({
 
       //if there is a user logged in, send them to the confirmation page
       if( Meteor.user()){
-        current_act=Activities.findOne();
+        current_act=Session.get('current_activity');
         Meteor.users.update({_id:Meteor.user()._id}, {$addToSet:{"profile.favorites":current_act}})
         Meteor.users.update({_id:Meteor.user()._id}, {$pull:{"profile.discards":current_act}})
         Router.go('share',{_id: current_act._id, fromEvents:0,fromYourEvents:0 });
@@ -99,7 +111,7 @@ Template.actInfo.helpers({
 
       //if there is a user logged in, send them to the confirmation page
       if( Meteor.user()){
-        current_act=Activities.findOne();
+        current_act=Session.get('current_activity');
         Meteor.users.update({_id:Meteor.user()._id}, {$pull:{"profile.favorites":current_act}});
         Meteor.users.update({_id:Meteor.user()._id}, {$addToSet:{"profile.discards":current_act}});
     }

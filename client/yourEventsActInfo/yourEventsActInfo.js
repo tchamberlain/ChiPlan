@@ -25,7 +25,6 @@ Template.yourEventsActInfo.onRendered( function(){
     Session.set('current_activity', Activities.findOne());
 
     current_activity=Activities.findOne();
-    console.log(current_activity,"here??");
 });
 
 

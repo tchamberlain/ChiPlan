@@ -67,17 +67,27 @@ Template.dashboard.events({
       Router.go('yourEventsActInfo',{_id: the_id, isInvite:[1]});
     },
 
+    'mouseenter #fav_icon': function (event, template){
+
+        //Session.set('icon_text' )
+         console.log( "mousehover", event);
+    },
+  "mouseleave #fav_icon": function(event, template){
+      console.log ("mouseout", event);
+  },
+    
+
     'click #remove': function(){
       var act_id = this._id;
       var user_id =Meteor.user()._id
       Meteor.users.update({_id: user_id}, {$pull: {'profile.favorites': {_id: act_id}}});
     },
+
     'click #fav_icon': function(){
             var act_id = this._id;
 
        Meteor.users.update({_id: user_id}, {$addToSet: {'profile.discarding': {_id: act_id}}});
       var act_id = this._id;
-      console.log("clicked icon")
 
      setTimeout(function() {
            Meteor.users.update({_id: user_id}, {$pull: {'profile.discarding': {_id: act_id}}});
@@ -114,10 +124,13 @@ Template.dashboard.events({
             return Meteor.user().profile.favorites;
   },
 
+
+    'get_icon_text':function(){
+      return Session.get('icon_text');
+    },
+
     'get_heart_icon': function(act_id){
           user_id=Meteor.user()._id;
-          console.log("heart icon",Meteor.users.find({_id:user_id, 'profile.discarding._id':act_id}).count());
-
           if(Meteor.users.find({_id:user_id, 'profile.discarding._id':act_id}).count()){
             return 0;
           }

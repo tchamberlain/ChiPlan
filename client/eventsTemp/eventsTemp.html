@@ -7,13 +7,15 @@
                   {{#if current_activity}}
                       <h6 class="ui large header" id="blur"><center>{{current_activity.title}}</center></h6> 
                       <ul align="left"><b>When:</b> {{get_when}}</ul>
-                      <ul align="left" ><b>Where:</b> {{get_where}}</ul>
+                      
                       {{#if more_info}}
+                            <ul align="left" ><b>Where:</b> {{current_activity.address}}</ul>
                             <ul align="left" ><b>Description:</b>{{get_first_line}}
                        {{#each get_rest}}
                          <div>{{line}}</div>
                         {{/each}}</ul>
                       {{else}}
+                        <ul align="left" ><b>Where:</b> {{get_where}}</ul>
                         <ul align="left" ><b>Description:</b> {{get_first_line}}<div id="blur_light">{{get_second_line}}</div><div id="blur_heavy">{{get_third_line}}...</div></ul>
                       {{/if}}
                     {{else}}
@@ -50,21 +52,24 @@
           <div class="row">
               {{#HammerTouchArea gestureMap=templateGestures}}
                   <div id= "hammerDiv">
-                    <div id= "deck_slide" class="ui padded raised attached segment">
-                          {{#if current_activity}}
+                    <div id= "deck_slide" class="ui padded compact raised attached segment">
+                        {{#if current_activity}}
                             <h6 class="ui large header" id="blur"><center>{{current_activity.title}}</center></h6> 
-                            <ul align="left"><b>When:</b> {{get_when}}</ul>
-                            <ul align="left"><b>Where:</b> {{current_activity.address}}</ul>
+                            <ul align="left"><b>When:</b> {{get_when}}</ul>                           
                             {{#if more_info}}
-                            <ul align="left"><p><b>Description:</b> {{split_description.part1}}</p>{{split_description.part2 }}{{split_description.part3}}{{split_description.rest}}</ul>
-                             {{else}}
-                            <ul align="left"><b>Description:</b> {{split_description.part1}}<div id="blur_light">{{split_description.part2}}</div><div id="blur_heavy">{{split_description.part3 }}...</div></ul>
+                                  <ul align="left" ><b>Where:</b> {{current_activity.address}}</ul>
+                                  <ul align="left" ><b>Description:</b>{{get_first_line}}
+                             {{#each get_rest}}
+                               <div>{{line}}</div>
+                              {{/each}}</ul>
+                            {{else}}
+                              <ul align="left" ><b>Where:</b> {{get_where}}</ul>
+                              <ul align="left" ><b>Description:</b> {{get_first_line}}<div id="blur_light">{{get_second_line}}</div><div id="blur_heavy">{{get_third_line}}...</div></ul>
                             {{/if}}
-
                           {{else}}
                            <h3 class="ui large header"><center>No more activities, please try a different search!</center></h3>
                           {{/if}}
-                        </div>
+                    </div>
                         {{#if more_info}}
                         <div id="less_info" class="ui large bottom attached button" tabindex="0"><i class="black chevron up icon "></i>Less info</div>
                         {{else}}
@@ -111,3 +116,6 @@
     </div>
 
 </template>
+
+
+
