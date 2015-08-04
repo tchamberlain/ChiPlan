@@ -1,8 +1,8 @@
-Router.route('/yourEventsActInfo/:_id/:is_invite', {
+Router.route('/yourEventsActInfo/:_id/:is_invite ', {
     name: 'yourEventsActInfo',
     data: function(){
 
-      if(this.params.is_invite){
+      if(this.params.is_invite==1){
          Session.set('discard_button_show',0);
         Session.set('favorite_button_show',0);
         Session.set('both_buttons_show',0);
@@ -21,10 +21,11 @@ Router.route('/yourEventsActInfo/:_id/:is_invite', {
         }
     });
 
-Template.yourEventsActInfo.onCreated( function(){
+Template.yourEventsActInfo.onRendered( function(){
     Session.set('current_activity', Activities.findOne());
+
     current_activity=Activities.findOne();
-    console.log(current_activity);
+    console.log(current_activity,"here??");
 });
 
 

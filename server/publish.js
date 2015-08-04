@@ -25,6 +25,10 @@ Meteor.publish('get_user_names', function(id){
         return Meteor.users.find({});
 });
 
+Meteor.publish('get_all_invites', function(id){
+        return Invites.find({});
+});
+
 
 
 

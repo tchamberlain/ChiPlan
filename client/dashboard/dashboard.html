@@ -15,16 +15,9 @@
             {{#if get_fav_list}}
                 {{#each get_fav_list}}
               <div class="item">
-<!--                 <div class="right floated content">
-                    <button class="ui labeled icon button" id="remove">
-                    <i class="remove icon"></i>
-                        Remove
-                        </button>
-
-                </div> -->
                 <div class="left floated content">
                   {{#if get_heart_icon _id}}
-                    <i id="icon" class="green heart icon"></i>
+                    <i id="fav_icon" class="green heart icon"></i>
                    {{else}}
                      <i class="red remove icon"></i>
                     {{/if}}
@@ -57,7 +50,7 @@
               <div class="item">
                 <div class="left floated content">
                   {{#if get_heart_icon _id}}
-                    <i id="icon" class="green heart icon"></i>
+                    <i id="fav_icon" class="green heart icon"></i>
                    {{else}}
                      <i class="remove icon"></i>
                     {{/if}}
@@ -96,7 +89,7 @@
                <div class="ui center aligned divided selection list">
                   {{#each get_invited_events}} 
                 <div class="item">
-                   <div class="left floated content">
+                   <div id="remove_invite" class="left floated content">
                       <i class="black mail outline icon"></i>
                   </div>
                    <div class="right floated content">
@@ -127,8 +120,12 @@
               <div class="ui center aligned divided selection list">
                   {{#each get_invited_events}} 
                 <div class="item">
-                   <div class="left floated content">
-                      <i class="black mail outline icon"></i>
+                   <div id="remove_invite" class="left floated content">
+                      {{#if get_heart_icon _id}}
+                        <i id="fav_icon" class="black mail outline icon"></i>
+                      {{else}}
+                        <i class="remove icon"></i>  
+                      {{/if}}                  
                   </div>
                       <div id="invite_activity" class="header"> <h5>{{inviter.profile.name}} invited you to {{activity.title}}</h5></div>
                   </div>

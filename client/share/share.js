@@ -21,6 +21,7 @@ Template.share.onRendered(function(){
 
 
 
+    Meteor.subscribe('get_all_invites');
     Meteor.subscribe('get_user_names');
     Meteor.subscribe('event_by_id',Router.current().params._id);
     Session.set('fromEvents',Router.current().params.fromEvents);

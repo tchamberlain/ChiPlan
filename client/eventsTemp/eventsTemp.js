@@ -27,7 +27,7 @@ Router.route('/events/:category/:date/:distance', {
 
 Template.eventsTemp.onRendered( function(){
     //geocodes the current db, use when you've clicked on surprise me to update all events
-    //geocode_all_activites();
+    geocode_all_activites();
     //tryna make it so the act_list is only made once
     if(Session.get('make_act_list')||(!Session.get('activity_list')))
     { console.log("should create the act list now")
@@ -155,7 +155,7 @@ function geocode_all_activites(){
 
     all_activities=Activities.find().fetch()
       // space out google maps api requests
-      update_all_db(852);
+      // update_all_db(0);
       function update_all_db(i) {
         if(all_activities.length > i) {
             setTimeout(function() {
@@ -250,14 +250,12 @@ discard= function(){
       create_act_list();
       activity_list=Session.get('activity_list');
       discard();
-      // Session.set('activity_index',1);
-      // Session.set('current_activity',activity_list[1]);
     }
 
 };
 
 favorite =function(){
-          //make the deck move to indicate previous is coming
+      //make the deck move to indicate previous is coming
       $("#deck_slide")
         .transition('fly left')
       ;

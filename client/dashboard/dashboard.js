@@ -1,5 +1,9 @@
-Router.route('/dashboard');
+Router.route('/dashboard',{
+   waitOn: function(){
 
+          return Meteor.subscribe('get_user_invites',Meteor.user()._id);
+        }
+  });
 
 Template.dashboard.onRendered( function(){    
   Meteor.subscribe('get_user_invites', Meteor.user()._id);
@@ -59,6 +63,7 @@ Template.dashboard.events({
     },
       'click #invite_activity': function(){
       var the_id = this.activity._id;
+      console.log(this.activity.title);
       Router.go('yourEventsActInfo',{_id: the_id, is_invite:1});
     },
 
@@ -67,7 +72,7 @@ Template.dashboard.events({
       var user_id =Meteor.user()._id
       Meteor.users.update({_id: user_id}, {$pull: {'profile.favorites': {_id: act_id}}});
     },
-    'click .icon': function(){
+    'click #fav_icon': function(){
             var act_id = this._id;
 
        Meteor.users.update({_id: user_id}, {$addToSet: {'profile.discarding': {_id: act_id}}});
@@ -81,18 +86,20 @@ Template.dashboard.events({
 
             }, 800);
 
-    //   if (#icon.hasClass("green heart icon")) {
-    //     console.log("this class")
-    //      #icon.removeClass("green heart icon").addClass("remove icon");
-    // }
-
-      // Meteor.users.update({_id: user_id}, {$pull: {'profile.favorites': {_id: act_id}}});
-      // Meteor.users.update({_id: user_id}, {$addToSet: {'profile.discards': {_id: act_id}}});
     },
 
     'click #remove_invite': function(){
       var user_id =Meteor.user()._id
-      Invites.update({_id: user_id}, {$pull: {'activity_inviter': {activity: this.activity,inviter: this.inviter}}});
+       Meteor.users.update({_id: user_id}, {$addToSet: {'profile.discarding': {_id: act_id}}});
+      var act_id = this._id;
+      console.log("clicked icon")
+     setTimeout(function() {
+           Meteor.users.update({_id: user_id}, {$pull: {'profile.discarding': {_id: act_id}}});
+        Invites.update({_id: user_id}, {$pull: {'activity_inviter': {activity: this.activity,inviter: this.inviter}}});
+
+
+            }, 800);      
+
     }
   });
 

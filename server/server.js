@@ -24,7 +24,7 @@ Meteor.startup(function() {
 
 
 
-  if (Activities.find().count()==(99999999)){
+  if (Activities.find().count()==(0)){
     Pre_activities.find().forEach(    
     function (elem) {     
       //you prolly wanna add this back in?
@@ -33,6 +33,7 @@ Meteor.startup(function() {
       elem.description = elem.description.replace("This calendar is not affiliated with any section of the City of Chicago", "");
       elem.description = elem.description.replace("Calendar: http://www.thrillhouse.com","");
       elem.description = elem.description.replace("If you'd like to make a small donation to help keep the calendar running, you can Paypal chicagosummercalendar@gmail.com","");
+      elem.description =elem.description.replace("Map:","");
 
       if(elem.source=="library"){
         title=elem.title
@@ -181,23 +182,28 @@ Meteor.startup(function() {
       }
       //if events are from chi summer calendar
       else{
-        title=elem.title
+        title=elem.title;
 
         //split the dates into arrays that can be used later
         var start_date_array=elem.start_date.split("/");
         var end_date_array=elem.end_date.split("/");
 
         //create javascript date objects from these arrays, subtracting 1 from the month (january is 0)
-        start_date1=new Date(Number(start_date_array[2]), Number(start_date_array[0])-1, Number(start_date_array[1]))
-        end_date1=new Date(Number(end_date_array[2]), Number(end_date_array[0])-1, Number(end_date_array[1]))
+        start_date1=new Date();
+        end_date1=new Date();
+        start_date1.setFullYear(2015, Number(start_date_array[0])-1, Number(start_date_array[2]));
+        end_date1.setFullYear(2015, Number(start_date_array[0])-1, Number(start_date_array[2]));
+        // start_date1=new Date(Number(start_date_array[2]), Number(start_date_array[0])-1, Number(start_date_array[1]))
+        // end_date1=new Date(Number(end_date_array[2]), Number(end_date_array[0])-1, Number(end_date_array[1]))
 
         // these events coming from the calendar need to be geocoded, so for now we set lat lng as 0,0
-        lat=0
-        lng=0
-        source= "calendar"
-        tags=elem.tags
-        start_time=elem.start_time
-        end_time= elem.end_time
+        lat=0;
+        lng=0;
+        source= "calendar";
+        console.log("calendar event",elem.title,start_date1)
+        tags=elem.tags;
+        start_time=elem.start_time;
+        end_time= elem.end_time;
 
 
         //get in highschoolers tick marks
@@ -212,8 +218,6 @@ Meteor.startup(function() {
 
         //location is now called address
         address=elem.location;
-        console.log("hello")
-        console.log(address)
 
       }
 
