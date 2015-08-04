@@ -12,12 +12,6 @@ Router.route('/events/:category/:date/:distance', {
     name: 'eventsTemp',
     data: function(){return {category:  this.params.category};},
     waitOn: function(){
-          lat=null;
-          lng=null;
-          if(Session.get('lng')){
-            lat=Session.get('lat');
-            lng=Session.get('lng');
-            }
         Session.set('category',this.params.category);
         Session.set('date',this.params.date);
         Session.set('dist',this.params.distance);
@@ -140,7 +134,7 @@ Template.eventsTemp.events({
 
 //********************** FUNCTIONS **********************//
 //********************** FUNCTIONS **********************//
-function geocode_all_activites(){
+geocode_all_activites=function(){
 
     all_activities=Activities.find().fetch()
       // space out google maps api requests

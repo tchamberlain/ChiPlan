@@ -1,59 +1,21 @@
 Router.route('/dashboard',{
    waitOn: function(){
-
-          return Meteor.subscribe('get_user_invites',Meteor.user()._id);
+        return Meteor.subscribe('get_user_invites',Meteor.user()._id);
         }
   });
 
 Template.dashboard.onRendered( function(){    
+  
   Meteor.subscribe('get_user_invites', Meteor.user()._id);
 
   if(Meteor.user()){
         discards=Meteor.user().profile.discards;
-        if(discards){
-          //get array of all discard ids
-          discard_ids=[];
-          for(i=0; i<discards.length; i++){
-            discard_ids[i]=discards[i]._id;
-          }
-        }
-
-        //get array of all favorite ids
-        favorite_ids=[];
+        discard_ids=get_list_of_ids(discards);
         favorites=Meteor.user().profile.favorites;
-        if(favorites){
-          favorite_ids=[];
-           for(i=0; i<favorites.length; i++){
-              favorite_ids[i]=favorites[i]._id;
-            }
-        }
-
+        favorite_ids=get_list_of_ids(favorites);
         Session.set('current_activity', Activities.findOne());
       }
-
 });
-
-
-function is_discard(act_id){
-    user_id=Meteor.user()._id;
-    if(Meteor.users.find({_id:user_id, 'profile.discards._id':act_id}).count()){
-      return 1;
-    }
-    else{
-      return 0;
-    }
-  };
-
-function is_favorite (act_id){
-    user_id=Meteor.user()._id;
-    if(Meteor.users.find({_id:user_id, 'profile.favorites._id':act_id}).count()){
-      return 1;
-    }
-   
-    else{
-    return 0;
-    }
-  };
 
 
 Template.dashboard.events({ 
@@ -67,36 +29,28 @@ Template.dashboard.events({
       Router.go('yourEventsActInfo',{_id: the_id, isInvite:[1]});
     },
 
-    'mouseenter #fav_icon': function (event, template){
-
-        //Session.set('icon_text' )
-         console.log( "mousehover", event);
-    },
-  "mouseleave #fav_icon": function(event, template){
-      console.log ("mouseout", event);
-  },
-    
-
-    'click #remove': function(){
-      var act_id = this._id;
-      var user_id =Meteor.user()._id
-      Meteor.users.update({_id: user_id}, {$pull: {'profile.favorites': {_id: act_id}}});
-    },
+  //   'mouseenter #fav_icon': function (event, template){
+  //       console.log( "mousehover", event);
+  //   },
+  // "mouseleave #fav_icon": function(event, template){
+  //     console.log ("mouseout", event);
+  // },
 
     'click #fav_icon': function(){
-            var act_id = this._id;
-
-       Meteor.users.update({_id: user_id}, {$addToSet: {'profile.discarding': {_id: act_id}}});
       var act_id = this._id;
 
-     setTimeout(function() {
-           Meteor.users.update({_id: user_id}, {$pull: {'profile.discarding': {_id: act_id}}});
-           Meteor.users.update({_id: user_id}, {$pull: {'profile.favorites': {_id: act_id}}});
-            Meteor.users.update({_id: user_id}, {$addToSet: {'profile.discards': {_id: act_id}}});
+      Meteor.users.update({_id: user_id}, {$addToSet: {'profile.discarding': {_id: act_id}}});
+      var act_id = this._id;
+
+      setTimeout(function() {
+        Meteor.users.update({_id: user_id}, {$pull: {'profile.discarding': {_id: act_id}}});
+        Meteor.users.update({_id: user_id}, {$pull: {'profile.favorites': {_id: act_id}}});
+        Meteor.users.update({_id: user_id}, {$addToSet: {'profile.discards': {_id: act_id}}});
 
             }, 800);
 
     },
+
 
     'click #remove_invite': function(){
 
@@ -107,25 +61,23 @@ Template.dashboard.events({
       console.log("act, inviter",act_id,inviter_id );
       Meteor.users.update({_id: user_id}, {$addToSet: {'profile.discarding': {_id: act_id}}}); 
 
-     setTimeout(function() {
-       Meteor.users.update({_id: user_id}, {$pull: {'profile.discarding': {_id: act_id}}});
-      Invites.update({_id: user_id}, {$pull: {'activity_inviter': {'activity._id': act_id,'inviter._id':inviter_id }}});
-
-
+      setTimeout(function() {
+        Meteor.users.update({_id: user_id}, {$pull: {'profile.discarding': {_id: act_id}}});
+        Invites.update({_id: user_id}, {$pull: {'activity_inviter': {'activity._id': act_id,'inviter._id':inviter_id }}});
             }, 800);      
 
     }
   });
 
-    Template.dashboard.helpers({ 
-        'get_fav_list': function(category){
+  Template.dashboard.helpers({ 
+      'get_fav_list': function(category){
             if (Meteor.user().profile.favorites.length==0)
               return false;
             return Meteor.user().profile.favorites;
   },
 
 
-    'get_icon_text':function(){
+  'get_icon_text':function(){
       return Session.get('icon_text');
     },
 
@@ -139,7 +91,7 @@ Template.dashboard.events({
           }
   },
 
-        'get_invited_events': function(category){
+    'get_invited_events': function(category){
             if(Meteor.user()){
                 user_id= Meteor.user()._id
                 if (Invites.find({_id: user_id}).count() >0) {
