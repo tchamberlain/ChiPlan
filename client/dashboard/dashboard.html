@@ -52,7 +52,7 @@
                   {{#if get_heart_icon _id}}
                     <i id="fav_icon" class="green heart icon"></i>
                    {{else}}
-                     <i class="remove icon"></i>
+                     <i class="red remove icon"></i>
                     {{/if}}
                 </div>
 
@@ -90,7 +90,11 @@
                   {{#each get_invited_events}} 
                 <div class="item">
                    <div id="remove_invite" class="left floated content">
-                      <i class="black mail outline icon"></i>
+                     {{#if get_heart_icon _id}}
+                        <i id="fav_icon" class="black mail outline icon"></i>
+                      {{else}}
+                        <i class="red remove icon"></i>  
+                      {{/if}}                  
                   </div>
                    <div class="right floated content">
                       </div>

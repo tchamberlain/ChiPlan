@@ -1,8 +1,8 @@
-Router.route('/yourEventsActInfo/:_id/:is_invite ', {
+Router.route('/yourEventsActInfo/:_id/:isInvite', {
     name: 'yourEventsActInfo',
     data: function(){
 
-      if(this.params.is_invite==1){
+      if((parseInt(this.params.isInvite))==1){
          Session.set('discard_button_show',0);
         Session.set('favorite_button_show',0);
         Session.set('both_buttons_show',0);

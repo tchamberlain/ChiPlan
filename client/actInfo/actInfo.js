@@ -37,8 +37,6 @@ Router.route('/actInfo/:_id/:button_info', {
         Session.set('both_buttons_show',1);
       }
 
-    // }
-
     },
         waitOn: function(){
           return Meteor.subscribe('event_by_id',this.params._id);

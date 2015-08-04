@@ -18,8 +18,8 @@ Template.dashboard.onRendered( function(){
           }
         }
 
-          //get array of all favorite ids
-          favorite_ids=[];
+        //get array of all favorite ids
+        favorite_ids=[];
         favorites=Meteor.user().profile.favorites;
         if(favorites){
           favorite_ids=[];
@@ -59,12 +59,12 @@ function is_favorite (act_id){
 Template.dashboard.events({ 
     'click #activity': function(){
       var the_id = this._id;
-      Router.go('yourEventsActInfo',{_id: the_id, is_invite:0});
+      Router.go('yourEventsActInfo',{_id: the_id, isInvite:[0]});
     },
       'click #invite_activity': function(){
       var the_id = this.activity._id;
       console.log(this.activity.title);
-      Router.go('yourEventsActInfo',{_id: the_id, is_invite:1});
+      Router.go('yourEventsActInfo',{_id: the_id, isInvite:[1]});
     },
 
     'click #remove': function(){
@@ -89,13 +89,17 @@ Template.dashboard.events({
     },
 
     'click #remove_invite': function(){
+
       var user_id =Meteor.user()._id
-       Meteor.users.update({_id: user_id}, {$addToSet: {'profile.discarding': {_id: act_id}}});
-      var act_id = this._id;
-      console.log("clicked icon")
+      var act_id = this.activity._id;
+      var inviter_id=this.inviter._id;
+
+      console.log("act, inviter",act_id,inviter_id );
+      Meteor.users.update({_id: user_id}, {$addToSet: {'profile.discarding': {_id: act_id}}}); 
+
      setTimeout(function() {
-           Meteor.users.update({_id: user_id}, {$pull: {'profile.discarding': {_id: act_id}}});
-        Invites.update({_id: user_id}, {$pull: {'activity_inviter': {activity: this.activity,inviter: this.inviter}}});
+       Meteor.users.update({_id: user_id}, {$pull: {'profile.discarding': {_id: act_id}}});
+      Invites.update({_id: user_id}, {$pull: {'activity_inviter': {'activity._id': act_id,'inviter._id':inviter_id }}});
 
 
             }, 800);      
@@ -112,6 +116,8 @@ Template.dashboard.events({
 
     'get_heart_icon': function(act_id){
           user_id=Meteor.user()._id;
+          console.log("heart icon",Meteor.users.find({_id:user_id, 'profile.discarding._id':act_id}).count());
+
           if(Meteor.users.find({_id:user_id, 'profile.discarding._id':act_id}).count()){
             return 0;
           }
