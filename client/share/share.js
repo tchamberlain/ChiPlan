@@ -78,13 +78,13 @@ Template.share.helpers({
 
    'get_link_fb':function(){
       act_id= Session.get('current_activity')._id;
-      link="https://www.facebook.com/sharer/sharer.php?u="+"chiplan.meteor.com/actInfo/"+act_id
+      link="https://www.facebook.com/sharer/sharer.php?u="+"chiplan.meteor.com/actInfo/"+act_id+"/0%2C0%2C1";
       return link;
    },
 
    'get_link_twitter':function(){
       act_id= Session.get('current_activity')._id;
-      link="https://twitter.com/intent/tweet?text="+"https://chiplan.meteor.com/actInfo/"+act_id
+      link="https://twitter.com/intent/tweet?text="+"https://chiplan.meteor.com/actInfo/"+act_id+"/0%2C0%2C1";
       return link;
    }
 });

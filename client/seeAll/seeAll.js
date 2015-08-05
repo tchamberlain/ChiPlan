@@ -48,7 +48,7 @@ Template.seeAll.onRendered( function(){
 
       }
       else {
-        unseen_list=activity_ids;
+        unseen_list=activity_list;
         Session.set('unseen_list',unseen_list);
       }
   }
@@ -72,7 +72,13 @@ Template.seeAll.events({
     'click #activity': function(){
        the_id= this._id;
        Session.set('current_activity',this);
-       Router.go('actInfo',{_id: the_id, button_info:[is_discard(the_id),is_favorite(the_id)]} );
+       if(!Meteor.user()){
+        button_info=[0,0,0];
+       }
+       else{
+        button_info=[is_discard(the_id),is_favorite(the_id)];
+       }
+       Router.go('actInfo',{_id: the_id, button_info:button_info} );
     },
 
       'click #back': function(){

@@ -95,7 +95,7 @@ function set_up_act_list(search_category, search_date, search_dist, user_lng, us
         category_query={tags: { $exists: true } }
       }
       else{
-        category_query={tags: category}
+        category_query={tags: [category]}
       }
 
       

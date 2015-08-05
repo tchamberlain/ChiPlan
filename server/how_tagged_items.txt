@@ -1,0 +1,111 @@
+
+//how many left??
+db.activities.find({tags:[]}).count()
+
+
+//make everything an array
+db.activities.update({}, {$set: {tags: []}}, {multi: true })
+
+////////////////
+
+//tag everything
+
+db.activities.update({title : /.*museum.*/i, tags:[]}, {$addToSet: {tags: "art"}}, {multi: true })
+
+db.activities.update({title:/.*Movies in the Park.*/i}, {$addToSet: {tags: "entertainment"}}, {multi: true })
+
+db.activities.update({description : /.*festival.*/i}, {$addToSet: {tags: "entertainment"}}, {multi: true })
+
+db.activities.update({title : /.*festival.*/i, tags:[]}, {$addToSet: {tags: "entertainment"}}, {multi: true })
+
+db.activities.update({title:/.*jazz.*/i, tags:[]}, {$addToSet: {tags: "art"}}, {multi: true })
+
+db.activities.update({title:/.*dance.*/i, tags:[]}, {$addToSet: {tags: "art"}}, {multi: true })
+
+db.activities.update({description:/.*open mic.*/i}, {$addToSet: {tags: "entertainment"}}, {multi: true })
+
+db.activities.update({title:/.*music.*/i, tags:[]}, {$addToSet: {tags: "art"}}, {multi: true })
+
+db.activities.update({title:/.*art.*/i, tags:[]}, {$addToSet: {tags: "art"}}, {multi: true })
+
+db.activities.update({title:/.*retro on roscoe.*/i, tags:[]}, {$addToSet: {tags: "art"}}, {multi: true })
+
+db.activities.update({title:/.*fest.*/i, tags:[]}, {$addToSet: {tags: "entertainment"}}, {multi: true })
+
+db.activities.update({title:/.*Fireworks.*/i, tags:[]}, {$addToSet: {tags: "entertainment"}}, {multi: true })
+
+db.activities.update({title:/.*film.*/i, tags:[]}, {$addToSet: {tags: "entertainment"}}, {multi: true })
+db.activities.update({title:/.*film.*/i}, {$addToSet: {tags: "art"}}, {multi: true })
+
+
+db.activities.update({title:/.*taste.*/i, tags:[]}, {$addToSet: {tags: "entertainment"}}, {multi: true })
+db.activities.update({title:/.*food.*/i, tags:[]}, {$addToSet: {tags: "entertainment"}}, {multi: true })
+
+db.activities.update({description:/.*concert.*/i, tags:[]}, {$addToSet: {tags: "entertainment"}}, {multi: true })
+
+db.activities.update({description:/.*Aquarium.*/i, tags:[]}, {$addToSet: {tags: "entertainment"}}, {multi: true })
+
+db.activities.update({title:/.*Full Moon Fire Jam.*/i, tags:[]}, {$addToSet: {tags: "entertainment"}}, {multi: true })
+db.activities.update({title:/.*market.*/i, tags:[]}, {$addToSet: {tags: "art"}}, {multi: true })
+db.activities.update({title:/.*DJ.*/i, tags:[]}, {$addToSet: {tags: "entertainment"}}, {multi: true })
+
+
+db.activities.update({title:/.*critical mass.*/i, tags:[]}, {$addToSet: {tags: "entertainment"}}, {multi: true })
+db.activities.update({title:/.*critical mass.*/i}, {$addToSet: {tags: "sports"}}, {multi: true })
+
+db.activities.update({description:/.*theater.*/i}, {$addToSet: {tags: "art"}}, {multi: true })
+
+
+db.activities.update({title:/.*Photography.*/i, tags:[]}, {$addToSet: {tags: "art"}}, {multi: true })
+db.activities.update({title:/.*Reading.*/i, tags:[]}, {$addToSet: {tags: "art"}}, {multi: true })
+
+db.activities.update({title:/.*journey.*/i, tags:[]}, {$addToSet: {tags: "entertainment"}}, {multi: true })
+db.activities.update({title:/.*studs.*/i, tags:[]}, {$addToSet: {tags: "art"}}, {multi: true })
+
+
+db.activities.update({title:/.*wired.*/i, tags:[]}, {$addToSet: {tags: "entertainment"}}, {multi: true })
+
+db.activities.update({title:/.*theatre.*/i, tags:[]}, {$addToSet: {tags: "art"}}, {multi: true })
+
+db.activities.update({title:/.*adler.*/i, tags:[]}, {$addToSet: {tags: "entertainment"}}, {multi: true })
+db.activities.update({title:/.*Game.*/i, tags:[]}, {$addToSet: {tags: "entertainment"}}, {multi: true })
+db.activities.update({title:/.*tactical.*/i, tags:[]}, {$addToSet: {tags: "entertainment"}}, {multi: true })
+db.activities.update({title:/.*electronic.*/i, tags:[]}, {$addToSet: {tags: "entertainment"}}, {multi: true })
+db.activities.update({title:/.*tinker.*/i, tags:[]}, {$addToSet: {tags: "entertainment"}}, {multi: true })
+db.activities.update({title:/.*show.*/i, tags:[]}, {$addToSet: {tags: "entertainment"}}, {multi: true })
+
+db.activities.update({title:/.*WHEELJAM.*/i, tags:[]}, {$addToSet: {tags: "art"}}, {multi: true })
+
+db.activities.update({title:/.*band.*/i, tags:[]}, {$addToSet: {tags: "entertainment"}}, {multi: true })
+db.activities.update({title:/.*science.*/i, tags:[]}, {$addToSet: {tags: "entertainment"}}, {multi: true })
+db.activities.update({description:/.*show.*/i, tags:[]}, {$addToSet: {tags: "entertainment"}}, {multi: true })
+
+db.activities.update({description:/.*yoga.*/i, tags:[]}, {$addToSet: {tags: [“sports”]}}, {multi: true })
+
+db.activities.update({description:/.*yoga.*/i, tags:[]}, {$addToSet: {tags: "sports"}}, {multi: true })
+
+
+//putting YouMedia stuff under entertainment, may want to change later.....
+db.activities.update({title:/.*YOUMedia.*/i, tags:[]}, {$addToSet: {tags: "entertainment"}}, {multi: true })
+
+//REMOVED farmers market//
+db.activities.remove({title:/.*Farmers Market - Multiple Locations.*/i, tags:[]})
+db.activities.remove({title:/.*Farmers Market.*/i, tags:[]})
+
+
+////////////
+tag sports stuff 
+
+db.pre_activities.update({}, {$set: {tags: []}}, {multi: true })
+
+db.pre_activities.update({}, {$addToSet: {tags: "sports"}}, {multi: true })
+
+
+
+db.pre_activities.update({source:"choosechicago"},{$set:{tags:[]}})
+
+db.pre_activities.update({source:"choosechicago"},{$set:{tags:[]}}, {multi: true })
+db.pre_activities.update({source:"choosechicago"},{$addToSet:{tags:"sports"}}, {multi: true })
+
+
+

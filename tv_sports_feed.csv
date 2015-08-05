@@ -1,0 +1,107 @@
+title,start_date_f,end_date_f,lat,lng,address ,description,tags,source 
+Chicago Cubs at Milwaukee Brewers,2015-08-01T18:10:00Z,2015-08-01T,none,none,Milwaukee,Milwaukee Brewers Tickets,sports ,espn 
+New York Yankees at Chicago White Sox,2015-08-01T18:10:00Z,2015-08-01T,none,none,Chicago,Chicago White Sox Tickets,sports ,espn 
+Chicago Cubs at Milwaukee Brewers,2015-08-02T13:10:00Z,2015-08-02T,none,none,Milwaukee,Milwaukee Brewers Tickets,sports ,espn 
+New York Yankees at Chicago White Sox,2015-08-02T13:10:00Z,2015-08-02T,none,none,Chicago,Chicago White Sox Tickets,sports ,espn 
+Chicago Cubs at Pittsburgh Pirates,2015-08-03T18:05:00Z,2015-08-03T,none,none,Pittsburgh,Pittsburgh Pirates Tickets,sports ,espn 
+Tampa Bay Rays at Chicago White Sox,2015-08-03T19:10:00Z,2015-08-03T,none,none,Chicago,Chicago White Sox Tickets,sports ,espn 
+Tampa Bay Rays at Chicago White Sox,2015-08-04T19:10:00Z,2015-08-04T,none,none,Chicago,Chicago White Sox Tickets,sports ,espn 
+Tampa Bay Rays at Chicago White Sox,2015-08-05T13:10:00Z,2015-08-05T,none,none,Chicago,Chicago White Sox Tickets,sports ,espn 
+Chicago Cubs at Pittsburgh Pirates,2015-08-05T18:05:00Z,2015-08-05T,none,none,Pittsburgh,Pittsburgh Pirates Tickets,sports ,espn 
+San Francisco Giants at Chicago Cubs,2015-08-06T19:05:00Z,2015-08-06T,none,none,Chicago,Chicago Cubs Tickets,sports ,espn 
+San Francisco Giants at Chicago Cubs,2015-08-07T15:05:00Z,2015-08-07T,none,none,Chicago,Chicago Cubs Tickets,sports ,espn 
+Chicago White Sox at Kansas City Royals,2015-08-07T19:10:00Z,2015-08-07T,none,none,Kansas City,Kansas City Royals Tickets,sports ,espn 
+San Francisco Giants at Chicago Cubs,2015-08-08T15:05:00Z,2015-08-08T,none,none,Chicago,Chicago Cubs Tickets,sports ,espn 
+Chicago White Sox at Kansas City Royals,2015-08-08T18:10:00Z,2015-08-08T,none,none,Kansas City,Kansas City Royals Tickets,sports ,espn 
+San Francisco Giants at Chicago Cubs,2015-08-09T02:33:00Z,2015-08-09T,none,none,Chicago,Chicago Cubs Tickets,sports ,espn 
+Chicago White Sox at Kansas City Royals,2015-08-09T13:10:00Z,2015-08-09T,none,none,Kansas City,Kansas City Royals Tickets,sports ,espn 
+Los Angeles Angels at Chicago White Sox,2015-08-10T19:10:00Z,2015-08-10T,none,none,Chicago,Chicago White Sox Tickets,sports ,espn 
+Milwaukee Brewers at Chicago Cubs,2015-08-11T19:05:00Z,2015-08-11T,none,none,Chicago,Chicago Cubs Tickets,sports ,espn 
+Los Angeles Angels at Chicago White Sox,2015-08-11T19:10:00Z,2015-08-11T,none,none,Chicago,Chicago White Sox Tickets,sports ,espn 
+Milwaukee Brewers at Chicago Cubs,2015-08-12T19:05:00Z,2015-08-12T,none,none,Chicago,Chicago Cubs Tickets,sports ,espn 
+Los Angeles Angels at Chicago White Sox,2015-08-12T19:10:00Z,2015-08-12T,none,none,Chicago,Chicago White Sox Tickets,sports ,espn 
+Milwaukee Brewers at Chicago Cubs,2015-08-13T13:20:00Z,2015-08-13T,none,none,Chicago,Chicago Cubs Tickets,sports ,espn 
+Chicago Cubs at Chicago White Sox,2015-08-14T15:10:00Z,2015-08-14T,none,none,Chicago,Chicago White Sox Tickets,sports ,espn 
+Chicago Cubs at Chicago White Sox,2015-08-15T18:10:00Z,2015-08-15T,none,none,Chicago,Chicago White Sox Tickets,sports ,espn 
+Chicago Cubs at Chicago White Sox,2015-08-16T13:10:00Z,2015-08-16T,none,none,Chicago,Chicago White Sox Tickets,sports ,espn 
+Chicago White Sox at Los Angeles Angels,2015-08-17T21:05:00Z,2015-08-17T,none,none,Anaheim,Los Angeles Angels Tickets,sports ,espn 
+Detroit Tigers at Chicago Cubs,2015-08-18T19:05:00Z,2015-08-18T,none,none,Chicago,Chicago Cubs Tickets,sports ,espn 
+Chicago White Sox at Los Angeles Angels,2015-08-18T21:05:00Z,2015-08-18T,none,none,Anaheim,Los Angeles Angels Tickets,sports ,espn 
+Detroit Tigers at Chicago Cubs,2015-08-19T19:05:00Z,2015-08-19T,none,none,Chicago,Chicago Cubs Tickets,sports ,espn 
+Chicago White Sox at Los Angeles Angels,2015-08-19T21:05:00Z,2015-08-19T,none,none,Anaheim,Los Angeles Angels Tickets,sports ,espn 
+Atlanta Braves at Chicago Cubs,2015-08-20T19:05:00Z,2015-08-20T,none,none,Chicago,Chicago Cubs Tickets,sports ,espn 
+Chicago White Sox at Los Angeles Angels,2015-08-20T21:05:00Z,2015-08-20T,none,none,Anaheim,Los Angeles Angels Tickets,sports ,espn 
+Atlanta Braves at Chicago Cubs,2015-08-21T15:05:00Z,2015-08-21T,none,none,Chicago,Chicago Cubs Tickets,sports ,espn 
+Chicago White Sox at Seattle Mariners,2015-08-21T21:10:00Z,2015-08-21T,none,none,Seattle,Seattle Mariners Tickets,sports ,espn 
+Atlanta Braves at Chicago Cubs,2015-08-22T15:05:00Z,2015-08-22T,none,none,Chicago,Chicago Cubs Tickets,sports ,espn 
+Chicago White Sox at Seattle Mariners,2015-08-22T20:10:00Z,2015-08-22T,none,none,Seattle,Seattle Mariners Tickets,sports ,espn 
+Atlanta Braves at Chicago Cubs,2015-08-23T13:20:00Z,2015-08-23T,none,none,Chicago,Chicago Cubs Tickets,sports ,espn 
+Chicago White Sox at Seattle Mariners,2015-08-23T15:10:00Z,2015-08-23T,none,none,Seattle,Seattle Mariners Tickets,sports ,espn 
+Boston Red Sox at Chicago White Sox,2015-08-24T19:10:00Z,2015-08-24T,none,none,Chicago,Chicago White Sox Tickets,sports ,espn 
+Boston Red Sox at Chicago White Sox,2015-08-25T17:10:00Z,2015-08-25T,none,none,Chicago,Chicago White Sox Tickets,sports ,espn 
+Chicago Cubs at San Francisco Giants,2015-08-25T21:05:00Z,2015-08-25T,none,none,San Francisco,San Francisco Giants Tickets,sports ,espn 
+Boston Red Sox at Chicago White Sox,2015-08-26T19:10:00Z,2015-08-26T,none,none,Chicago,Chicago White Sox Tickets,sports ,espn 
+Chicago Cubs at San Francisco Giants,2015-08-26T21:15:00Z,2015-08-26T,none,none,San Francisco,San Francisco Giants Tickets,sports ,espn 
+Chicago Cubs at San Francisco Giants,2015-08-27T14:45:00Z,2015-08-27T,none,none,San Francisco,San Francisco Giants Tickets,sports ,espn 
+Seattle Mariners at Chicago White Sox,2015-08-27T19:10:00Z,2015-08-27T,none,none,Chicago,Chicago White Sox Tickets,sports ,espn 
+Seattle Mariners at Chicago White Sox,2015-08-28T19:10:00Z,2015-08-28T,none,none,Chicago,Chicago White Sox Tickets,sports ,espn 
+Chicago Cubs at Los Angeles Dodgers,2015-08-28T21:10:00Z,2015-08-28T,none,none,Los Angeles,Los Angeles Dodgers Tickets,sports ,espn 
+Seattle Mariners at Chicago White Sox,2015-08-29T18:10:00Z,2015-08-29T,none,none,Chicago,Chicago White Sox Tickets,sports ,espn 
+Chicago Cubs at Los Angeles Dodgers,2015-08-29T20:10:00Z,2015-08-29T,none,none,Los Angeles,Los Angeles Dodgers Tickets,sports ,espn 
+Chicago Cubs at Los Angeles Dodgers,2015-08-30T02:33:00Z,2015-08-30T,none,none,Los Angeles,Los Angeles Dodgers Tickets,sports ,espn 
+Seattle Mariners at Chicago White Sox,2015-08-30T13:10:00Z,2015-08-30T,none,none,Chicago,Chicago White Sox Tickets,sports ,espn 
+Cincinnati Reds at Chicago Cubs,2015-08-31T19:05:00Z,2015-08-31T,none,none,Chicago,Chicago Cubs Tickets,sports ,espn 
+Cincinnati Reds at Chicago Cubs,2015-09-01T19:05:00Z,2015-09-01T,none,none,Chicago,Chicago Cubs Tickets,sports ,espn 
+Chicago White Sox at Minnesota Twins,2015-09-01T19:10:00Z,2015-09-01T,none,none,Minneapolis,Minnesota Twins Tickets,sports ,espn 
+Cincinnati Reds at Chicago Cubs,2015-09-02T13:20:00Z,2015-09-02T,none,none,Chicago,Chicago Cubs Tickets,sports ,espn 
+Chicago White Sox at Minnesota Twins,2015-09-02T19:10:00Z,2015-09-02T,none,none,Minneapolis,Minnesota Twins Tickets,sports ,espn 
+Chicago White Sox at Minnesota Twins,2015-09-03T12:10:00Z,2015-09-03T,none,none,Minneapolis,Minnesota Twins Tickets,sports ,espn 
+Arizona Diamondbacks at Chicago Cubs,2015-09-04T13:20:00Z,2015-09-04T,none,none,Chicago,Chicago Cubs Tickets,sports ,espn 
+Chicago White Sox at Kansas City Royals,2015-09-04T19:10:00Z,2015-09-04T,none,none,Kansas City,Kansas City Royals Tickets,sports ,espn 
+Arizona Diamondbacks at Chicago Cubs,2015-09-05T13:20:00Z,2015-09-05T,none,none,Chicago,Chicago Cubs Tickets,sports ,espn 
+Chicago White Sox at Kansas City Royals,2015-09-05T18:10:00Z,2015-09-05T,none,none,Kansas City,Kansas City Royals Tickets,sports ,espn 
+Chicago White Sox at Kansas City Royals,2015-09-06T13:10:00Z,2015-09-06T,none,none,Kansas City,Kansas City Royals Tickets,sports ,espn 
+Arizona Diamondbacks at Chicago Cubs,2015-09-06T13:20:00Z,2015-09-06T,none,none,Chicago,Chicago Cubs Tickets,sports ,espn 
+Cleveland Indians at Chicago White Sox,2015-09-07T13:10:00Z,2015-09-07T,none,none,Chicago,Chicago White Sox Tickets,sports ,espn 
+Chicago Cubs at St. Louis Cardinals,2015-09-07T13:15:00Z,2015-09-07T,none,none,Saint Louis,St. Louis Cardinals Tickets,sports ,espn 
+Cleveland Indians at Chicago White Sox,2015-09-08T19:05:00Z,2015-09-08T,none,none,Chicago,Chicago White Sox Tickets,sports ,espn 
+Chicago Cubs at St. Louis Cardinals,2015-09-08T19:05:00Z,2015-09-08T,none,none,Saint Louis,St. Louis Cardinals Tickets,sports ,espn 
+Chicago Cubs at St. Louis Cardinals,2015-09-09T12:45:00Z,2015-09-09T,none,none,Saint Louis,St. Louis Cardinals Tickets,sports ,espn 
+Cleveland Indians at Chicago White Sox,2015-09-09T19:10:00Z,2015-09-09T,none,none,Chicago,Chicago White Sox Tickets,sports ,espn 
+Chicago Cubs at Philadelphia Phillies,2015-09-10T18:05:00Z,2015-09-10T,none,none,Philadelphia,Philadelphia Phillies Tickets,sports ,espn 
+Chicago Cubs at Philadelphia Phillies,2015-09-11T18:05:00Z,2015-09-11T,none,none,Philadelphia,Philadelphia Phillies Tickets,sports ,espn 
+Minnesota Twins at Chicago White Sox,2015-09-11T19:10:00Z,2015-09-11T,none,none,Chicago,Chicago White Sox Tickets,sports ,espn 
+Chicago Cubs at Philadelphia Phillies,2015-09-12T18:05:00Z,2015-09-12T,none,none,Philadelphia,Philadelphia Phillies Tickets,sports ,espn 
+Minnesota Twins at Chicago White Sox,2015-09-12T18:10:00Z,2015-09-12T,none,none,Chicago,Chicago White Sox Tickets,sports ,espn 
+Chicago Cubs at Philadelphia Phillies,2015-09-13T12:35:00Z,2015-09-13T,none,none,Philadelphia,Philadelphia Phillies Tickets,sports ,espn 
+Minnesota Twins at Chicago White Sox,2015-09-13T13:10:00Z,2015-09-13T,none,none,Chicago,Chicago White Sox Tickets,sports ,espn 
+Oakland Athletics at Chicago White Sox,2015-09-14T19:10:00Z,2015-09-14T,none,none,Chicago,Chicago White Sox Tickets,sports ,espn 
+Chicago Cubs at Pittsburgh Pirates,2015-09-15T18:05:00Z,2015-09-15T,none,none,Pittsburgh,Pittsburgh Pirates Tickets,sports ,espn 
+Oakland Athletics at Chicago White Sox,2015-09-15T19:10:00Z,2015-09-15T,none,none,Chicago,Chicago White Sox Tickets,sports ,espn 
+Chicago Cubs at Pittsburgh Pirates,2015-09-16T18:05:00Z,2015-09-16T,none,none,Pittsburgh,Pittsburgh Pirates Tickets,sports ,espn 
+Oakland Athletics at Chicago White Sox,2015-09-16T19:10:00Z,2015-09-16T,none,none,Chicago,Chicago White Sox Tickets,sports ,espn 
+Chicago Cubs at Pittsburgh Pirates,2015-09-17T11:35:00Z,2015-09-17T,none,none,Pittsburgh,Pittsburgh Pirates Tickets,sports ,espn 
+Oakland Athletics at Chicago White Sox,2015-09-17T13:10:00Z,2015-09-17T,none,none,Chicago,Chicago White Sox Tickets,sports ,espn 
+St. Louis Cardinals at Chicago Cubs,2015-09-18T13:20:00Z,2015-09-18T,none,none,Chicago,Chicago Cubs Tickets,sports ,espn 
+Chicago White Sox at Cleveland Indians,2015-09-18T18:05:00Z,2015-09-18T,none,none,Cleveland,Cleveland Indians Tickets,sports ,espn 
+St. Louis Cardinals at Chicago Cubs,2015-09-19T12:05:00Z,2015-09-19T,none,none,Chicago,Chicago Cubs Tickets,sports ,espn 
+Chicago White Sox at Cleveland Indians,2015-09-19T18:05:00Z,2015-09-19T,none,none,Cleveland,Cleveland Indians Tickets,sports ,espn 
+St. Louis Cardinals at Chicago Cubs,2015-09-20T02:33:00Z,2015-09-20T,none,none,Chicago,Chicago Cubs Tickets,sports ,espn 
+Chicago White Sox at Cleveland Indians,2015-09-20T12:05:00Z,2015-09-20T,none,none,Cleveland,Cleveland Indians Tickets,sports ,espn 
+Chicago White Sox at Detroit Tigers,2015-09-21T18:08:00Z,2015-09-21T,none,none,Detroit,Detroit Tigers Tickets,sports ,espn 
+Milwaukee Brewers at Chicago Cubs,2015-09-21T19:05:00Z,2015-09-21T,none,none,Chicago,Chicago Cubs Tickets,sports ,espn 
+Chicago White Sox at Detroit Tigers,2015-09-22T18:08:00Z,2015-09-22T,none,none,Detroit,Detroit Tigers Tickets,sports ,espn 
+Milwaukee Brewers at Chicago Cubs,2015-09-22T19:05:00Z,2015-09-22T,none,none,Chicago,Chicago Cubs Tickets,sports ,espn 
+Chicago White Sox at Detroit Tigers,2015-09-23T12:08:00Z,2015-09-23T,none,none,Detroit,Detroit Tigers Tickets,sports ,espn 
+Milwaukee Brewers at Chicago Cubs,2015-09-23T19:05:00Z,2015-09-23T,none,none,Chicago,Chicago Cubs Tickets,sports ,espn 
+Chicago White Sox at New York Yankees,2015-09-24T18:05:00Z,2015-09-24T,none,none,Bronx,New York Yankees Tickets,sports ,espn 
+Pittsburgh Pirates at Chicago Cubs,2015-09-25T13:20:00Z,2015-09-25T,none,none,Chicago,Chicago Cubs Tickets,sports ,espn 
+Chicago White Sox at New York Yankees,2015-09-25T18:05:00Z,2015-09-25T,none,none,Bronx,New York Yankees Tickets,sports ,espn 
+Pittsburgh Pirates at Chicago Cubs,2015-09-26T02:33:00Z,2015-09-26T,none,none,Chicago,Chicago Cubs Tickets,sports ,espn 
+Chicago White Sox at New York Yankees,2015-09-26T02:33:00Z,2015-09-26T,none,none,Bronx,New York Yankees Tickets,sports ,espn 
+Chicago White Sox at New York Yankees,2015-09-27T02:33:00Z,2015-09-27T,none,none,Bronx,New York Yankees Tickets,sports ,espn 
+Pittsburgh Pirates at Chicago Cubs,2015-09-27T02:33:00Z,2015-09-27T,none,none,Chicago,Chicago Cubs Tickets,sports ,espn 
+Chicago Cubs at Cincinnati Reds,2015-09-29T18:10:00Z,2015-09-29T,none,none,Cincinnati,Cincinnati Reds Tickets,sports ,espn 
+Kansas City Royals at Chicago White Sox,2015-09-29T19:10:00Z,2015-09-29T,none,none,Chicago,Chicago White Sox Tickets,sports ,espn 
+Chicago Cubs at Cincinnati Reds,2015-09-30T18:10:00Z,2015-09-30T,none,none,Cincinnati,Cincinnati Reds Tickets,sports ,espn 
+Kansas City Royals at Chicago White Sox,2015-09-30T19:10:00Z,2015-09-30T,none,none,Chicago,Chicago White Sox Tickets,sports ,espn 

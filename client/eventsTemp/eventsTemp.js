@@ -16,6 +16,8 @@ Router.route('/events/:category/:date/:distance', {
         Session.set('date',this.params.date);
         Session.set('dist',this.params.distance);
         Session.set('more_info',0);
+        lng=Session.get('lng');
+        lat=Session.get('lat');
         return Meteor.subscribe('events_query', [this.params.category, this.params.date, this.params.distance, lng,lat]);
     }
     });
@@ -138,7 +140,7 @@ geocode_all_activites=function(){
 
     all_activities=Activities.find().fetch()
       // space out google maps api requests
-      // update_all_db(0);
+      //update_all_db(210);
       function update_all_db(i) {
         if(all_activities.length > i) {
             setTimeout(function() {
@@ -382,7 +384,7 @@ get_list_of_ids =function(event_array){
           }
         }
         return pieces;
-  }
+  };
 
   transitionRightLeft= function(){
    $("#deck_slide")
@@ -391,15 +393,14 @@ get_list_of_ids =function(event_array){
     $("#deck_slide")
             .transition('fly left')
           ;
-}
+};
 
 add_fav= function(user,activity){
   Meteor.users.update({_id:Meteor.user()._id}, {$addToSet:{"profile.favorites":current_act}})
   Meteor.users.update({_id:Meteor.user()._id}, {$pull:{"profile.discards":current_act}})
-}
+};
 
 add_discard= function(user,activity){
   Meteor.users.update({_id:Meteor.user()._id}, {$addToSet:{"profile.discards":activity}})
   Meteor.users.update({_id:Meteor.user()._id}, {$pull:{"profile.favorites":activity}})
-
-}
+};
