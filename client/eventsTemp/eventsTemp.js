@@ -50,7 +50,7 @@ Template.eventsTemp.helpers({
     line=split_description();
     return line[0];
   },
-    'get_second_line': function(){
+  'get_second_line': function(){
     line=split_description();
     return line[1];
   },
@@ -61,6 +61,12 @@ Template.eventsTemp.helpers({
 
   'get_when': function(){
     return get_when();
+  },
+
+  'more_info_disabled': function(){
+    num_lines=split_description().length;
+    console.log("num_lines",num_lines);
+    return (num_lines<=3);
   },
 
  'get_where': function(){

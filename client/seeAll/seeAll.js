@@ -13,6 +13,7 @@ Router.route('/seeAll/:category/:date/:distance', {
             return;
           }
           else{
+
             subscribed=1;
             return Meteor.subscribe('events_query', [this.params.category, this.params.date, this.params.distance]);
           }
@@ -37,6 +38,7 @@ Template.seeAll.onRendered( function(){
           //get the favorites, discards, and unseens that are in the current activity list
           discard_list=get_objects_on_list(activity_list, discard_ids);
           favorite_list= get_objects_on_list(activity_list,favorite_ids);
+          console.log(favorite_list);
 
           //returns ids missing from favorites and discards
           unseen_list= get_objects_off_list(activity_list, favorite_ids);

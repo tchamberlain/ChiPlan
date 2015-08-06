@@ -17,3 +17,4 @@ iron:router@1.0.9
 semantic:ui
 semantic:ui-css
 sacha:spin
+meteorhacks:kadira

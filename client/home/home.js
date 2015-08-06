@@ -7,6 +7,35 @@ Router.configure({
   layoutTemplate: 'main'
 });
 
+Meteor.startup(function() {
+  var url      = window.location.href;  
+
+  if(url=="http://localhost:3000/"){
+     Accounts.loginServiceConfiguration.remove({
+    service: "facebook"
+  });
+  Accounts.loginServiceConfiguration.insert({
+    service: "facebook",
+    appId: "1655047711391983",
+    secret: "63d4d2c34e96b3765135c6e0f6d84979"
+  }); 
+  }
+
+  else{
+         Accounts.loginServiceConfiguration.remove({
+        service: "facebook"
+      });
+      Accounts.loginServiceConfiguration.insert({
+        service: "facebook",
+        appId: "1452040111772209",
+        secret: "11ba0145478dbb9c321da18403060822"
+      }); 
+  }
+});
+
+
+
+
 Template.home.onRendered(function(){
   //initialize semantic ui check box/ dropdown for mobile
   this.$('.checkbox').checkbox();

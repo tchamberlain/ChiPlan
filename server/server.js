@@ -2,17 +2,40 @@
 //SERVER STUFF
 //*************************
 
+
+
+// Kadira.connect('tsiQkv3kndvwK6onb', '3f9ed325-5973-46ab-882f-48009e1af487');
+
+
+//added fb stuff to client side, so you can use the window function to get he url
 //On start up, add fblogin
 Meteor.startup(function() {
-  Accounts.loginServiceConfiguration.remove({
-    service: "facebook"
-  });
-  Accounts.loginServiceConfiguration.insert({
-    service: "facebook",
-    appId: "1452040111772209",
-    secret: "11ba0145478dbb9c321da18403060822"
-  }); 
+  // var url      = window.location.href;  
 
+  // if(url=="http://localhost:3000/"){
+  //    Accounts.loginServiceConfiguration.remove({
+  //   service: "facebook"
+  // });
+  // Accounts.loginServiceConfiguration.insert({
+  //   service: "facebook",
+  //   appId: "1655047711391983",
+  //   secret: "63d4d2c34e96b3765135c6e0f6d84979"
+  // }); 
+  // }
+
+  // else{
+  //        Accounts.loginServiceConfiguration.remove({
+  //       service: "facebook"
+  //     });
+  //     Accounts.loginServiceConfiguration.insert({
+  //       service: "facebook",
+  //       appId: "1452040111772209",
+  //       secret: "11ba0145478dbb9c321da18403060822"
+  //     }); 
+  // }
+
+
+ 
   //this removes events that have already happened from the activity db
   yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1); 
