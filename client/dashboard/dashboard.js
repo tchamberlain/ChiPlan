@@ -21,6 +21,7 @@ Template.dashboard.onRendered( function(){
 Template.dashboard.events({ 
     'click #activity': function(){
       var the_id = this._id;
+      Session.set('current_activity',Meteor.subscribe('event_by_id',the_id));
       Router.go('yourEventsActInfo',{_id: the_id, isInvite:[0]});
     },
       'click #invite_activity': function(){

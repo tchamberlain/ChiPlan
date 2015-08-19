@@ -1,0 +1,73 @@
+<template name="share">
+    <!-- try to call a helper that will let us set a session current activity -->
+
+    <div id="share_box" class="ui raised very padded text container segment">
+        <ul><h3>Great Choice!</h3> </ul>
+         <div class="row"> <img class="ui  mini image" src=" https://im1.shutterfly.com/media/47a5d932b3127ccee9ce23c1459e00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713205651525.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" ></div>
+         <ul><h5>You are going to <b>{{get_activity.title}}</b> 
+
+          <p>on {{get_when}}</p></h5></ul>
+        <ul><h5><b>Do you want to invite a friend to this event? </b></h5></ul>
+        <ul><h5><p> Search a ChiPlan user by their <b>first and last name:</b></p></h5></ul>
+        
+        <ul><div id="invite_form" class="ui icon input">
+           <input class="newLink" id="invite_form" type="text" placeholder="FirstName LastName">
+          <i class="circular inverted search link icon" id="search_button" ></i>
+        </div></ul>
+        <div class="row"> <img class="ui  mini image" src=" https://im1.shutterfly.com/media/47a5d932b3127ccee9ce23c1459e00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713205651525.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" ></div>
+        <ul><h5><b>Share this event: </b></h5></ul>
+        <ul> 
+
+          <a class="twitter-share-button"
+        href={{get_link_twitter}}>
+      
+         <button class="ui twitter button">
+            <i class="twitter icon"></i>
+            Twitter
+          </button>
+      </a>
+
+        <a href={{get_link_fb}} target="_blank">
+                    <button class="ui facebook button">
+            <i class="facebook icon"></i>
+            Facebook
+          </button>
+       </a>
+        </ul>
+           <div class="row"> <img class="ui  mini image" src=" https://im1.shutterfly.com/media/47a5d932b3127ccee9ce23c1459e00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713205651525.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" ></div>
+           
+
+           {{#if get_fromYourEvents}}  
+                         <div  id="back_to_yourEvents"  class="ui center aligned large left labeled icon button"><i class="reply icon"></i>Back to Your Events
+           </div>     
+           {{else}}
+             {{#if get_fromEvents}}
+                  <div  id="back_to_eventsTemp"  class="ui center aligned large left labeled icon button"><i class="reply icon"></i>Back
+           </div>
+            {{else}}
+               <div  id="back_to_seeAll"  class="ui center aligned large left labeled icon button"><i class="reply icon"></i>Back to Events List
+              </div>
+            {{/if}}          
+
+          {{/if}}
+
+    </div>
+
+
+<!-- user input error modal -->
+     <div class="ui small modal error_modal">
+      <div class="header"><h4>Sorry the user you've entered doesn't exitst.</h4> <p>Try searching for a different user</p></div>
+     <div class="actions">
+        <div class="ui center aligned positive right labeled icon button">
+          Ok
+          <i class="checkmark icon"></i>
+        </div>
+      </div>
+    </div>
+<!-- send invite modal -->
+     <div id="send" class="ui medium modal send_modal">
+        {{>invite_modal}}
+    </div>
+
+
+</template>

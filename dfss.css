@@ -4,6 +4,8 @@
 
 
 
+@computerBreakpoint : 10px;
+
 #blur_light {
 	color: transparent;
    text-shadow: 0 0 0px rgba(0,0,0,0.6);

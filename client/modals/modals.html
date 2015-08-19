@@ -1,28 +1,73 @@
-
+<!-- 
 
 <template name="name_modal">
-    <div class="header"><h3>To finish creating your account, please enter your name</h3> </div>
-    <div id="name" class="ui input">
-        <p> <h5>First Name:</h5> <input class="first_name" id="invite_form" type="text" ></p>
-         <p><h5>Last Name:</h5><input class="last_name" id="invite_form" type="text" ></p>
-    </div>
-    <div class="header"><h3>Please enter your date of birth</h3> </div>
-    <div id="DOB" class="ui input">
-     <p><h5>Month (MM):</h5> <input class="month" id="invite_form" type="text" > </p>
-     <p><h5>Day (DD):</h5> <input class="day" id="invite_form" type="text" > </p>
-     <p><h5>Year (YYYY):</h5> <input class="year" id="invite_form" type="text" > </p>
-    </div>
-    <div class="actions">
-        <div id="name_enter" class="ui center aligned positive right labeled icon button">
-          Ok
-          <i class="checkmark icon"></i>
+
+      <div class="header"><h3>To finish creating your account, please enter your name.</h3> </div>
+      <div id="name" class="ui input">
+          <p> <h5>First Name:</h5> <input class="first_name" id="invite_form" type="text" ></p>
+           <p><h5>Last Name:</h5><input class="last_name" id="invite_form" type="text" ></p>
+      </div>
+      <div class="header"><h3>Please enter your date of birth</h3> </div>
+      <p><div id="DOB" class="ui input"><h5 class="header">Month (MM):</h5><ul><input class="month" id="invite_form" type="text" ></ul></div></p>
+       <p><div id="DOB" class="ui input"><h5>Day (DD):</h5><ul><input class="day" id="invite_form" type="text" ></ul></div></p>
+      <ul><div id="DOB" class="ui input"><h5>Year (YYYY):</h5> <input class="year" id="invite_form" type="text" > </div></ul>
+      <div class="actions">
+          <div id="name_enter" class="ui center aligned positive right labeled icon button">
+            Ok
+            <i class="checkmark icon"></i>
+          </div>
         </div>
-    </div>
+
+</template>
+ -->
+
+<template name="name_modal">
+
+      <div class="header"><h3>To finish creating your account, please enter your name.</h3> </div>
+        <div id="name" class="ui input">
+           <p> <h5>First Name:</h5> <input class="first_name" id="invite_form" type="text" ></p>
+        </div>
+        <div id="name" class="ui input">
+           <p><h5>Last Name:</h5><input class="last_name" id="invite_form" type="text" ></p>
+        </div>
+        
+      <div class="header"><h3>Please enter your date of birth</h3> </div>
+      <div id="DOB" class="ui input">
+        <p><h5>Month (MM):</h5><input class="month" id="invite_form" type="text" ></p>
+      </div>
+      <div id="DOB" class="ui input">
+        <p><h5>Day (DD):</h5><input class="day" id="invite_form" type="text" ></p>
+      </div>
+      <div id="DOB" class="ui input">
+        <p><h5>Year (YYYY):</h5><input class="year" id="invite_form" type="text" ></p>
+      </div>
+
+
+
+      <div class="actions">
+          <div id="name_enter" class="ui center aligned positive right labeled icon button">
+            Ok
+            <i class="checkmark icon"></i>
+          </div>
+        </div>
+
 </template>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- put modal in a separate template so that you can use a click event with it -->
-<template name="invite_modal">
+<!-- <template name="invite_modal">
       <div class="header"><h4>Invite      
         <div class="ui massive label">
            <p> <i class="user icon"></i>      {{get_person.profile.name}} </p>
@@ -38,4 +83,4 @@
           <i class="send icon"></i>
         </div>
       </div>
-</template>
+</template> -->

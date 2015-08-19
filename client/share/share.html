@@ -11,7 +11,7 @@
         <ul><h5><p> Search a ChiPlan user by their <b>first and last name:</b></p></h5></ul>
         
         <ul><div id="invite_form" class="ui icon input">
-           <input class="newLink" id="invite_form" type="text" placeholder="FirstName LastName">
+           <input class="inviteForm" id="invite_form" type="text" placeholder="FirstName LastName">
           <i class="circular inverted search link icon" id="search_button" ></i>
         </div></ul>
         <div class="row"> <img class="ui  mini image" src=" https://im1.shutterfly.com/media/47a5d932b3127ccee9ce23c1459e00000030O00QaOHDVo5ZOQe3nwk/cC/f%3D0/ls%3D00902940588420150713205651525.JPG/ps%3D50/r%3D0/rx%3D550/ry%3D400/" ></div>
@@ -70,4 +70,25 @@
     </div>
 
 
+</template>
+
+
+
+<!-- put modal in a separate template so that you can use a click event with it -->
+<template name="invite_modal">
+      <div class="header"><h4>Invite      
+        <div class="ui massive label">
+           <p> <i class="user icon"></i>      {{get_person.profile.name}} </p>
+        </div>
+           to   </h4> <h3 align="center"><b><p> {{get_current_activity.title}}</p></b></h3></div>
+       <div class="actions">
+        <div class="ui left labeled gray deny big icon button">
+          Cancel
+          <i class="remove icon"></i>
+        </div>
+        <div id="invite" class="ui positive left labeled big icon button">
+          Send invite
+          <i class="send icon"></i>
+        </div>
+      </div>
 </template>

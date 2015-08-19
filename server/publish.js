@@ -30,6 +30,11 @@ Meteor.publish('get_all_invites', function(id){
 });
 
 
+Meteor.publish('user_by_name', function(name){
+        return Meteor.users.find({'profile.name':name});
+});
+
+
 
 
 

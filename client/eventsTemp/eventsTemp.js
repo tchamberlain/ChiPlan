@@ -146,7 +146,7 @@ geocode_all_activites=function(){
 
     all_activities=Activities.find().fetch()
       // space out google maps api requests
-      //update_all_db(210);
+      update_all_db(970);
       function update_all_db(i) {
         if(all_activities.length > i) {
             setTimeout(function() {

@@ -6,6 +6,9 @@ db.activities.find({tags:[]}).count()
 //make everything an array
 db.activities.update({}, {$set: {tags: []}}, {multi: true })
 
+
+
+
 ////////////////
 
 //tag everything
@@ -106,6 +109,37 @@ db.pre_activities.update({source:"choosechicago"},{$set:{tags:[]}})
 
 db.pre_activities.update({source:"choosechicago"},{$set:{tags:[]}}, {multi: true })
 db.pre_activities.update({source:"choosechicago"},{$addToSet:{tags:"sports"}}, {multi: true })
+
+
+
+
+
+____________________________________________________
+
+____________________________________________________
+____________________________________________________
+____________________________________________________
+
+DEPLOY TO METOER DB
+
+to deploy the local db to the deployed db
+
+
+THESE ARE THE STEPS:
+
+
+meteor mongo --url chiplan.meteor.com
+
+mongodump -h 127.0.0.1 --port 3001 -d meteor
+
+
+//CHANGE -u AND -p BASED ON WHAT THE —url COMMAND SPITS OUT
+
+mongorestore -u client-16bab6b1  -p c872d1a0-b6c5-6ebc-a123-449fd0a68410   -h production-db-d2.meteor.io:27017 -d chiplan_meteor_com dump/meteor/
+
+
+
+
 
 
 

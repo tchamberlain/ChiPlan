@@ -2,11 +2,10 @@
 
     <div class="ui page grid">
 
-       <div class="computer only row">
+       <div class="computer tablet only row">
             <div class= "ten wide centered column">
         <div class="ui very padded raised container segment">
-            <h3>{{chosen_activity.title}}</h3> 
-            <!-- <ul><b>Time:</b> {{chosen_activity.start_time}}</ul> -->
+            <h3><center>{{chosen_activity.title}}</center></h3>         
             <ul><b>When:</b> {{get_when}}</ul>
             <ul><b>Address:</b> {{chosen_activity.address}}</ul>
             <ul><b>Description:</b> {{chosen_activity.description}}</ul>
@@ -31,7 +30,7 @@
 
            <div class="mobile only row">
         <div class="ui very padded raised container segment">
-            <h3>{{chosen_activity.title}}</h3> 
+            <h3><center>{{chosen_activity.title}}</center></h3> 
             <ul><b>When:</b> {{get_when}}</ul>
             <ul><b>Address:</b> {{chosen_activity.address}}</ul>
             <ul><b>Description:</b> {{chosen_activity.description}}</ul>
