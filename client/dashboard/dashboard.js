@@ -9,33 +9,46 @@ Template.dashboard.onRendered( function(){
   Meteor.subscribe('get_user_invites', Meteor.user()._id);
 
   if(Meteor.user()){
+
         discards=Meteor.user().profile.discards;
+      if(discards){
         discard_ids=get_list_of_ids(discards);
+      }
+      else{discard_ids=[];}
+
         favorites=Meteor.user().profile.favorites;
+     if(favorites){
         favorite_ids=get_list_of_ids(favorites);
+      }
+      else{
+        favorite_ids=[];
+
+      }
         Session.set('current_activity', Activities.findOne());
       }
 });
 
 
 Template.dashboard.events({ 
+      'click #accept': function(){
+        console.log("u pushed accept",this.title);
+      // thing that inserts activity into db after geocoding
+    },
     'click #activity': function(){
       var the_id = this._id;
       Session.set('current_activity',Meteor.subscribe('event_by_id',the_id));
       Router.go('yourEventsActInfo',{_id: the_id, isInvite:[0]});
+    },
+        'click #share': function(){
+      var the_id = this._id;
+      Session.set('current_activity',Meteor.subscribe('event_by_id',the_id));
+      Router.go('share',{_id: the_id, fromEvents:0,fromYourEvents:1});
     },
       'click #invite_activity': function(){
       var the_id = this.activity._id;
       console.log(this.activity.title);
       Router.go('yourEventsActInfo',{_id: the_id, isInvite:[1]});
     },
-
-  //   'mouseenter #fav_icon': function (event, template){
-  //       console.log( "mousehover", event);
-  //   },
-  // "mouseleave #fav_icon": function(event, template){
-  //     console.log ("mouseout", event);
-  // },
 
     'click #fav_icon': function(){
       var act_id = this._id;
@@ -90,6 +103,10 @@ Template.dashboard.events({
           else{
             return 1;
           }
+  },
+  'is_admin':function(){
+    return Meteor.user().profile.name=="admin admin";
+
   },
 
     'get_invited_events': function(category){

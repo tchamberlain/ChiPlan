@@ -69,7 +69,10 @@ Template.home.events({
     'click #next_event': function(){
       the_id = Session.get('next_event')._id
       Router.go('actInfo',{_id: the_id, button_info:[0,0,1]} );
-    },  
+    },
+   'click #create': function(){
+      Router.go('createEvent');
+    },    
     'click #B_entertainment': function(){
       set_up_deck("entertainment");
     },

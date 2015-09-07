@@ -1,0 +1,93 @@
+<template name="createEvent">
+ 	<div class="ui  page grid">
+ 		<div class="six wide centered  column">
+ 			<div class="ui very raised padded segment">
+ 				<h2 class="ui large header"><b>Create Your Own Event</b></h2>
+ 				 <h2 class="ui small header">Events will be reviewed before they are added</h2>
+
+		        <div class ="row">
+			       	<div id="title" class="ui input">
+			           <p> <h5>Event title:</h5> <input class="title" type="text" ></p>
+			        </div>
+		    	</div>
+		         <div class ="row">
+					<div id="name" class="ui input">
+						<p> <h5>Start date:</h5> <input class="start_date" type="text" ></p>
+					</div>
+					<div id="name" class="ui input">
+						<p> <h5>End date:</h5> <input class="end_date" type="text" ></p>
+					</div>
+		        </div>
+		         <div class ="row">
+					<div id="name" class="ui input">
+						<p> <h5>Start time:</h5> <input class="start_time" type="text" ></p>
+					</div>
+					<div id="name" class="ui input">
+						<p> <h5>End time:</h5> <input class="end_time" type="text" ></p>
+					</div>
+		        </div>
+		         <div class ="row">
+			         <div id="name" class="ui input">
+			           <p> <h5>Description:</h5> <input class="description" type="text" ></p>
+			        </div>
+		         </div>
+	         <div class ="row">
+		         <div id="name" class="ui input">
+		           <p> <h5>Address:</h5> <input class="address" type="text" ></p>
+		        </div>
+		    </div>
+		    <div class="row">
+			    <div id="submit" class="ui large right floated positive left labeled icon button">
+			    	Submit Event 
+			    	<i class="ui add icon"></i>
+			    </div>
+		</div>
+		           <!-- start drop down menu -->
+<!-- 
+		<div id="date_dropdown" class="ui floating dropdown large button">
+                  <span class="text">Day</span>
+                  <div class="menu">
+                    <div class="header">
+                      Choose a day
+                    </div>
+
+
+                     {{#each get_days}}
+
+                    <div id="today_selector" class="item" value="today">
+                      {{get_days.day}}
+                    </div>
+                    {{/each}}
+                  </div>
+                </div>
+                 <div id="dist_dropdown" class="ui floating labeled icon dropdown large button">
+                  <i class="location arrow icon"></i>
+                  <span class="text">Distance</span>
+                  <div class="menu">
+                    <div class="header">
+                      <i class="tags icon"></i>
+                    Filter events by distance
+                    </div>
+                    <div id="five_mi" class="item">
+                      Within five miles
+                    </div>
+                    <div id="ten_mi" class="item">
+                      Within ten miles
+                    </div>
+                  </div>
+                </div> -->
+                <!-- end added drop down menu -->
+
+		   </div>
+	 </div>
+
+    <!--     //make this a drop down
+         <div id="name" class="ui input">
+           <p> <h5>Category:</h5> <input class="first_name" id="invite_form" type="text" ></p>
+        </div> -->
+
+        
+        
+
+ 	</div>
+</template>

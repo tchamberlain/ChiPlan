@@ -1,0 +1,25 @@
+
+-check if facebook login works (both on http and www, when www is up )
+
+
+
+GUIDE FOR STUFF
+-pem file
+-install meteor up -- same for windows?
+-make it so that when pre_activities has stuff in it, it loads automatically
+-connecting to linux machine,same for windows?
+
+
+
+
+
+
+APP BUGS
+-fix the filters for mobile
+-check the filters for desktop
+
+
+
+eventually need elastic ip.
+
+

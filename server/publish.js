@@ -10,7 +10,14 @@ Meteor.publish('events_query', function(query_parameters){
 });
 
 
+Meteor.publish('get_admin', function(){
+        return Meteor.users.find({'profile.name': "admin admin"});
+});
 
+// Meteor.publish('admin_invites', function(){
+//       admin_id=Meteor.users.find({'profile.name':"admin admin"}).fetch()[0]._id;
+//         return Meteor.Invites.find({_id:admin_id });
+// });
 
 Meteor.publish('event_by_id', function(id){
         return Activities.find({_id: id});
@@ -31,6 +38,7 @@ Meteor.publish('get_all_invites', function(id){
 
 
 Meteor.publish('user_by_name', function(name){
+        console.log(Meteor.users.find({'profile.name':name}).fetch());
         return Meteor.users.find({'profile.name':name});
 });
 

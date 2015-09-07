@@ -249,7 +249,6 @@ Template.invite_modal.events({
 
 Template.invite_modal.helpers({
   'get_current_activity': function () {
-    console.log("doing this??",Session.get('current_activity'));
     return Session.get('current_activity');
 
   }

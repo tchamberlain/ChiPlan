@@ -107,18 +107,25 @@
             </div>
         </div> 
     </div>
-        {{#if get_next_event}}
+        
         <!-- <div class="one wide column right attached" > -->
         <div class="two wide column" >
+          {{#if get_next_event}}
+              <div class="ui compact segment">
+                  <p><h5><b>You are next going to:</b></h5></p>
+                  <!-- <p><h5><b>Y{{get_next_event.title}} </b></h5></p> -->
+                  <div id="next_event" class="ui huge icon label button">
+                     <p> <i class="share icon"></i> <h7>{{get_next_event}} </h7></p>
+                  </div>
+              </div>
+            {{/if}}
             <div class="ui compact segment">
-                <p><h5><b>You are next going to:</b></h5></p>
-                <!-- <p><h5><b>Y{{get_next_event.title}} </b></h5></p> -->
-                <div id="next_event" class="ui huge icon label button">
-                   <p> <i class="share icon"></i> <h7>{{get_next_event}} </h7></p>
+                 <div id="create" class=" green ui huge icon label button">
+                   <p> <i class="add icon"></i> <h7>Create your own event! </h7></p>
                 </div>
             </div>
         </div>
-        {{/if}}
+
     </div>
 
     <!-- testing comp grid -->
