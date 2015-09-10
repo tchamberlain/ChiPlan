@@ -9,15 +9,9 @@ Meteor.publish('events_query', function(query_parameters){
 
 });
 
-
 Meteor.publish('get_admin', function(){
         return Meteor.users.find({'profile.name': "admin admin"});
 });
-
-// Meteor.publish('admin_invites', function(){
-//       admin_id=Meteor.users.find({'profile.name':"admin admin"}).fetch()[0]._id;
-//         return Meteor.Invites.find({_id:admin_id });
-// });
 
 Meteor.publish('event_by_id', function(id){
         return Activities.find({_id: id});
@@ -65,11 +59,11 @@ function set_up_act_list(search_category, search_date, search_dist, user_lng, us
         //get tomorrows date using today's date, however don't get hours, only day month and year
         tomorrow=new Date(yr,mm,dd);     
         tomorrow.setDate(tomorrow.getDate() + 1); 
-        date_query= { "start_date": tomorrow }
+        date_query= { start_date: tomorrow }
       } 
 
       else if (search_date=="today"){
-        date_query= { "start_date": today }
+        date_query= { start_date: today }
       } 
   
     // if this week is checked, get only events within the week

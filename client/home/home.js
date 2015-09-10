@@ -1,4 +1,3 @@
-// js for home page
 Router.route('/', function(){
   this.render('home');
 },{name: 'home'});
@@ -7,97 +6,49 @@ Router.configure({
   layoutTemplate: 'main'
 });
 
-Meteor.startup(function() {
-  var url      = window.location.href;  
-
-  if(url=="http://localhost:3000/"){
-     Accounts.loginServiceConfiguration.remove({
-    service: "facebook"
-  });
-  Accounts.loginServiceConfiguration.insert({
-    service: "facebook",
-    appId: "1655047711391983",
-    secret: "63d4d2c34e96b3765135c6e0f6d84979"
-  }); 
-  }
-
-  else{
-         Accounts.loginServiceConfiguration.remove({
-        service: "facebook"
-      });
-      Accounts.loginServiceConfiguration.insert({
-        service: "facebook",
-        appId: "1452040111772209",
-        secret: "11ba0145478dbb9c321da18403060822"
-      }); 
-  }
-});
-
-
-
-
 Template.home.onRendered(function(){
   //initialize semantic ui check box/ dropdown for mobile
+  $('.ui.dropdown').dropdown();
   this.$('.checkbox').checkbox();
+  //set weekend as the default
   this.$('#weekend').checkbox('check');
-  $('.ui.dropdown')
-  .dropdown();
+  
 });
 
 Template.home.helpers({
   'get_next_event': function(){
-    //First manually sort all favorites (change this later when server side $sort is implemented)
-    if((Meteor.user())&&(Meteor.user().profile.favorites.length)){
-      favorites=Meteor.user().profile.favorites
-      next_event= favorites[0]
-      for(i=1; i<favorites.length; i++){
-        if(favorites[i].start_date<next_event.start_date){
-          next_event=favorites[i];
-        }
+    next_event=findNextEvent();
+    //if the event exists return it's title
+    if(next_event){
+      //only want first part of the title to display
+          next_event=next_event.title.substring(0,18)+"...";
+          return next_event;
       }
-      Session.set('next_event', next_event);
-      next_event=next_event.title.substring(0,18)+"...";
-      return next_event;
+      else{
+       return 0;
+      }
     }
-    else{
-      return 0;
-    }
-   }
 });
 
 Template.home.events({
     'click #next_event': function(){
-      the_id = Session.get('next_event')._id
+      the_id = Session.get('next_event')._id;
+      Session.set('current_activity',findNextEvent());
       Router.go('actInfo',{_id: the_id, button_info:[0,0,1]} );
     },
    'click #create': function(){
       Router.go('createEvent');
     },    
-    'click #B_entertainment': function(){
-      set_up_deck("entertainment");
+    'click #category': function(evt, temp){
+       var category=""+($(evt.target).closest('img').data('value'));
+       //get the category the user clicked on, then build a list of events with that category
+      set_up_deck(category);
     },
-
-    'click #B_sports': function(){
-      set_up_deck("sports");
-    },
-
-    'click #B_art': function(){
-      set_up_deck("art");
-    },
-
-    'click #B_stayin': function(){
-      set_up_deck("stayin");
-    },
-
-    'click #B_surpriseme': function(){
-      set_up_deck("surpriseme");
-    }
 
  });
 
 
 function get_search(){
-
   //date search
     if ($("#tomorrow").checkbox('is checked')){ date="tomorrow"}
     else if ($("#today").checkbox('is checked')){date="today"}
@@ -121,8 +72,6 @@ function get_search(){
   return(search)
 }
 
-
-//FUNCTIONS
 set_up_deck=function(category){
     //reset the activity lists
       Session.set('activity_list_all',null);
@@ -140,6 +89,30 @@ set_up_deck=function(category){
       Router.go('eventsTemp',{category: category, date: search[0], distance: search[1],user_loc:user_loc})
 
   }
+
+
+ // get and sort all of user's favorites in order to return the one closest in time
+function findNextEvent(){
+  if((Meteor.user())&&(Meteor.user().profile.favorites.length)){
+    favorites=Meteor.user().profile.favorites;
+    next_event= favorites[0]
+    for(i=1; i<favorites.length; i++){
+      if(favorites[i].start_date<next_event.start_date){
+        next_event=favorites[i];
+      }
+    }
+    //set the next event as a session variable
+    Session.set('next_event',next_event)
+
+    return next_event;
+  }
+  //if user isn't logged in, or they have no favorites, return 0
+  else{
+    return 0;
+  }
+}
+
+//determine if these need to be here!!!!!!!
 
 is_discard = function(act_id){
   user_id=Meteor.user()._id;

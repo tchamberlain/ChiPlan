@@ -1,4 +1,4 @@
-// check if user is on mobile device
+// check if user is on mobile device, so that the description can be made diff. lengths for mobile and for desktop
 //initiate as false
 isMobile = false; 
 // device detection
@@ -12,9 +12,7 @@ Router.route('/events/:category/:date/:distance', {
     name: 'eventsTemp',
     data: function(){return {category:  this.params.category};},
     waitOn: function(){
-        Session.set('category',this.params.category);
-        Session.set('date',this.params.date);
-        Session.set('dist',this.params.distance);
+        //we want the default to be that more info is not showing
         Session.set('more_info',0);
         lng=Session.get('lng');
         lat=Session.get('lat');
@@ -23,12 +21,18 @@ Router.route('/events/:category/:date/:distance', {
     });
 
 Template.eventsTemp.onRendered( function(){
+
+    // trying to keep track of if this is the current version we've deployed to chiplan.org
+    console.log("we've redeployed with mup");
+
+
     //GEOCODE the current db, use when you've clicked on surprise me to update all events
     geocode_all_activites();
 
     if(!Session.get('activity_list')){ 
       console.log("no activity_list detected, bouta make a new one");
-      create_act_list();
+      //false because this is not coming from the see all page
+      create_act_list(false);
     } 
 });
 
@@ -62,13 +66,13 @@ Template.eventsTemp.helpers({
   'get_when': function(){
     return get_when();
   },
-
+  //we disable the more info button if the description isless than or equal to 3 lines
   'more_info_disabled': function(){
     num_lines=split_description().length;
-    console.log("num_lines",num_lines);
     return (num_lines<=3);
   },
 
+  //show only part of the event's address, if the address is too long
  'get_where': function(){
     where=Session.get('current_activity').address;
     if(isMobile){num_char=30}
@@ -132,7 +136,7 @@ Template.eventsTemp.events({
     },
 
     'click #seeAll': function(){
-        //setting make_act_list to 1, since we want to create a new one when re-rendering the eventsTemp page
+        //setting activity_list to null, since we want to create a new one when re-rendering the eventsTemp page
         Session.set('activity_list',null);
          query_params=Router.current().params;
          Router.go('seeAll',{category: query_params.category, date: query_params.date, distance: query_params.distance});
@@ -142,54 +146,8 @@ Template.eventsTemp.events({
 
 //********************** FUNCTIONS **********************//
 //********************** FUNCTIONS **********************//
-geocode_all_activites=function(){
 
-    all_activities=Activities.find().fetch()
-      // space out google maps api requests
-      update_all_db(970);
-      function update_all_db(i) {
-        if(all_activities.length > i) {
-            setTimeout(function() {
-                 geocode_update_db(all_activities[i]);
-                i+=1;
-                update_all_db(i);
-                console.log(i);
-            }, 4000);
-        }
-      } 
-
-        function geocode_update_db (elem) {   
-
-            //check if it's coordinates are 0, only update if they are bc those are the ones that havent been geocoded
-            if(elem.location.coordinates[0]==0){
-              geocoder = new google.maps.Geocoder();
-              geocoder.geocode( { 'address': elem.address}, function(results, status) {
-              if (status == google.maps.GeocoderStatus.OK) {
-                  lat = results[0].geometry.location.lat();
-                  lng = results[0].geometry.location.lng();
-                  console.log(lat);
-                  console.log(lng);
-              } else {
-                  alert('Geocode was not successful for the following reason: ' + status);
-              }
-
-              Activities.update({_id: elem._id}, {$set: {
-                  location: {
-                    "type" : "Point",
-                    "coordinates" : [ 
-                      lng, 
-                      lat
-                    ]
-                    } 
-                  }});
-          });
-      }
-    }
-      };
-   
-
-
-//uses current activity to return a pretty formated date string
+//uses current activity to return a nicely formated date string
 get_when= function(){
     start_time=Session.get('current_activity').start_time
     start_date=Session.get('current_activity').start_date
@@ -229,7 +187,7 @@ discard= function(){
     add_discard(Meteor.user(),current_act);
   }
 
-  //update the current activity, but wait until deck has slide away
+  //update the current activity, but wait until deck has slid away
   setTimeout(function() {
     activity_index=Session.get('activity_index')+1;
     Session.set('activity_index', activity_index);
@@ -291,16 +249,16 @@ create_act_list= function(for_see_all){
             }
             activity_list=activity_list_new;
         }
-      }
-      
-      //set the first activity, if were in the eventsTemp, if not, no needs
-      if(!for_see_all){
+
+        //set the first activity, if were in the eventsTemp, if not, no need
         activity_index=0;
         current_activity= activity_list[activity_index];
         Session.set('activity_list',activity_list);
         Session.set('current_activity',current_activity);
         Session.set('activity_index',activity_index);
+
       }
+           
       return activity_list;
 };
 

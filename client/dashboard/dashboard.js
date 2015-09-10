@@ -1,12 +1,14 @@
 Router.route('/dashboard',{
    waitOn: function(){
-        return Meteor.subscribe('get_user_invites',Meteor.user()._id);
+          return Meteor.subscribe('get_user_invites',Meteor.user()._id);
         }
   });
 
 Template.dashboard.onRendered( function(){    
   
   Meteor.subscribe('get_user_invites', Meteor.user()._id);
+
+
 
   if(Meteor.user()){
 
@@ -31,8 +33,11 @@ Template.dashboard.onRendered( function(){
 
 Template.dashboard.events({ 
       'click #accept': function(){
-        console.log("u pushed accept",this.title);
+        console.log("u pushed accept",this.activity.title);
       // thing that inserts activity into db after geocoding
+    // Meteor.call('acceptEvent');
+      //console.log()
+
     },
     'click #activity': function(){
       var the_id = this._id;
@@ -105,8 +110,7 @@ Template.dashboard.events({
           }
   },
   'is_admin':function(){
-    return Meteor.user().profile.name=="admin admin";
-
+    return isAdmin();
   },
 
     'get_invited_events': function(category){
@@ -125,3 +129,10 @@ Template.dashboard.events({
   }
           
   });
+
+
+
+isAdmin=function(){
+  return Meteor.user().profile.name=="admin admin";
+
+}
