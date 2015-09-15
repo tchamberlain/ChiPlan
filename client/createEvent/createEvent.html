@@ -1,21 +1,12 @@
 
 <template name="createEvent">
-	{{#if getEventSubmitted}}
-		<div class="ui  page grid">
-			<div class="twelve wide centered column">
-				<div class= "ui very padded raised segment">
-					<h2>Your event will be added to the website shortly!</h2>
-				</div>
-			</div>
-		</div>
 
-	{{else}}
 			<div class="ui  page grid">
 			<div class="twelve wide centered column">
 			<div class= "ui very padded raised segment">
 				<h2 class="ui large header"><b>Create Your Own Event</b></h2>
 				 <h2 class="ui small header">Events will be reviewed before they are added</h2>
-				<div class="ui disabled form">
+				<div class="ui form">
 				  <div class="field">
 				    <label>Event title:</label>
 				    <input type="text" name="title" placeholder="Title">
@@ -42,7 +33,7 @@
 					</select>
 					</div>
 					<div class="field">
-					    	<select class="ui fluid search dropdown" name="day">
+					    	<select class="ui fluid search dropdown" name="start_day">
 								<option value="">Day</option>
 								<option value="1">1</option>
 								<option value="2">2</option>
@@ -78,21 +69,44 @@
 							</select>				    	
 					 	</div>
 					<div class="field">
-					<input type="text" name="card[expire-year]" maxlength="4" placeholder="Year">
+					<input type="text" name="start_year" maxlength="4" placeholder="Year">
 					</div>
 					</div>
 				</div>
 				<div class="field">
 				    <label>Start Time</label>
-				    <div class="two fields">
+				    <div class="three fields">
 				    	<div class="two wide field">
-      						<input class="start_hour" type="text" name="start_time[hour]" maxlength="2" placeholder="Hour">
+      						<input class="start_hour" type="text" name="start_hour" maxlength="2" placeholder="Hour">
 				    	</div> <h6><b>:</b></h6>
 				   		<div class="two wide field">
-      						<input class="start_minute" type="text" name="start_time[minute]" maxlength="2" placeholder="Minute">
+      						<input class="start_minute" type="text" name="start_minute" maxlength="2" placeholder="Minute">
 				    	</div>
+				    	<div class="two wide field">
+							<select class="ui fluid search dropdown" name="start_am_pm">
+									<option value="am">am</option>
+									<option value="pm">pm</option>
+							</select>
+						</div>
 				    </div>
-				  </div>		
+				  </div>	
+				  <div class="field">
+				    <label>End Time</label>
+				    <div class="three fields">
+				    	<div class="two wide field">
+      						<input class="end_hour" type="text" name="end_hour" maxlength="2" placeholder="Hour">
+				    	</div> <h6><b>:</b></h6>
+				   		<div class="two wide field">
+      						<input class="end_minute" type="text" name="end_minute" maxlength="2" placeholder="Minute">
+				    	</div>
+				    	<div class="two wide field">
+							<select class="ui fluid search dropdown" name="end_am_pm">
+									<option value="am">am</option>
+									<option value="pm">pm</option>
+							</select>
+						</div>				    	
+				    </div>
+				  </div>			
 				  <div class="field">
 				    <label>Description</label>
 				    <input type="text" name="description" placeholder="Description">
@@ -103,13 +117,12 @@
 				    <input type="text" name="address" placeholder="Address">
 				  </div>
 				  	<div class="row">	 	 
-				  		<button class="ui right floated huge button" id="submitEvent">Submit Event</button>
+				  		<button class="ui right floated huge button" id="submit">Submit</button>
 				  	</div>
 				</div>
 			</div>
 			</div>
 		</div>
-	{{/if}}
 
 		
 </template>
