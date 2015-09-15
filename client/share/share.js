@@ -177,8 +177,6 @@ Template.share.events = {
            activity_list=Session.get('activity_list');
         Session.set('activity_index',activity_index );
         Session.set('current_activity', activity_list[activity_index])
-        params=Router.current().params;
-        params=Router.current().params;
         Router.go('eventsTemp',{category:Session.get('category'),date:Session.get('date'),distance: Session.get('dist')})
 
 

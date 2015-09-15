@@ -6,6 +6,8 @@ if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine
     || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(navigator.userAgent.substr(0,4))) isMobile = true;
 
 
+
+
 //********************** ROUTES **********************//
 //********************** ROUTES **********************//
 Router.route('/events/:category/:date/:distance', {
@@ -21,13 +23,22 @@ Router.route('/events/:category/:date/:distance', {
     });
 
 Template.eventsTemp.onRendered( function(){
+  console.log(Router.current().params);
 
-    // trying to keep track of if this is the current version we've deployed to chiplan.org
-    console.log("we've redeployed with mup");
+    //initialize the popups that will cue swiping
+      $('.button')
+        .popup({
+      on: 'manual'
+      });
 
+      //if there is no user logged in, or if the user has not yet swiped, then show pop up to cue swiping
+      if((Meteor.user()==null)||(Meteor.user().profile.hasSwiped==false)){
+            $('button')
+           .popup('show');
+      }
 
     //GEOCODE the current db, use when you've clicked on surprise me to update all events
-    geocode_all_activites();
+    //geocode_all_activites();
 
     if(!Session.get('activity_list')){ 
       console.log("no activity_list detected, bouta make a new one");
@@ -41,6 +52,7 @@ Template.eventsTemp.onRendered( function(){
 Template.eventsTemp.helpers({
   //gets the remainder of the event description
   'get_rest': function(){
+
     lines=split_description();
     lines=lines.slice(1,split_description().length+1);
     line_obj=[];
@@ -51,6 +63,7 @@ Template.eventsTemp.helpers({
   }, 
   //gets first, second, third lines of event description
   'get_first_line': function(){
+      console.log(activity_list);
     line=split_description();
     return line[0];
   },
@@ -65,6 +78,13 @@ Template.eventsTemp.helpers({
 
   'get_when': function(){
     return get_when();
+  },
+  //CHANGE TO FIVE SOON
+  //determines whether or not attendence num will be displayed (if over five people are going)
+  'showAttendance': function(){
+
+    current_activity=Session.get('current_activity');
+    return (current_activity.attending>=1);
   },
   //we disable the more info button if the description isless than or equal to 3 lines
   'more_info_disabled': function(){
@@ -90,6 +110,13 @@ Template.eventsTemp.helpers({
 //gestures for phone swiping
   templateGestures: {
     'swipeleft #hammerDiv': function (event, templateInstance) {
+        //if there is a user logged in, and if they have swiped before, this will make sure they don't see the swipe instructions
+        // if(Meteor.user){
+        //   Meteor.user.profile.hasSwiped=true;
+        // };
+
+        $('button')
+          .popup('hide');
       //not sure why you have to put this in a second time for the phone transition
         transitionRightLeft();
       //same as discard
@@ -97,6 +124,8 @@ Template.eventsTemp.helpers({
     },
     'swiperight #hammerDiv': function (event, templateInstance) {
          //same as favorite
+          $('button')
+          .popup('hide');
          favorite();
     },
   },
@@ -169,7 +198,6 @@ get_when= function(){
   }
 
 discard= function(){
-
   activity_list=Session.get('activity_list');
   current_act=Session.get('current_activity');
 
@@ -200,6 +228,15 @@ discard= function(){
 favorite =function(){
   activity_list=Session.get('activity_list');
   current_act=Session.get('current_activity');
+  console.log('in fav, attending',   current_act.attending);
+  //update the number of people going to the event
+  if(current_act.attending==undefined){
+    Activities.update({_id:current_act._id}, {$set:{"attending":1}});
+  }
+  else{
+    attendence=current_act.attending+1;
+    Activities.update({_id:current_act._id}, {$set:{"attending":attendence}});
+  }
 
   //make sure there's an activity list
   if(!activity_list){
@@ -211,6 +248,10 @@ favorite =function(){
   if( Meteor.user()){
     add_fav(Meteor.user(),current_act);
 
+    params=Router.current().params;
+    Session.set('category',params.category);
+    Session.set('dsitance',params.distance);
+    Session.set('date',params.date);
     //route to the "Share" page
     Router.go('share',{_id: current_act._id, fromEvents:1, fromYourEvents:0});
 
@@ -266,12 +307,14 @@ create_act_list= function(for_see_all){
 distance_query=function(){
   
   distance_param= Router.current().params.distance;
+  console.log(distance_param);
   x=Session.get('lng');
   y=Session.get('lat');
-
+  x=5;
   //if the user's loc doesn't exist, or they don't specify a distance, return all activities
   if(distance_param=="any_dist"||(!x)){
     act_list=Activities.find({}).fetch();
+    console.log("in dist query, before narrowed down how many activites",Activities.find({}).fetch());
   }
   else if(distance_param=="five"){
     act_list=Activities.find({ location:
@@ -328,7 +371,6 @@ get_list_of_ids =function(event_array){
           other_line_characters=20;
         };
 
-
         for(i=0;i<description.length;i++){
           if(num_pieces==0){num_characters=first_line_characters}
           else{num_characters=other_line_characters}
@@ -368,3 +410,24 @@ add_discard= function(user,activity){
   Meteor.users.update({_id:Meteor.user()._id}, {$addToSet:{"profile.discards":activity}})
   Meteor.users.update({_id:Meteor.user()._id}, {$pull:{"profile.favorites":activity}})
 };
+
+is_discard = function(act_id){
+  user_id=Meteor.user()._id;
+  if(Meteor.users.find({_id:user_id, 'profile.discards._id':act_id}).count()){
+    return 1;
+  }
+  else{
+    return 0;
+  }
+  };
+
+is_favorite =function (act_id){
+  user_id=Meteor.user()._id;
+  if(Meteor.users.find({_id:user_id, 'profile.favorites._id':act_id}).count()){
+    return 1;
+  }
+  else{
+  return 0;
+  }
+  };
+

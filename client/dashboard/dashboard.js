@@ -34,9 +34,11 @@ Template.dashboard.onRendered( function(){
 Template.dashboard.events({ 
       'click #accept': function(){
         console.log("u pushed accept",this.activity.title);
+        acceptEvent(this.activity);
+        Activities.insert({title: this.activity.title, start_date: this.activity.start_date, tags:[]});
+
       // thing that inserts activity into db after geocoding
     // Meteor.call('acceptEvent');
-      //console.log()
 
     },
     'click #activity': function(){
@@ -134,5 +136,12 @@ Template.dashboard.events({
 
 isAdmin=function(){
   return Meteor.user().profile.name=="admin admin";
+}
+
+function acceptEvent (obj){
+  //geocode
+  //translate date to real date
+  
 
 }
+

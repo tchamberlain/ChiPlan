@@ -38,7 +38,7 @@ Template.seeAll.onRendered( function(){
           //get the favorites, discards, and unseens that are in the current activity list
           discard_list=get_objects_on_list(activity_list, discard_ids);
           favorite_list= get_objects_on_list(activity_list,favorite_ids);
-          console.log(favorite_list);
+          console.log(favorite_list, '');
 
           //returns ids missing from favorites and discards
           unseen_list= get_objects_off_list(activity_list, favorite_ids);
@@ -51,7 +51,9 @@ Template.seeAll.onRendered( function(){
       }
       else {
         unseen_list=activity_list;
-        Session.set('unseen_list',unseen_list);
+        Session.set('unseen_list',unseen_list); 
+        Session.set('favorite_list',null);
+        Session.set('discard_list',null);
       }
   }
   );

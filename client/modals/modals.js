@@ -74,10 +74,11 @@ Template.name_modal.events({
   
     var DOB= month+"/"+day+"/"+year;
 
+
        Meteor.users.update({_id: Meteor.user()._id}, {$set: {
                       'profile.name': full_name,
-                      'profile.DOB': DOB
-
+                      'profile.DOB': DOB,
+                      'profile.hasSwiped':false
                       }});
         console.log(Meteor.user().profile.name)
         console.log(Meteor.user().profile.DOB)

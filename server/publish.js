@@ -1,10 +1,9 @@
-
 //publish only events from a given query
 Meteor.publish('events_query', function(query_parameters){
     
-	//set up act list
+  //set up act list
   console.log("user_loc?", query_parameters[3],query_parameters[4]);
-	
+  
     return set_up_act_list(query_parameters[0],query_parameters[1],query_parameters[2],query_parameters[3],query_parameters[4]);
 
 });
@@ -37,7 +36,10 @@ Meteor.publish('user_by_name', function(name){
 });
 
 
-
+Meteor.publish('user_by_name', function(name){
+        console.log(Meteor.users.find({'profile.name':name}).fetch());
+        return Meteor.users.find({'profile.name':name});
+});
 
 
 function set_up_act_list(search_category, search_date, search_dist, user_lng, user_lat){
@@ -54,23 +56,46 @@ function set_up_act_list(search_category, search_date, search_dist, user_lng, us
       var yr = today.getFullYear();
       today= new Date(yr,mm,dd);
       
+        console.log(Activities.find(date_query).fetch(),"in  publish out of conditional says today events");
+
+        //for debugging
+        tomorrow=new Date(yr,mm,dd); 
+        nextDay=new Date(yr,mm,dd);     
+        tomorrow.setDate(tomorrow.getDate() + 1); 
+        nextDay.setDate(tomorrow.getDate() + 1); 
+        console.log(tomorrow,"tomorrow");
+        console.log(nextDay,"nextDay");
+
+
       //if tomorrow is checked, get only tom events
       if (search_date=="tomorrow"){
         //get tomorrows date using today's date, however don't get hours, only day month and year
         tomorrow=new Date(yr,mm,dd);     
         tomorrow.setDate(tomorrow.getDate() + 1); 
-        date_query= { start_date: tomorrow }
+       // var date_query= { start_date: tomorrow }
+        date_query= { $and: [
+                {start_date: {$lt: nextDay}},
+                {start_date: {$gte: tomorrow}}
+            ]}
       } 
 
       else if (search_date=="today"){
-        date_query= { start_date: today }
+        console.log("today date", today);
+        //var date_query= { start_date: today };
+        date_query= { $and: [
+                {start_date: {$lt: tomorrow}},
+                {start_date: {$gte: today}}
+            ]}
+        console.log(Activities.find(date_query).fetch(),"in today publish conditional today says events");
+        console.log(date_query);
+
       } 
   
     // if this week is checked, get only events within the week
       else if (search_date=="week"){
         end =new Date(yr,mm,dd);    
         end.setDate(end.getDate() + 7); 
-        date_query= { $and: [
+        var date_query= { $and: [
                 {start_date: {$lt: end}},
                 {start_date: {$gte: today}}
             ]}
@@ -99,14 +124,13 @@ function set_up_act_list(search_category, search_date, search_dist, user_lng, us
       console.log(category)
       if(category=="surpriseme"){
         //this is a cheat, currently doing this query when we know they exist
-        category_query={tags: { $exists: true } }
+        var category_query={tags: { $exists: true } };
       }
       else{
-        category_query={tags: [category]}
+        var category_query={tags: [category]};
       }
 
-      
-      
+
       var final_query= Activities.find({$and:[ date_query, category_query]})
       var total= final_query.count();
       console.log(total)

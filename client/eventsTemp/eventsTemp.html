@@ -9,6 +9,9 @@
                       <ul align="left"><b>When:</b> {{get_when}}</ul>
                       {{#if more_info_disabled}}
                                 <ul align="left" ><b>Where:</b> {{current_activity.address}}</ul>
+                                {{#if showAttendance}}
+                                  <ul align="left" ><b># of People Going:</b> {{current_activity.attending}}</ul>
+                                {{/if}}
                                 <ul align="left" ><b>Description:</b>{{get_first_line}}
                            {{#each get_rest}}
                              <div>{{line}}</div>
@@ -105,20 +108,26 @@
             </div>
           </div>
 
+
+
           <div class="mobile only row">
             <div class=" ui buttons">
                   <button id="previous" class=" ui medium left labeled icon button">
                        <i class="share icon"></i>
                        Previous
                 </button>   
-                 <button id="discard" class=" ui medium negative left labeled icon button">
-                       <i class="icon remove"></i>
+                 <button id="discard"  class=" ui medium negative left labeled icon button">
+                       <i data-content="Swipe left to discard" class="icon remove"></i>
                         I don't want to go
                 </button>
-                <button id="favorite" class=" ui medium positive right labeled icon button">
+                 <div class="ui inverted mini popup">Swipe left to discard </div>
+
+                <button id="favorite"  class=" ui medium positive right labeled icon button">
                         I want to go
-                  <i class="icon heart"></i>
-                </button>                   
+                  <i data-content="Swipe right to favorite" class="icon heart"></i>
+                </button> 
+               <div class="ui inverted mini popup"  data-variation="wide" >Swipe right to favorite </div>
+                  
             </div>
           </div>
         </div>

@@ -1,93 +1,120 @@
+
 <template name="createEvent">
- 	<div class="ui  page grid">
- 		<div class="six wide centered  column">
- 			<div class="ui very raised padded segment">
- 				<h2 class="ui large header"><b>Create Your Own Event</b></h2>
- 				 <h2 class="ui small header">Events will be reviewed before they are added</h2>
-
-		        <div class ="row">
-			       	<div id="title" class="ui input">
-			           <p> <h5>Event title:</h5> <input class="title" type="text" ></p>
-			        </div>
-		    	</div>
-		         <div class ="row">
-					<div id="name" class="ui input">
-						<p> <h5>Start date:</h5> <input class="start_date" type="text" ></p>
-					</div>
-					<div id="name" class="ui input">
-						<p> <h5>End date:</h5> <input class="end_date" type="text" ></p>
-					</div>
-		        </div>
-		         <div class ="row">
-					<div id="name" class="ui input">
-						<p> <h5>Start time:</h5> <input class="start_time" type="text" ></p>
-					</div>
-					<div id="name" class="ui input">
-						<p> <h5>End time:</h5> <input class="end_time" type="text" ></p>
-					</div>
-		        </div>
-		         <div class ="row">
-			         <div id="name" class="ui input">
-			           <p> <h5>Description:</h5> <input class="description" type="text" ></p>
-			        </div>
-		         </div>
-	         <div class ="row">
-		         <div id="name" class="ui input">
-		           <p> <h5>Address:</h5> <input class="address" type="text" ></p>
-		        </div>
-		    </div>
-		    <div class="row">
-			    <div id="submit" class="ui large right floated positive left labeled icon button">
-			    	Submit Event 
-			    	<i class="ui add icon"></i>
-			    </div>
+	{{#if getEventSubmitted}}
+		<div class="ui  page grid">
+			<div class="twelve wide centered column">
+				<div class= "ui very padded raised segment">
+					<h2>Your event will be added to the website shortly!</h2>
+				</div>
+			</div>
 		</div>
-		           <!-- start drop down menu -->
-<!-- 
-		<div id="date_dropdown" class="ui floating dropdown large button">
-                  <span class="text">Day</span>
-                  <div class="menu">
-                    <div class="header">
-                      Choose a day
-                    </div>
 
+	{{else}}
+			<div class="ui  page grid">
+			<div class="twelve wide centered column">
+			<div class= "ui very padded raised segment">
+				<h2 class="ui large header"><b>Create Your Own Event</b></h2>
+				 <h2 class="ui small header">Events will be reviewed before they are added</h2>
+				<div class="ui disabled form">
+				  <div class="field">
+				    <label>Event title:</label>
+				    <input type="text" name="title" placeholder="Title">
+				  </div>
+				 <div class="field">
+				<label>Start Date</label>
+					<div class="three fields">
+						
+					<div class="field">
+					<select class="ui fluid search dropdown" name="start_month">
+					<option value="">Month</option>
+					<option value="1">January</option>
+					<option value="2">February</option>
+					<option value="3">March</option>
+					<option value="4">April</option>
+					<option value="5">May</option>
+					<option value="6">June</option>
+					<option value="7">July</option>
+					<option value="8">August</option>
+					<option value="9">September</option>
+					<option value="10">October</option>
+					<option value="11">November</option>
+					<option value="12">December</option>
+					</select>
+					</div>
+					<div class="field">
+					    	<select class="ui fluid search dropdown" name="day">
+								<option value="">Day</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+								<option value="13">13</option>
+								<option value="14">14</option>
+								<option value="15">15</option>
+								<option value="16">16</option>
+								<option value="17">17</option>
+								<option value="18">18</option>
+								<option value="19">19</option>
+								<option value="20">20</option>
+								<option value="21">21</option>
+								<option value="22">22</option>
+								<option value="23">23</option>
+								<option value="24">24</option>
+								<option value="25">25</option>
+								<option value="26">26</option>
+								<option value="27">27</option>
+								<option value="28">28</option>
+								<option value="29">29</option>
+								<option value="30">30</option>
+								<option value="31">31</option>
+							</select>				    	
+					 	</div>
+					<div class="field">
+					<input type="text" name="card[expire-year]" maxlength="4" placeholder="Year">
+					</div>
+					</div>
+				</div>
+				<div class="field">
+				    <label>Start Time</label>
+				    <div class="two fields">
+				    	<div class="two wide field">
+      						<input class="start_hour" type="text" name="start_time[hour]" maxlength="2" placeholder="Hour">
+				    	</div> <h6><b>:</b></h6>
+				   		<div class="two wide field">
+      						<input class="start_minute" type="text" name="start_time[minute]" maxlength="2" placeholder="Minute">
+				    	</div>
+				    </div>
+				  </div>		
+				  <div class="field">
+				    <label>Description</label>
+				    <input type="text" name="description" placeholder="Description">
+				  </div>
+				  <div class="field">
+				  	<!-- maybe add more areas to this? st. number etc etc -->
+				    <label>Address</label>
+				    <input type="text" name="address" placeholder="Address">
+				  </div>
+				  	<div class="row">	 	 
+				  		<button class="ui right floated huge button" id="submitEvent">Submit Event</button>
+				  	</div>
+				</div>
+			</div>
+			</div>
+		</div>
+	{{/if}}
 
-                     {{#each get_days}}
-
-                    <div id="today_selector" class="item" value="today">
-                      {{get_days.day}}
-                    </div>
-                    {{/each}}
-                  </div>
-                </div>
-                 <div id="dist_dropdown" class="ui floating labeled icon dropdown large button">
-                  <i class="location arrow icon"></i>
-                  <span class="text">Distance</span>
-                  <div class="menu">
-                    <div class="header">
-                      <i class="tags icon"></i>
-                    Filter events by distance
-                    </div>
-                    <div id="five_mi" class="item">
-                      Within five miles
-                    </div>
-                    <div id="ten_mi" class="item">
-                      Within ten miles
-                    </div>
-                  </div>
-                </div> -->
-                <!-- end added drop down menu -->
-
-		   </div>
-	 </div>
-
-    <!--     //make this a drop down
-         <div id="name" class="ui input">
-           <p> <h5>Category:</h5> <input class="first_name" id="invite_form" type="text" ></p>
-        </div> -->
-
-        
-        
-
- 	</div>
+		
 </template>
+
+
+
+
+
