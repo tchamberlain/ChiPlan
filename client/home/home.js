@@ -20,13 +20,20 @@ if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine
 
 
 Template.home.onRendered(function(){
-  Session.set('current_activity',null);
   //initialize semantic ui check box/ dropdown for mobile
   $('.ui.dropdown').dropdown();
   this.$('.checkbox').checkbox();
   //set weekend as the default
   if(!isMobile){
     this.$('#weekend').checkbox('check');
+  }
+
+  //setting hasSwiped to false if no one is logged in, if not, check if they've swiped first
+  if(Meteor.user()){
+    hasSwiped=Meteor.user().profile.hasSwiped;
+  }
+  else{
+    hasSwiped=false;
   }
   
 });

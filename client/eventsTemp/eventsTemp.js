@@ -47,7 +47,7 @@ Template.eventsTemp.onRendered( function(){
       $('.button').popup({on: 'manual'});
 
       //if there is no user logged in, or if the user has not yet swiped, then show pop up to cue swiping
-      if((Meteor.user()==null)||(Meteor.user().profile.hasSwiped==false)){
+      if(hasSwiped==false){
             $('button')
            .popup('show');
       }
@@ -108,16 +108,33 @@ Template.eventsTemp.helpers({
     }
     return where;
   },
-    'more_info': function(){
+  'more_info': function(){
       return Session.get('more_info');
+},
+    'hasntSwiped': function(){
+      return (!hasSwiped);
 },
 
 //gestures for phone swiping
   templateGestures: {
     'swipeleft #hammerDiv': function (event, templateInstance) {
+        //update hasSwiped to true so the user isn't cued to swipe again
+        hasSwiped=true;
+        if(Meteor.user()){
+          //update meteor user to reflect that they've swiped
+          Meteor.users.update({_id:Meteor.user()._id}, {$set:{"profile.hasSwiped":true}})
+
+        }
         swipeLeft();
     },
     'swiperight #hammerDiv': function (event, templateInstance) {
+        //update hasSwiped to true so the user isn't cued to swipe again
+       hasSwiped=true;
+        if(Meteor.user()){
+          //update meteor user to reflect that they've swiped
+          Meteor.users.update({_id:Meteor.user()._id}, {$set:{"profile.hasSwiped":true}})
+
+        }
         swiperight();
     },
   },
@@ -218,21 +235,30 @@ function swipeRight(){
 };
 
 add_fav= function(activity){
-  console.log('in add_fav');
+    //handle attendence  
+   if(activity.attending==undefined){
+      Activities.update({_id:activity._id}, {$set:{"attending":1}});
+    }
+    else{
+      attendence=activity.attending+1;
+      Activities.update({_id:activity._id}, {$set:{"attending":attendence}});
+    }
+
   Meteor.users.update({_id:Meteor.user()._id}, {$addToSet:{"profile.favorites":activity}})
   Meteor.users.update({_id:Meteor.user()._id}, {$pull:{"profile.discards":activity}})
 
-  //handle attendence  ############## ADD THIS
-  //########################################################
 
 };
 
 add_discard= function(activity){
+
+  //handle attendence --if the activity was a favorite, decrement attendence 
+  if(is_favorite(activity)){
+    attendence=activity.attending-1;
+    Activities.update({_id:activity._id}, {$set:{"attending":attendence}});
+  }
   Meteor.users.update({_id:Meteor.user()._id}, {$addToSet:{"profile.discards":activity}})
   Meteor.users.update({_id:Meteor.user()._id}, {$pull:{"profile.favorites":activity}})
-
-   //handle attendence ############## ADD THIS
-   //########################################################
 };
 
 

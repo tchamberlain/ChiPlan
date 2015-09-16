@@ -120,13 +120,17 @@
                        <i data-content="Swipe left to discard" class="icon remove"></i>
                         I don't want to go
                 </button>
-                 <div class="ui inverted mini popup">Swipe left to discard </div>
+                {{#if hasntSwiped}}
+                  <div class="ui inverted mini popup">Swipe left to discard </div>
+                 {{/if}}
 
                 <button id="favorite"  class=" ui medium positive right labeled icon button">
                         I want to go
                   <i data-content="Swipe right to favorite" class="icon heart"></i>
                 </button> 
-               <div class="ui inverted mini popup"  data-variation="wide" >Swipe right to favorite </div>
+                {{#if hasntSwiped}}
+                  <div class="ui inverted mini popup"  data-variation="wide" >Swipe right to favorite </div>
+               {{/if}}
                   
             </div>
           </div>

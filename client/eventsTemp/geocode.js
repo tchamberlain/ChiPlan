@@ -14,10 +14,14 @@ geocode_all_activites=function(){
         }
       } 
 
-        function geocode_update_db (elem) {   
+      };
+   
+
+//takes in one activity, gets its lat and lng and updates it in the database 
+            geocode_update_db = function (elem) {   
 
             //check if it's coordinates are 0, only update if they are bc those are the ones that havent been geocoded
-            if(elem.location.coordinates[0]==0){
+            if(!elem.location.coordinates[0]){
               geocoder = new google.maps.Geocoder();
               geocoder.geocode( { 'address': elem.address}, function(results, status) {
               if (status == google.maps.GeocoderStatus.OK) {
@@ -41,5 +45,3 @@ geocode_all_activites=function(){
           });
       }
     }
-      };
-   

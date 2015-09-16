@@ -141,7 +141,9 @@ isAdmin=function(){
 
 function acceptEvent (obj){
   //geocode
-  //translate date to real date
+  //call geocode function
+    //- can;t call geocode function bc the activity needs to be already in the db??
+  //call insert on the object, as is?
   
 
 }

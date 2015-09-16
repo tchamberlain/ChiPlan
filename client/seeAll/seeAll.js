@@ -3,29 +3,19 @@ Router.route('/seeAll/:category/:date/:distance', {
     data: function(){
         },
         waitOn: function(){
-           //set parameters as session variables to use in share page 
-           Session.set('dist_param',this.params.distance);
-           Session.set('date_param',this.params.date);
-           Session.set('category_param',this.params.category);
-
-          if(Session.get('activity_list_all')){
-            subscribed=0;
-            return;
-          }
-          else{
-
-            subscribed=1;
+          //if the event list already exists, do not need to re-subscribe
+          if(!Globals.seeAllEventList){
             return Meteor.subscribe('events_query', [this.params.category, this.params.date, this.params.distance]);
           }
     }
     });
 
-Template.seeAll.onRendered( function(){
-        if(subscribed){
-           activity_list_all=create_act_list(1);
-          Session.set('activity_list_all',activity_list_all);
+Template.seeAll.onCreated( function(){
+        if(!Globals.seeAllEventList){
+           Globals.seeAllEventList=create_act_list();
+          Session.set('activity_list_all',Globals.seeAllEventList);
         }
-       activity_list=Session.get('activity_list_all');
+       activity_list=Globals.seeAllEventList;
 
 
     if(Meteor.user()){

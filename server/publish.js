@@ -47,6 +47,8 @@ function set_up_act_list(search_category, search_date, search_dist, user_lng, us
       console.log("setting up act list")
       activity_index=0;
 
+
+      console.log(search_category, "search_category inside of server");
       // ************DATE QUERY SETUP************
       //here we get the current date and put it in a useable foramt
       //we want these dates to not have times (hours or seconds)
@@ -133,7 +135,7 @@ function set_up_act_list(search_category, search_date, search_dist, user_lng, us
 
       var final_query= Activities.find({$and:[ date_query, category_query]})
       var total= final_query.count();
-      console.log(total)
+      console.log(category_query, total);
       return final_query;
 
 
