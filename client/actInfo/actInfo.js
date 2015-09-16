@@ -1,46 +1,38 @@
-Router.route('/actInfo/:_id/:button_info', {
+Router.route('/actInfo/:_id', {
     name: 'actInfo',
-    data: function(){
-      favorite_button_show= parseInt(this.params.button_info[0]);
-      discard_button_show= parseInt(this.params.button_info[2]);
-      only_info= parseInt(this.params.button_info[4]);
-
-      //no buttons by default
-      setButtonsNone();
-      if(only_info){setButtonsNone();}
-      else if(discard_button_show){ setButtonsDiscard();}
-      else if(favorite_button_show){setButtonsFavorite();}
-      else {setButtonsBoth();}
-    },
-        waitOn: function(){
-          if(Session.get('current_activity')){
-            subscribed=0;
-            console.log('current_act in route',Session.get('current_activity'));
-            return;
-          }
-          else{
-            subscribed=1;
-            return Meteor.subscribe('event_by_id',this.params._id);
-          }
-        }
+    waitOn: function(){
+        currentID=this.params._id;
+        return Meteor.subscribe('event_by_id',this.params._id);
+    }
     });
 
 Template.actInfo.onCreated( function(){
-    if(subscribed){
-      console.log("actInfo, subscribed and re-setting current activity")
-      Session.set('current_activity', Activities.findOne());
+    var currentEvent=Activities.findOne(currentID);
+    Session.set('currentEvent', currentEvent);
+
+    //default is no buttons
+    setButtonsNone();
+
+    //if this is neither a fav nor a discard, we need to show both buttons
+    if((is_favorite(currentEvent._id)||is_discard(currentEvent._id))==false){
+      console.log("is_favorite(currentEvent._id)",is_favorite(currentEvent._id));
+      console.log("is_discard(currentEvent._id)",is_discard(currentEvent._id));
+      setButtonsBoth();
+    }
+    else if(is_favorite(currentEvent._id)){
+      setButtonsDiscard();
+    }
+    else{
+      setButtonsFavorite();
     }
 });
 
 Template.actInfo.helpers({
    'chosen_activity': function(){
-      return Session.get('current_activity');
-   },
-    'BacktoMyEvents': function(){
-      return Session.get('BacktoMyEvents');
+      return Session.get('currentEvent');
    },
   'is_favorite': function(){
-          act_id=Session.get('current_activity')._id;
+          act_id=Session.get('currentEvent')._id;
          return is_favorite(act_id);
   }
 });
@@ -50,14 +42,14 @@ Template.actInfo.helpers({
     'click #favorite': function(){
         //if there is a user logged in, send them to the share page
         if( Meteor.user()){
-         current_act=Session.get('current_activity');
+         current_act=Session.get('currentEvent');
 
           //update buttons
           setButtonsDiscard();
           //update user
-          add_fav(Meteor.user(),current_act);
+          add_fav(current_act);
           
-          Router.go('share',{_id: current_act._id, fromEvents:0,fromYourEvents:0 });
+          Router.go('share',{lastPlace: "actInfo", _id: current_act._id, fromEvents:0,fromYourEvents:0 });
         }
     //if there's no user, set up an error modal
     else{
@@ -68,18 +60,24 @@ Template.actInfo.helpers({
 
    'click #discard': function(){
       if( Meteor.user()){
-        current_act=Session.get('current_activity');
+        current_act=Session.get('currentEvent');
         //update buttons
         setButtonsFavorite()
 
         //if there is a user logged in, send them to the share page
-        add_discard(Meteor.user(),current_act);
+        add_discard(current_act);
       }
       else{
       $('.ui.modal.not_logged_in_modal')
         .modal('show');
     }
-  }
+  },
+
+     'click #back': function(){
+        //you either need to go back to seeAll, Dash, or Home
+        //check current route and see where you need to go
+
+    }
 
  });
 
@@ -123,6 +121,8 @@ setButtonsNone= function(){
   Session.set('both_buttons_show',0);
   
 };
+
+
 
 
 Deps.autorun(function(){

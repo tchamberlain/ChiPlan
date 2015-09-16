@@ -1,5 +1,6 @@
 Router.route('/dashboard',{
    waitOn: function(){
+          nullGlobals();
           return Meteor.subscribe('get_user_invites',Meteor.user()._id);
         }
   });
@@ -44,7 +45,7 @@ Template.dashboard.events({
     'click #activity': function(){
       var the_id = this._id;
       Session.set('current_activity',Meteor.subscribe('event_by_id',the_id));
-      Router.go('yourEventsActInfo',{_id: the_id, isInvite:[0]});
+      Router.go('actInfo',{_id: the_id, isInvite:[0]});
     },
         'click #share': function(){
       var the_id = this._id;
@@ -54,7 +55,7 @@ Template.dashboard.events({
       'click #invite_activity': function(){
       var the_id = this.activity._id;
       console.log(this.activity.title);
-      Router.go('yourEventsActInfo',{_id: the_id, isInvite:[1]});
+      Router.go('actInfo',{_id: the_id, isInvite:[1]});
     },
 
     'click #fav_icon': function(){

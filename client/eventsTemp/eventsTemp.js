@@ -16,20 +16,35 @@ Router.route('/events/:category/:date/:distance', {
     waitOn: function(){
         //we want the default to be that more info is not showing
         Session.set('more_info',0);
-        lng=Session.get('lng');
-        lat=Session.get('lat');
+
+        //get users lat and lng if it exists
+        if(Globals.userLocation){
+          lat=Globals.userLocation.lat;
+          lng=Globals.userLocation.lng;
+        }
+        else{
+          lat=null;
+          lng=null;
+        }
         return Meteor.subscribe('events_query', [this.params.category, this.params.date, this.params.distance, lng,lat]);
     }
     });
 
-Template.eventsTemp.onRendered( function(){
-  console.log(Router.current().params);
 
+Template.eventsTemp.onCreated( function(){
+  if(!Globals.eventList){ 
+    console.log("no activity_list detected, bouta make a new one");
+    create_act_list();
+  }
+  Session.set('currentEvent',Globals.eventList[Globals.eventIndex]);
+
+});
+
+
+Template.eventsTemp.onRendered( function(){
+    
     //initialize the popups that will cue swiping
-      $('.button')
-        .popup({
-      on: 'manual'
-      });
+      $('.button').popup({on: 'manual'});
 
       //if there is no user logged in, or if the user has not yet swiped, then show pop up to cue swiping
       if((Meteor.user()==null)||(Meteor.user().profile.hasSwiped==false)){
@@ -37,14 +52,6 @@ Template.eventsTemp.onRendered( function(){
            .popup('show');
       }
 
-    //GEOCODE the current db, use when you've clicked on surprise me to update all events
-    //geocode_all_activites();
-
-    if(!Session.get('activity_list')){ 
-      console.log("no activity_list detected, bouta make a new one");
-      //false because this is not coming from the see all page
-      create_act_list(false);
-    } 
 });
 
 //********************** HELPERS **********************//
@@ -52,7 +59,6 @@ Template.eventsTemp.onRendered( function(){
 Template.eventsTemp.helpers({
   //gets the remainder of the event description
   'get_rest': function(){
-
     lines=split_description();
     lines=lines.slice(1,split_description().length+1);
     line_obj=[];
@@ -82,8 +88,7 @@ Template.eventsTemp.helpers({
   //CHANGE TO FIVE SOON
   //determines whether or not attendence num will be displayed (if over five people are going)
   'showAttendance': function(){
-
-    current_activity=Session.get('current_activity');
+    current_activity=Session.get('currentEvent');
     return (current_activity.attending>=1);
   },
   //we disable the more info button if the description isless than or equal to 3 lines
@@ -94,7 +99,7 @@ Template.eventsTemp.helpers({
 
   //show only part of the event's address, if the address is too long
  'get_where': function(){
-    where=Session.get('current_activity').address;
+    where=Session.get('currentEvent').address;
     if(isMobile){num_char=30}
     else{num_char=40}
 
@@ -110,27 +115,18 @@ Template.eventsTemp.helpers({
 //gestures for phone swiping
   templateGestures: {
     'swipeleft #hammerDiv': function (event, templateInstance) {
-        //if there is a user logged in, and if they have swiped before, this will make sure they don't see the swipe instructions
-        // if(Meteor.user){
-        //   Meteor.user.profile.hasSwiped=true;
-        // };
-
-        $('button')
-          .popup('hide');
-      //not sure why you have to put this in a second time for the phone transition
-        transitionRightLeft();
-      //same as discard
-      discard();
+        swipeLeft();
     },
     'swiperight #hammerDiv': function (event, templateInstance) {
-         //same as favorite
-          $('button')
-          .popup('hide');
-         favorite();
+        swiperight();
     },
   },
-    'current_activity': function(){
-          return Session.get('current_activity');
+    'currentEvent': function(){
+        //if the page refreshes, reset the current event using the global variables
+          if(!Session.get('currentEvent')){
+            Session.set('currentEvent',Globals.eventList[Globals.eventIndex]);
+          }
+          return Session.get('currentEvent');
       }
 });
 
@@ -145,11 +141,10 @@ Template.eventsTemp.events({
     },
     //when the user clicks discard button, want to move to the next event, and hide the rest of the info
     'click #discard': function(){
-        Session.set('more_info',0);
-        discard();
+        swipeLeft();
       },
     'click #favorite': function(){ 
-        favorite();
+        swipeRight();
       },
       
     'click #previous': function(){
@@ -160,121 +155,102 @@ Template.eventsTemp.events({
      $("#deck_slide")
         .transition('fly right')
       ;
-        activity_index-=1;
-        Session.set('current_activity', activity_list[activity_index]);
+        
+        Globals.eventIndex+=1;
+        var currentEvent=Globals.eventList[Globals.eventIndex]
+        Session.set('currentEvent', currentEvent);
     },
 
     'click #seeAll': function(){
         //setting activity_list to null, since we want to create a new one when re-rendering the eventsTemp page
-        Session.set('activity_list',null);
          query_params=Router.current().params;
          Router.go('seeAll',{category: query_params.category, date: query_params.date, distance: query_params.distance});
-       
       }
   });
 
 //********************** FUNCTIONS **********************//
 //********************** FUNCTIONS **********************//
 
-//uses current activity to return a nicely formated date string
-get_when= function(){
-    start_time=Session.get('current_activity').start_time
-    start_date=Session.get('current_activity').start_date
 
-    var month_names = [
-        "January", "February", "March",
-        "April", "May", "June", "July",
-        "August", "September", "October",
-        "November", "December"
-    ];
-    var day_names=["Sunday","Monday", "Tuesday","Wednesday", "Thursday","Friday","Saturday"];
 
-    var dayIndex = start_date.getDay();
-    var monthIndex = start_date.getMonth();
-    var date = start_date.getDate();
-    
-    when=day_names[dayIndex]+", "+month_names[monthIndex]+"  "+date+ ", "+start_time;
-    return when;
-  }
+function swipeLeft(){
+  // get the current activity 
+  var currentEvent=Globals.eventList[Globals.eventIndex];
 
-discard= function(){
-  activity_list=Session.get('activity_list');
-  current_act=Session.get('current_activity');
-
-  //make sure there's an activity list
-  if(!activity_list){
-    activity_list=create_act_list(0);
-    Session.set('activity_list',activity_list);
-  }
-
-  //make the deck slide away
+  //transition deck
   transitionRightLeft();
 
-  //update the user, if there is one
-  if( Meteor.user()){
-    add_discard(Meteor.user(),current_act);
-  }
+  //increment which part of the list your on
+  Globals.eventIndex+=1;
 
-  //update the current activity, but wait until deck has slid away
-  setTimeout(function() {
-    activity_index=Session.get('activity_index')+1;
-    Session.set('activity_index', activity_index);
-    Session.set('current_activity', activity_list[activity_index]);
-
+    setTimeout(function() {
+      Session.set('currentEvent', Globals.eventList[Globals.eventIndex]);
     }, 200);
 
+  //if logged in, add a discard
+   if(Meteor.user()){
+       add_discard(currentEvent);
+    }
+
+
 };
 
-favorite =function(){
-  activity_list=Session.get('activity_list');
-  current_act=Session.get('current_activity');
-  console.log('in fav, attending',   current_act.attending);
-  //update the number of people going to the event
-  if(current_act.attending==undefined){
-    Activities.update({_id:current_act._id}, {$set:{"attending":1}});
+function swipeRight(){
+  // get the current activity 
+  var currentEvent=Globals.eventList[Globals.eventIndex];
+
+  //increment which part of the list your on
+  Globals.eventIndex+=1;
+
+  //if logged in, add favorite
+  if(Meteor.user()){
+    add_fav(currentEvent);
+    //route to share, coming from eventsTemp
+    Router.go('share',{_id: currentEvent._id});
+    var currentEvent=Globals.eventList[Globals.eventIndex];
+    Session.set('currentEvent',currentEvent);
+
   }
   else{
-    attendence=current_act.attending+1;
-    Activities.update({_id:current_act._id}, {$set:{"attending":attendence}});
+    alert("You need to log in to favorite activites");
   }
 
-  //make sure there's an activity list
-  if(!activity_list){
-    activity_list=create_act_list(0);
-    Session.set('activity_list',activity_list);
-  }    
-
-  //update the user, if there is one
-  if( Meteor.user()){
-    add_fav(Meteor.user(),current_act);
-
-    params=Router.current().params;
-    Session.set('category',params.category);
-    Session.set('dsitance',params.distance);
-    Session.set('date',params.date);
-    //route to the "Share" page
-    Router.go('share',{_id: current_act._id, fromEvents:1, fromYourEvents:0});
-
-    //update current activity
-    activity_index=Session.get('activity_index')+1;
-    Session.set('activity_index', activity_index);
-    Session.set('current_activity', activity_list[activity_index]);
-
-}
-else{
-    alert("You must be logged in to favorite activities");
-  }
 };
 
-create_act_list= function(for_see_all){
-    //getting all of the activities, returns an array of events within the user specified distance
-    activity_list=distance_query();
+add_fav= function(activity){
+  console.log('in add_fav');
+  Meteor.users.update({_id:Meteor.user()._id}, {$addToSet:{"profile.favorites":activity}})
+  Meteor.users.update({_id:Meteor.user()._id}, {$pull:{"profile.discards":activity}})
 
-    //taking out discards and favorites from what you display
-    //first check if there is a meteor user who has favorites
+  //handle attendence  ############## ADD THIS
+  //########################################################
+
+};
+
+add_discard= function(activity){
+  Meteor.users.update({_id:Meteor.user()._id}, {$addToSet:{"profile.discards":activity}})
+  Meteor.users.update({_id:Meteor.user()._id}, {$pull:{"profile.favorites":activity}})
+
+   //handle attendence ############## ADD THIS
+   //########################################################
+};
+
+
+
+create_act_list= function(){
+    //getting all of the activities, returns an array of events within the user specified distance
+      activity_list=distance_query();
+    
+    
+
+    //for_see_all will be true if seeAll is contained in the path
+    var routeName = Router.current().route.getName();
+    console.log(routeName);
+    for_see_all= routeName.indexOf("seeAll")>-1;
+
+    //if current route says see all, then you don't want to exclude favorites and discards
     if(!for_see_all){
       if(Meteor.user()){
-
         discards=Meteor.user().profile.discards;
         favorites=Meteor.user().profile.favorites;
 
@@ -292,12 +268,10 @@ create_act_list= function(for_see_all){
         }
 
         //set the first activity, if were in the eventsTemp, if not, no need
-        activity_index=0;
-        current_activity= activity_list[activity_index];
-        Session.set('activity_list',activity_list);
-        Session.set('current_activity',current_activity);
-        Session.set('activity_index',activity_index);
 
+        current_activity= activity_list[0];
+        Session.set('currentEvent',current_activity);
+       Globals.eventList=activity_list;
       }
            
       return activity_list;
@@ -307,16 +281,15 @@ create_act_list= function(for_see_all){
 distance_query=function(){
   
   distance_param= Router.current().params.distance;
-  console.log(distance_param);
-  x=Session.get('lng');
-  y=Session.get('lat');
-  x=5;
+
   //if the user's loc doesn't exist, or they don't specify a distance, return all activities
-  if(distance_param=="any_dist"||(!x)){
+  if(distance_param=="any_dist"||(Globals.userLocation==null)){
     act_list=Activities.find({}).fetch();
     console.log("in dist query, before narrowed down how many activites",Activities.find({}).fetch());
   }
   else if(distance_param=="five"){
+      x=Globals.userLocation.lng;
+      y=Globals.userLocation.lat;
     act_list=Activities.find({ location:
                                            { $near :
                                               {
@@ -327,6 +300,8 @@ distance_query=function(){
 
   }
   else if(distance_param=="ten"){
+      x=Globals.userLocation.lng;
+      y=Globals.userLocation.lat;
     act_list=Activities.find({ location:
                                            { $near :
                                               {
@@ -346,14 +321,14 @@ get_list_of_ids =function(event_array){
     ids=[];
     for(i=0; i<event_array.length; i++)
     {
-        ids[i]=event_array[i]._id;
+      ids[i]=event_array[i]._id;
     }
     return ids;
 }
 
 //uses current activities description, returns an array with a line of the description in each element
   split_description= function(){       
-        description=Session.get('current_activity').description;
+        description=Session.get('currentEvent').description;
         if(description[description.length-1]=="]"){
           description=description.substring(0,description.length-2);
         }
@@ -401,33 +376,53 @@ get_list_of_ids =function(event_array){
           ;
 };
 
-add_fav= function(user,activity){
-  Meteor.users.update({_id:Meteor.user()._id}, {$addToSet:{"profile.favorites":current_act}})
-  Meteor.users.update({_id:Meteor.user()._id}, {$pull:{"profile.discards":current_act}})
-};
-
-add_discard= function(user,activity){
-  Meteor.users.update({_id:Meteor.user()._id}, {$addToSet:{"profile.discards":activity}})
-  Meteor.users.update({_id:Meteor.user()._id}, {$pull:{"profile.favorites":activity}})
-};
 
 is_discard = function(act_id){
   user_id=Meteor.user()._id;
   if(Meteor.users.find({_id:user_id, 'profile.discards._id':act_id}).count()){
-    return 1;
+    return true;
   }
   else{
-    return 0;
+    return false;
   }
   };
 
 is_favorite =function (act_id){
   user_id=Meteor.user()._id;
   if(Meteor.users.find({_id:user_id, 'profile.favorites._id':act_id}).count()){
-    return 1;
+    return true;
   }
   else{
-  return 0;
+  return false;
   }
   };
+
+
+
+//uses current activity to return a nicely formated date string
+get_when= function(){
+    start_time=Session.get('currentEvent').start_time;
+    start_date=Session.get('currentEvent').start_date;
+
+    var month_names = [
+        "January", "February", "March",
+        "April", "May", "June", "July",
+        "August", "September", "October",
+        "November", "December"
+    ];
+    var day_names=["Sunday","Monday", "Tuesday","Wednesday", "Thursday","Friday","Saturday"];
+
+    var dayIndex = start_date.getDay();
+    var monthIndex = start_date.getMonth();
+    var date = start_date.getDate();
+    
+    when=day_names[dayIndex]+", "+month_names[monthIndex]+"  "+date+ ", "+start_time;
+    return when;
+  }
+
+
+
+
+
+
 

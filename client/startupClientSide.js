@@ -3,7 +3,30 @@
 
 //adds facebook as a login service 
 Meteor.startup(function() {
-  var url      = window.location.href;  
+    Globals= {}; 
+
+
+    GoogleMaps.load();
+      // first get current location lat and lng
+       Globals.userLocation=null;
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else { 
+       var print_eventually= "Geolocation is not supported by this browser.";
+       console.log(print_eventually);
+    }
+
+    function showPosition(position) {
+       Globals.userLocation={lat:position.coords.latitude, lng:position.coords.longitude};
+    }
+    console.log(Globals.userLocation,"userLocation");
+
+
+  console.log("in the startup function!!!");
+
+  var url      = window.location.href;
+
 //(requires different app id and secret for chiplan.org and for the local host)
   if(url=="http://localhost:3000/"){
      Accounts.loginServiceConfiguration.remove({
@@ -32,20 +55,5 @@ Meteor.startup(function() {
    // set the name modal so it exists
     Session.set('name_modal',0)
     
-    
-    GoogleMaps.load();
-      // first get current location lat and lng
-
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-    } else { 
-       print_eventually= "Geolocation is not supported by this browser.";
-    }
-
-    function showPosition(position) {
-       Session.set('lat',position.coords.latitude);
-       Session.set('lng',position.coords.longitude);
-
-    }
   
 });

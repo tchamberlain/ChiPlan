@@ -1,4 +1,7 @@
 Router.route('/', function(){
+  //reset all global variables
+    nullGlobals();
+  //render home template
   this.render('home');
 },{name: 'home'});
 
@@ -81,26 +84,25 @@ function get_search(){
   else if (($("#dist_dropdown").dropdown('get text'))=="Within ten miles"){dist="ten"}
   else{dist="any_dist"}
 
-  search=[date, dist]
+  search=[date, dist];
   return(search)
 }
 
 set_up_deck=function(category){
-    //reset the activity lists
-      Session.set('activity_list_all',null);
-      Session.set('activity_list',null);
-       Session.set('current_activity',null);
 
-      //if user has location, get it
-      if(Session.get('lng')){
-         user_loc=[Session.get('lng'),Session.get('lng') ];
-      }
-      else{
-        user_loc=0;
-      }
+       //ADD THIS LATER !!!!!
+      //if user DOES NOT have location, disable distance search 
+      // if(Globals.userLocation){
+      //    user_loc=[Session.get('lng'),Session.get('lng') ];
+      // }
+      // else{
+      //   user_loc=0;
+      // }
+
       //get users input parameters
       search=get_search();
-      Router.go('eventsTemp',{category: category, date: search[0], distance: search[1],user_loc:user_loc})
+      Globals.searchParams={category: category, date: search[0], distance: search[1]};
+      Router.go('eventsTemp',{category: category, date: search[0], distance: search[1]})
 
   }
 
@@ -124,6 +126,15 @@ function findNextEvent(){
   else{
     return 0;
   }
+}
+
+nullGlobals=function(){
+    Globals.eventList=null;
+    Globals.seeAllEventList=null;
+    Globals.eventIndex=0;
+    Globals.currentEvent=null;
+    Globals.searchParams=null;
+    Session.set('currentEvent',null);
 }
 
 

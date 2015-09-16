@@ -110,7 +110,7 @@ Template.seeAll.events({
             Session.set('discard_list', discard_list);
 
             //update the users profile
-            add_discard(Meteor.user(),current_act);
+            add_discard(current_act);
        }
       
           //if its a discard or an unseen, make it a favorite
@@ -127,7 +127,7 @@ Template.seeAll.events({
              Session.set('favorite_list', favorite_list);
 
               //update the users profile
-              add_fav(Meteor.user(),current_act);
+              add_fav(current_act);
          }
       }
     }

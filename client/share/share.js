@@ -1,15 +1,11 @@
-Router.route('/share/:_id/:fromEvents/:fromYourEvents', {
+Router.route('share/:_id/', {
     name: 'share',
     data: function(){
-     Session.set('get_fromYourEvents',0);
      Meteor.subscribe('event_by_id',Router.current().params._id);
-      if(this.params.fromEvents=="fromYourEvents"){
-        Session.set('get_fromYourEvents',1);
-      }
        Session.set('fromEvents',this.params.fromEvents);
    },
         waitOn: function(){
-          if(Session.get('current_activity')){ 
+          if(Session.get('currentEvent')){ 
             return  Meteor.subscribe('get_user_names')  ;}
             
           else{
@@ -18,7 +14,7 @@ Router.route('/share/:_id/:fromEvents/:fromYourEvents', {
     });
 
 
-Template.share.onRendered(function(){
+Template.share.onCreated(function(){
  
   //subscriptions
     act_id=Router.current().params._id;
@@ -28,7 +24,7 @@ Template.share.onRendered(function(){
 
 
     Session.set('fromEvents',Router.current().params.fromEvents);
-    Session.set('current_activity', Activities.findOne(act_id));
+    Session.set('currentEvent', Activities.findOne(act_id));
 
     //get the parameters in case you need to re-populate the act_list 
     dist_param=Session.get('dist_param');
@@ -44,19 +40,6 @@ Template.share.helpers({
     return get_when();
   },
 
-  //used to determine which back button to show
-  'get_fromEvents': function(){
-        if (parseInt(Router.current().params.fromEvents)==1){ var fromEvents=true;}
-        else{ var fromEvents=false;}
-
-        return fromEvents;
-   },
-     'get_fromYourEvents': function(){
-        if ((Router.current().params.fromYourEvents)==1){ var YourEvents=true;}
-        else{ var YourEvents=false;}
-
-        return YourEvents;
-   },
      'get_back_button': function(){
         if (parseInt(Router.current().params.fromEvents)==1){ var fromEvents=true;}
         else{ var fromEvents=false;}
@@ -68,22 +51,22 @@ Template.share.helpers({
    },
 
     'get_activity': function(){
-      return Session.get('current_activity');
+      return Session.get('currentEvent');
    },
 
      'get_activity_date': function(){
       
-      return Session.get('current_activity');
+      return Session.get('currentEvent');
    },
 
    'get_link_fb':function(){
-      act_id= Session.get('current_activity')._id;
+      act_id= Session.get('currentEvent')._id;
       link="https://www.facebook.com/sharer/sharer.php?u="+"chiplan.meteor.com/actInfo/"+act_id+"/0%2C0%2C1";
       return link;
    },
 
    'get_link_twitter':function(){
-      act_id= Session.get('current_activity')._id;
+      act_id= Session.get('currentEvent')._id;
       link="https://twitter.com/intent/tweet?text="+"https://chiplan.meteor.com/actInfo/"+act_id+"/0%2C0%2C1";
       return link;
    }
@@ -143,50 +126,10 @@ Template.share.events = {
 
     },
 
-  'click #back_to_seeAll': function (evt, template) {
-      var the_id=Session.get('current_activity')._id
-      console.log("clicked back to see all");
-      if(Session.get('activity_list')!=null){
-      Router.go('seeAll',{category:Session.get('category'),date:Session.get('date'),distance: Session.get('dist')})
-      }
-      else{
-        console.log('are you here');
-        Router.go('seeAll',{category:category_param,date:date_param,distance: dist_param});
-      }
+    // 'click #back': function (evt, template) {
 
-    },
+    //   },
 
-    'click #back_to_yourEvents': function (evt, template) {
-        var the_id=Session.get('current_activity')._id
-        console.log("clicked back_to_actInfo");
-        Router.go('dashboard');
-
-    },
-
-      'click #seeAll': function (evt, template) {
-        var the_id=Session.get('current_activity')._id
-        Router.go('actInfo',{_id: the_id, button_info:[0,1,0]})
-    },
-
-      'click #back_to_eventsTemp': function (evt, template) {
-        //update current activity
-      
-
-        if(Session.get('activity_list')!=null){
-           activity_index=Session.get('activity_index')+1;
-           activity_list=Session.get('activity_list');
-        Session.set('activity_index',activity_index );
-        Session.set('current_activity', activity_list[activity_index])
-        Router.go('eventsTemp',{category:Session.get('category'),date:Session.get('date'),distance: Session.get('dist')})
-
-
-        }
-        else{
-          //Session.set('create_act_list',0);
-          Router.go(history.back());
-        }
-       
-    },
 
     'call_invite_modal':function(evt, template){
       var input_name = invite_modal.find(".inviteForm").value;
@@ -206,10 +149,7 @@ Template.share.events = {
       }
 
 }
-
-
 };
-
 
 
 
@@ -219,12 +159,11 @@ Template.invite_modal.helpers ({
    }
 });
 
-
 Template.invite_modal.events({
      
      'click #invite': function () {
       user_id= Session.get('query_name')._id
-      invite_activity= Session.get('current_activity')
+      invite_activity= Session.get('currentEvent')
       inviter= Meteor.user()
 
     //if the user has already been invited to something, we will do an update of their doc
@@ -244,13 +183,10 @@ Template.invite_modal.events({
 
 });
 
-
 Template.invite_modal.helpers({
-  'get_current_activity': function () {
-    return Session.get('current_activity');
-
+  'get_currentEvent': function () {
+    return Session.get('currentEvent');
   }
-
 });
 
 
