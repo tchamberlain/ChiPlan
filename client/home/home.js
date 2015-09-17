@@ -55,8 +55,7 @@ Template.home.helpers({
 
 Template.home.events({
     'click #next_event': function(){
-      the_id = Session.get('next_event')._id;
-      Session.set('current_activity',findNextEvent());
+      Session.set('actInfoEvent',findNextEvent());
       Router.go('actInfo',{_id: the_id, button_info:[0,0,1]} );
     },
    'click #create': function(){

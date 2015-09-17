@@ -5,7 +5,7 @@ Router.route('/seeAll/:category/:date/:distance', {
         waitOn: function(){
           //if the event list already exists, do not need to re-subscribe
           if(!Globals.seeAllEventList){
-            return Meteor.subscribe('events_query', [this.params.category, this.params.date, this.params.distance]);
+            return Meteor.subscribe ('events_query', [this.params.category, this.params.date, this.params.distance]);
           }
     }
     });
@@ -65,13 +65,13 @@ Template.seeAll.onCreated( function(){
 Template.seeAll.events({ 
     'click #activity': function(){
        the_id= this._id;
-       Session.set('current_activity',this);
        if(!Meteor.user()){
         button_info=[0,0,0];
        }
        else{
         button_info=[is_discard(the_id),is_favorite(the_id)];
        }
+       Session.set('actInfoEvent',this);
        Router.go('actInfo',{_id: the_id, button_info:button_info} );
     },
 

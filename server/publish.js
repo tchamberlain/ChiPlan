@@ -16,17 +16,9 @@ Meteor.publish('event_by_id', function(id){
         return Activities.find({_id: id});
 });
 
-Meteor.publish('get_user_invites', function(id){
-        return Invites.find({_id: id});
-});
-
 
 Meteor.publish('get_user_names', function(id){
         return Meteor.users.find({});
-});
-
-Meteor.publish('get_all_invites', function(id){
-        return Invites.find({});
 });
 
 

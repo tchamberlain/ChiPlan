@@ -5,7 +5,8 @@ Router.route('share/:_id/', {
        Session.set('fromEvents',this.params.fromEvents);
    },
         waitOn: function(){
-          if(Session.get('currentEvent')){ 
+          //only subscribe if share event doesnt exist
+          if(Session.get('shareEvent')){ 
             return  Meteor.subscribe('get_user_names')  ;}
             
           else{
@@ -19,12 +20,11 @@ Template.share.onCreated(function(){
   //subscriptions
     act_id=Router.current().params._id;
     Meteor.subscribe('event_by_id',act_id);
-    Meteor.subscribe('get_all_invites');
     Meteor.subscribe('get_user_names');
 
 
     Session.set('fromEvents',Router.current().params.fromEvents);
-    Session.set('currentEvent', Activities.findOne(act_id));
+    Session.set('shareEvent', Activities.findOne(act_id));
 
     //get the parameters in case you need to re-populate the act_list 
     dist_param=Session.get('dist_param');
@@ -51,22 +51,22 @@ Template.share.helpers({
    },
 
     'get_activity': function(){
-      return Session.get('currentEvent');
+      return Session.get('shareEvent');
    },
 
      'get_activity_date': function(){
       
-      return Session.get('currentEvent');
+      return Session.get('shareEvent');
    },
 
    'get_link_fb':function(){
-      act_id= Session.get('currentEvent')._id;
+      act_id= Session.get('shareEvent')._id;
       link="https://www.facebook.com/sharer/sharer.php?u="+"chiplan.meteor.com/actInfo/"+act_id+"/0%2C0%2C1";
       return link;
    },
 
    'get_link_twitter':function(){
-      act_id= Session.get('currentEvent')._id;
+      act_id= Session.get('shareEvent')._id;
       link="https://twitter.com/intent/tweet?text="+"https://chiplan.meteor.com/actInfo/"+act_id+"/0%2C0%2C1";
       return link;
    }
@@ -163,31 +163,15 @@ Template.invite_modal.events({
      
      'click #invite': function () {
       user_id= Session.get('query_name')._id
-      invite_activity= Session.get('currentEvent')
+      invite_activity= Session.get('shareEvent')
       inviter= Meteor.user();
-
       Meteor.call('sendInvite',Meteor.user(),Session.get('query_name'), invite_activity);
-
-    //if the user has already been invited to something, we will do an update of their doc
-    if (Invites.findOne(user_id)){
-        Invites.update({_id: user_id}, {$addToSet: {activity_inviter: {activity:invite_activity, inviter:inviter }}});
     }
-
-    //currently using extra colllection for this(since client side cant update users --- not sure if necessary, 
-    //also not sure if a bad sercurity issue in future....
-    else{
-      Invites.insert({
-        _id: user_id,
-        activity_inviter: [{activity:invite_activity, inviter:inviter }]
-      });
-    }
-  }
-
 });
 
 Template.invite_modal.helpers({
-  'get_currentEvent': function () {
-    return Session.get('currentEvent');
+  'get_shareEvent': function () {
+    return Session.get('shareEvent');
   }
 });
 

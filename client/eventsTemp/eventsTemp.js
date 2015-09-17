@@ -223,6 +223,7 @@ function swipeRight(){
   if(Meteor.user()){
     add_fav(currentEvent);
     //route to share, coming from eventsTemp
+    Session.set('shareCurrentEvent',currentEvent);
     Router.go('share',{_id: currentEvent._id});
     var currentEvent=Globals.eventList[Globals.eventIndex];
     Session.set('currentEvent',currentEvent);

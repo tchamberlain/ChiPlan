@@ -6,35 +6,6 @@ Template.invite_modal.helpers ({
    }
 });
 
-
-Template.invite_modal.events({
-     
-     'click #invite': function () {
-      user_id= Session.get('query_name')._id
-      invite_activity= Session.get('current_activity')
-      inviter= Meteor.user()
-
-    //if the user has already been invited to something, we will do an update of their doc
-    if (Invites.findOne(user_id)){
-        Invites.update({_id: user_id}, {$addToSet: {activity_inviter: {activity:invite_activity, inviter:inviter }}});
-    }
-
-    //currently using extra colllection for this(since client side cant update users --- not sure if necessary, 
-    //also not sure if a bad sercurity issue in future....
-    else{
-      Invites.insert({
-        _id: user_id,
-        activity_inviter: [{activity:invite_activity, inviter:inviter }]
-      });
-    }
-  }
-
-});
-
-
-
-
-
   //tryna check for this on login
   Accounts.onLogin( function(){
     //removing events from favorites and from discards that already occurred

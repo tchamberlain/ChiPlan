@@ -5,17 +5,17 @@
 Router.route('/createEvent', {
     name: 'createEvent',
         waitOn: function(){
-            return [Meteor.subscribe('get_all_invites'),Meteor.subscribe('get_admin')];
+          //not entirely sure why we need to get admin here? now that were doing invitations differently dont needa subscirbe to admin
+            return Meteor.subscribe('get_admin');
         }
         
     });
-//testing making a new route for form submitted 
 
+//making a route for the success page once you've created an event
 Router.route('/createEvent/success', {
     name: 'success'
     });
 
-//testing making a new route for form submitted 
 
 
 Template.createEvent.onRendered(function(){

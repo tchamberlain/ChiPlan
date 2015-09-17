@@ -1,25 +1,28 @@
 Router.route('/actInfo/:_id/:isInvite', {
     name: 'actInfo',
     waitOn: function(){
-        currentID=this.params._id;
-        return Meteor.subscribe('event_by_id',this.params._id);
+      if(!Session.get('actInfoEvent')){
+          currentID=this.params._id;
+          return Meteor.subscribe('event_by_id',this.params._id);
+      }
     }
     });
 
 Template.actInfo.onCreated( function(){
-    var currentEvent=Activities.findOne(currentID);
-    Session.set('currentEvent', currentEvent);
+    var actInfoEvent=Activities.findOne(currentID);
+    Session.set('actInfoEvent', actInfoEvent);
+    Meteor.subscribe('event_by_id',currentID);
 
     //default is no buttons
     setButtonsNone();
 
     //if this is neither a fav nor a discard, we need to show both buttons
-    if((is_favorite(currentEvent._id)||is_discard(currentEvent._id))==false){
-      console.log("is_favorite(currentEvent._id)",is_favorite(currentEvent._id));
-      console.log("is_discard(currentEvent._id)",is_discard(currentEvent._id));
+    if((is_favorite(actInfoEvent._id)||is_discard(actInfoEvent._id))==false){
+      console.log("is_favorite(actInfoEvent._id)",is_favorite(actInfoEvent._id));
+      console.log("is_discard(actInfoEvent._id)",is_discard(actInfoEvent._id));
       setButtonsBoth();
     }
-    else if(is_favorite(currentEvent._id)){
+    else if(is_favorite(actInfoEvent._id)){
       setButtonsDiscard();
     }
     else{
@@ -29,10 +32,10 @@ Template.actInfo.onCreated( function(){
 
 Template.actInfo.helpers({
    'chosen_activity': function(){
-      return Session.get('currentEvent');
+      return Session.get('actInfoEvent');
    },
   'is_favorite': function(){
-          act_id=Session.get('currentEvent')._id;
+          act_id=Session.get('actInfoEvent')._id;
          return is_favorite(act_id);
   }
 });
@@ -42,13 +45,14 @@ Template.actInfo.helpers({
     'click #favorite': function(){
         //if there is a user logged in, send them to the share page
         if( Meteor.user()){
-         current_act=Session.get('currentEvent');
+         current_act=Session.get('actInfoEvent');
 
           //update buttons
           setButtonsDiscard();
           //update user
           add_fav(current_act);
-          
+          current_act=Activities.findOne(currentID);
+          Session.set('shareEvent',current_act);
           Router.go('share',{lastPlace: "actInfo", _id: current_act._id, fromEvents:0,fromYourEvents:0 });
         }
     //if there's no user, set up an error modal
@@ -60,7 +64,7 @@ Template.actInfo.helpers({
 
    'click #discard': function(){
       if( Meteor.user()){
-        current_act=Session.get('currentEvent');
+        current_act=Session.get('actInfoEvent');
         //update buttons
         setButtonsFavorite()
 
