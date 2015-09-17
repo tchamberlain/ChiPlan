@@ -271,7 +271,6 @@ create_act_list= function(){
 
     //for_see_all will be true if seeAll is contained in the path
     var routeName = Router.current().route.getName();
-    console.log(routeName);
     for_see_all= routeName.indexOf("seeAll")>-1;
 
     //if current route says see all, then you don't want to exclude favorites and discards
@@ -337,7 +336,7 @@ distance_query=function(){
                                            }}).fetch();
   }
 
-  console.log("how many activiites (in dist_query)",act_list.length);
+  //console.log("how many activiites (in dist_query)",act_list.length);
   return act_list;
 
 }
@@ -345,11 +344,16 @@ distance_query=function(){
 //takes an array of event objects, returns array of ids
 get_list_of_ids =function(event_array){
     ids=[];
-    for(i=0; i<event_array.length; i++)
-    {
-      ids[i]=event_array[i]._id;
+    if(event_array){
+      for(var i=0; i<event_array.length; i++)
+      {
+        ids[i]=event_array[i]._id;
+      }
+      return ids;
     }
-    return ids;
+    else{
+      return [];
+    }
 }
 
 //uses current activities description, returns an array with a line of the description in each element

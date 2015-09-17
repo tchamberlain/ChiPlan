@@ -164,7 +164,9 @@ Template.invite_modal.events({
      'click #invite': function () {
       user_id= Session.get('query_name')._id
       invite_activity= Session.get('currentEvent')
-      inviter= Meteor.user()
+      inviter= Meteor.user();
+
+      Meteor.call('sendInvite',Meteor.user(),Session.get('query_name'), invite_activity);
 
     //if the user has already been invited to something, we will do an update of their doc
     if (Invites.findOne(user_id)){

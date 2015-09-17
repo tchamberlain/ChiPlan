@@ -1,4 +1,4 @@
-Router.route('/actInfo/:_id', {
+Router.route('/actInfo/:_id/:isInvite', {
     name: 'actInfo',
     waitOn: function(){
         currentID=this.params._id;

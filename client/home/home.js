@@ -60,7 +60,13 @@ Template.home.events({
       Router.go('actInfo',{_id: the_id, button_info:[0,0,1]} );
     },
    'click #create': function(){
+    if(Meteor.user()){
       Router.go('createEvent');
+    }
+    else{
+      alert("You must log in to create an event");
+    }
+      
     },    
     'click #category': function(evt, temp){
        var category=""+($(evt.target).closest('img').data('value'));

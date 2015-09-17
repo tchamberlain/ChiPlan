@@ -36,33 +36,6 @@ Template.createEvent.events({
 });
 
 
-
-Template.createEvent.helpers({
-  'get_days':function(){
-    days=[];
-      for(i=1;i<32;i++){
-        day=i;
-        days[i]={day:i};
-      }
-    return days;
-  },
-    'get_month':function(){
-    months=[];
-      for(i=1;i<12;i++){
-        months[i]=i;
-      }
-    return months;
-  },
-  'get_year':function(){
-    years=[2015,2016];
-    return months;
-  }
-
-
-});
-
-
-
  //Get value from an input field
    function getFieldValue(fieldId) { 
       // 'get field' is part of Semantics form behavior API
@@ -94,7 +67,7 @@ Template.createEvent.helpers({
 function sendEventToAdmin(template){
   //first get all of the info from the form
   var title = template.find('input[name=title]').value;
-  var start_month = template.find('select[name=start_month]').value;
+  var start_month = template.find('select[name=start_month]').value -1;
   var start_day = template.find('select[name=start_day]').value;
   var start_year = template.find('input[name=start_year]').value;
   var start_date=new Date(start_year,start_month,start_day);
@@ -112,8 +85,6 @@ function sendEventToAdmin(template){
   var description = template.find('input[name=description]').value;
   var address = template.find('input[name=address]').value;
 
-  //now geocode this one object
-  //geocodinggggg
 
   //put this into an object 
   var eventObject={

@@ -35,11 +35,8 @@ Template.dashboard.onRendered( function(){
 Template.dashboard.events({ 
       'click #accept': function(){
         console.log("u pushed accept",this.activity.title);
+        this.activity.tags=[];
         acceptEvent(this.activity);
-        Activities.insert({title: this.activity.title, start_date: this.activity.start_date, tags:[]});
-
-      // thing that inserts activity into db after geocoding
-    // Meteor.call('acceptEvent');
 
     },
     'click #activity': function(){
@@ -81,6 +78,7 @@ Template.dashboard.events({
       var inviter_id=this.inviter._id;
 
       console.log("act, inviter",act_id,inviter_id );
+      //here you 
       Meteor.users.update({_id: user_id}, {$addToSet: {'profile.discarding': {_id: act_id}}}); 
 
       setTimeout(function() {
@@ -140,11 +138,11 @@ isAdmin=function(){
 }
 
 function acceptEvent (obj){
-  //geocode
-  //call geocode function
-    //- can;t call geocode function bc the activity needs to be already in the db??
-  //call insert on the object, as is?
-  
+    //call insert on the object
+    console.log(obj);
+    Activities.insert(obj);
 
+  //call geocode function on the object
+  geocode_update_db(obj);
 }
 
