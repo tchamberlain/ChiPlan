@@ -1,8 +1,8 @@
 Router.route('/actInfo/:_id/:isInvite', {
     name: 'actInfo',
     waitOn: function(){
+      currentID=this.params._id;
       if(!Session.get('actInfoEvent')){
-          currentID=this.params._id;
           return Meteor.subscribe('event_by_id',this.params._id);
       }
     }
@@ -45,13 +45,19 @@ Template.actInfo.helpers({
     'click #favorite': function(){
         //if there is a user logged in, send them to the share page
         if( Meteor.user()){
-         current_act=Session.get('actInfoEvent');
+          if(!Session.get('actInfoEvent')){
+             current_act=Activities.findOne(currentID);
+          }
+          else{
+           current_act=Session.get('actInfoEvent');
+
+          }
 
           //update buttons
           setButtonsDiscard();
           //update user
           add_fav(current_act);
-          current_act=Activities.findOne(currentID);
+         
           Session.set('shareEvent',current_act);
           Router.go('share',{lastPlace: "actInfo", _id: current_act._id, fromEvents:0,fromYourEvents:0 });
         }
@@ -87,7 +93,7 @@ Template.actInfo.helpers({
 
 Template.actInfo.helpers({
   'get_when': function(){
-    return get_when();
+    return get_when(Session.get('actInfoEvent'));
   },
   
   'favorite_button_show':function(){

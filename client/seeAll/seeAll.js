@@ -72,7 +72,7 @@ Template.seeAll.events({
         button_info=[is_discard(the_id),is_favorite(the_id)];
        }
        Session.set('actInfoEvent',this);
-       Router.go('actInfo',{_id: the_id, button_info:button_info} );
+       Router.go('actInfo',{_id: the_id, isInvite:0} );
     },
 
       'click #back': function(){

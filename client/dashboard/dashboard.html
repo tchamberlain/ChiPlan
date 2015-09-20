@@ -97,18 +97,33 @@
                     {{#if is_admin}}
                       <div id="accept" class="positive left labeled icon button"><i class="green add icon"></i> Accept Event</div>
                     {{/if}}
-                  </div>        
-                   <div id="remove_invite" class="left floated content">
-                     {{#if get_heart_icon _id}}
-                        <i id="fav_icon" class="black mail outline icon"></i>
-                      {{else}}
-                        <i class="red remove icon"></i>  
-                      {{/if}}                  
-                  </div>
-                   <div class="right floated content">
+                  </div>     
+ <div class="left floated content">
+                    {{#if isUnseen}}  
+                     <div class="ui buttons">
+                        <button class="ui tiny positive active button" id="acceptInvite">Accept</button>
+                        <div class="or"></div>
+                        <button class="ui tiny negative button" id="declineInvite">Decline</button>
                       </div>
+                {{else}}
+                    <div class="ui buttons">
+                      {{#if isAccepted}}
+                      <button class="ui tiny positive active button" id="acceptInvite">Accepted</button>
+                      {{else}}
+                       <button class="ui tiny positive button" id="acceptInvite">Accept</button>
+                       {{/if}}
+                      <div class="or"></div>
+                        {{#if isDeclined}}
+                       <button class="ui tiny negative active button" id="declineInvite">Declined</button>
+                       {{else}}
+                       <button class="ui tiny negative button" id="declineInvite">Decline</button>
+                       {{/if}}
+                    </div>
+                  {{/if}}
+                  </div>
                   <div class="content">
-                      <div id="invite_activity" class="header"> <h4><div class="ui large label">{{inviter.profile.name}}</div> invited you to {{activity.title}}</h4></div>
+                      <div id="invite_activity" class="header"> <h4><div class="ui large label">{{inviterName}}</div> invited you to {{actTitle}}</h4></div>
+
 
                       {{#if is_admin}}
                           <ul>Description: {{activity.description}}</ul>
@@ -172,7 +187,7 @@
   <div class="ui page grid">
     <!-- computer sent invitations -->
       <div class="computer only row">
-        {{#if get_invited_events}}
+        {{#if get_sentInvitations}}
        <div class="one wide computer only column"></div>
         <div  class="ui center floated raised very padded text container segment">
 
@@ -199,7 +214,7 @@
                    <div class="right floated content">
                       </div>
                   <div class="content">
-                      <div id="invite_activity" class="header"><h4> You invited <div class="ui large label">{{invitee.profile.name}}</div> to {{activity.title}}</h4></div>
+                      <div id="invite_activity" class="header"><h4> You invited <div class="ui large label">{{inviteeName}}</div> to {{actTitle}}</h4></div>
 
                       {{#if is_admin}}
                           <ul>Description: {{activity.description}}</ul>

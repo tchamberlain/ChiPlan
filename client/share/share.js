@@ -7,7 +7,10 @@ Router.route('share/:_id/', {
         waitOn: function(){
           //only subscribe if share event doesnt exist
           if(Session.get('shareEvent')){ 
-            return  Meteor.subscribe('get_user_names')  ;}
+            //you may need to change this so that it searches for user names at the beginning, or, put a loader button for the 
+            //user search to check if the subscription worked
+            //return  Meteor.subscribe('get_user_names')  ;
+          }
             
           else{
             return [Meteor.subscribe('event_by_id',Router.current().params._id), Meteor.subscribe('get_user_names')]; }
@@ -37,7 +40,7 @@ Template.share.onCreated(function(){
 Template.share.helpers({
 
   'get_when': function(){
-    return get_when();
+    return get_when(Session.get('shareEvent'));
   },
 
      'get_back_button': function(){
@@ -102,9 +105,6 @@ Template.share.events = {
 
 //if they press the search button on the form, we save the name they have entered
   'click #search_button': function (evt, template) {
-    console.log("search_buttoned")
-    //call_invite_modal();
-    //call_invite_modal =function(){
 
   var input_name = template.find('.inviteForm').value;
       //check for name in user DB
@@ -125,10 +125,6 @@ Template.share.events = {
 
 
     },
-
-    // 'click #back': function (evt, template) {
-
-    //   },
 
 
     'call_invite_modal':function(evt, template){
@@ -162,12 +158,40 @@ Template.invite_modal.helpers ({
 Template.invite_modal.events({
      
      'click #invite': function () {
-      user_id= Session.get('query_name')._id
-      invite_activity= Session.get('shareEvent')
+      invitee= Session.get('query_name');
+      invite_activity= Session.get('shareEvent');
       inviter= Meteor.user();
-      Meteor.call('sendInvite',Meteor.user(),Session.get('query_name'), invite_activity);
+
+
+     // we're going to add the invitation onto the activity
+        Activities.update({_id: invite_activity._id}, {$addToSet: {
+                  invitations: {
+                     inviterName: inviter.profile.name,
+                     inviteeName:invitee.profile.name,
+                     inviterID: inviter._id,
+                     inviteeID:invitee._id,
+                     accepted:null
+                    } 
+                  }}); 
+            console.log(inviter.profile.name,invitee.profile.name,inviter._id,invitee._id);
+
+
+      //Were going to insert an invitation into the db
+      //call meteor to do so 
+      // Invitations.insert({
+      //                inviteStr:""+inviter._id+invitee._id+invite_activity.title,
+      //                activity: invite_activity._id,
+      //                inviterName: inviter.profile.name,
+      //                inviteeName:invitee.profile.name,
+      //                inviterID: inviter._id,
+      //                inviteeID:invitee._id,
+      //                accepted:null
+      //   });
+
     }
+
 });
+
 
 Template.invite_modal.helpers({
   'get_shareEvent': function () {

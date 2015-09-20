@@ -83,7 +83,7 @@ Template.eventsTemp.helpers({
   },
 
   'get_when': function(){
-    return get_when();
+    return get_when(Session.get('currentEvent'));
   },
   //CHANGE TO FIVE SOON
   //determines whether or not attendence num will be displayed (if over five people are going)
@@ -223,7 +223,8 @@ function swipeRight(){
   if(Meteor.user()){
     add_fav(currentEvent);
     //route to share, coming from eventsTemp
-    Session.set('shareCurrentEvent',currentEvent);
+    Session.set('shareEvent',currentEvent);
+    console.log("just set share",Session.get('shareEvent'));
     Router.go('share',{_id: currentEvent._id});
     var currentEvent=Globals.eventList[Globals.eventIndex];
     Session.set('currentEvent',currentEvent);
@@ -431,9 +432,12 @@ is_favorite =function (act_id){
 
 
 //uses current activity to return a nicely formated date string
-get_when= function(){
-    start_time=Session.get('currentEvent').start_time;
-    start_date=Session.get('currentEvent').start_date;
+get_when= function(activity){
+  start_time=activity.start_time;
+  start_date=activity.start_date;
+    
+
+
 
     var month_names = [
         "January", "February", "March",

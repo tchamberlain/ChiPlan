@@ -23,15 +23,19 @@ Meteor.publish('get_user_names', function(id){
 
 
 Meteor.publish('user_by_name', function(name){
-        console.log(Meteor.users.find({'profile.name':name}).fetch());
         return Meteor.users.find({'profile.name':name});
 });
 
-
-Meteor.publish('user_by_name', function(name){
-        console.log(Meteor.users.find({'profile.name':name}).fetch());
-        return Meteor.users.find({'profile.name':name});
+Meteor.publish('getSentInvitations', function(inviter){
+        return  Activities.find({ invitations: {$elemMatch: { inviterID: inviter._id}}});
 });
+
+Meteor.publish('getInvitations', function(invitee){
+        return  Activities.find({ invitations: {$elemMatch: { inviteeID: invitee._id}}});
+});
+
+
+
 
 
 function set_up_act_list(search_category, search_date, search_dist, user_lng, user_lat){

@@ -56,7 +56,7 @@ Template.home.helpers({
 Template.home.events({
     'click #next_event': function(){
       Session.set('actInfoEvent',findNextEvent());
-      Router.go('actInfo',{_id: the_id, button_info:[0,0,1]} );
+      Router.go('actInfo',{_id: findNextEvent()._id,isInvite:[0]} );
     },
    'click #create': function(){
     if(Meteor.user()){
