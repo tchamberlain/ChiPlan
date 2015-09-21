@@ -37,7 +37,7 @@ Template.name_modal.events({
     console.log("in the right function")
     var first_name = template.find(".first_name").value;
     var last_name = template.find(".last_name").value;
-    var full_name= first_name+" "+last_name
+    var full_name= first_name+' '+last_name;
       console.log(full_name)
     var month = template.find(".month").value;
     var year = template.find(".year").value;

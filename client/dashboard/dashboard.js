@@ -46,8 +46,13 @@ Template.dashboard.events({
     },
     'click #activity': function(){
       var the_id = this._id;
-      Session.set('current_activity',Meteor.subscribe('event_by_id',the_id));
-      Session.set('actInfoEvent',this);
+      if(isAdmin){
+        Session.set('actInfoEvent',this.activity);
+      }
+      else{
+          Session.set('current_activity',Meteor.subscribe('event_by_id',the_id));
+          Session.set('actInfoEvent',this);
+      }
       Router.go('actInfo',{_id: the_id, isInvite:[0]});
     },
     'click #share': function(){
@@ -106,6 +111,14 @@ Template.dashboard.events({
 
       Invitations.update({_id:this._id}, {$set:{accepted:true}});
 
+
+      if(isAdmin){
+          //call insert on the object
+          Activities.insert(this.activity);
+          //call geocode function on the object
+          geocode_update_db(this.activity);
+      }
+
     },
         'click #declineInvite': function(){
       /// update accept in invitation object
@@ -136,6 +149,10 @@ Template.dashboard.events({
             if (Meteor.user().profile.favorites.length==0)
               return false;
             return Meteor.user().profile.favorites;
+  },
+      'getProp': function(invite_id, prop){
+          invite=Invites.findOne(invite_id);
+            return invite.activity[prop];
   },
     'isAccepted': function(){
             console.log("is acceoted",(Session.get('acceptedInvites').indexOf(this.inviteStr)>-1));
@@ -188,8 +205,7 @@ isAdmin=function(){
 }
 
 function acceptEvent (obj){
-    //call insert on the object
-
+   //call insert on the object
     Activities.insert(obj);
 
   //call geocode function on the object
@@ -228,4 +244,3 @@ function makeAcceptedLists(sent){
       console.log(sent,acceptedInvites,"acceptedInvites" );
       return listEvents;
 }
-

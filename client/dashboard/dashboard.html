@@ -110,13 +110,13 @@
                       {{#if isAccepted}}
                       <button class="ui tiny positive active button" id="acceptInvite">Accepted</button>
                       {{else}}
-                       <button class="ui tiny positive button" id="acceptInvite">Accept</button>
+                       <button class="ui tiny gray button" id="acceptInvite">Accept</button>
                        {{/if}}
                       <div class="or"></div>
                         {{#if isDeclined}}
                        <button class="ui tiny negative active button" id="declineInvite">Declined</button>
                        {{else}}
-                       <button class="ui tiny negative button" id="declineInvite">Decline</button>
+                       <button class="ui tiny gray button" id="declineInvite">Decline</button>
                        {{/if}}
                     </div>
                   {{/if}}
@@ -126,10 +126,10 @@
 
 
                       {{#if is_admin}}
+                          <ul> </ul>
                           <ul>Description: {{activity.description}}</ul>
                           <ul>Address: {{activity.address}}</ul>
                           <ul>Start Date:{{activity.start_date}}</ul>
-                          <ul>End Date:{{activity.end_date}}</ul>
                           <ul>Start time:{{activity.start_time}}</ul>
                           <ul>End time:{{activity.end_time}}</ul>
                       {{/if}}

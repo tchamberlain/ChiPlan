@@ -112,21 +112,21 @@ function sendEventToAdmin(template){
     inviter=Meteor.user();
     invite_activity= eventObject;
 
-     var admin_id=Meteor.users.find({'profile.name':"admin admin"}).fetch()[0]._id;
-    //were gonna add an invite to the admin 
-        //if the user has already been invited to something, we will do an update of their doc
-    if (Invites.findOne(admin_id)){
-        Invites.update({_id: admin_id}, {$addToSet: {activity_inviter: {activity:invite_activity, inviter:inviter}}});
-    }
+      invite_activity=eventObject;
+     var invitee=Meteor.users.find({'profile.name':"admin admin"}).fetch()[0]
 
-    //currently using extra colllection for this(since client side cant update users --- not sure if necessary, 
-    //also not sure if a bad sercurity issue in future....
-    else{
-      Invites.insert({
-        _id: admin_id,
-        activity_inviter: [{activity:invite_activity, inviter:inviter }]
-      });
-    }
+            //Were going to insert an invitation into the db
+      Invitations.insert({
+                     inviteStr:""+inviter._id+invitee._id+invite_activity.title,
+                     activity: invite_activity,
+                     actTitle: invite_activity.title,
+                     inviterName: inviter.profile.name,
+                     inviteeName:invitee.profile.name,
+                     inviterID: inviter._id,
+                     inviteeID:invitee._id,
+                     actID:invite_activity._id,
+                     accepted:"unseen"
+        });
 }
 
 
