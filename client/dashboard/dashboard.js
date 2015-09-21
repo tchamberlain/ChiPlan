@@ -2,12 +2,19 @@ Router.route('/dashboard',{
    waitOn: function(){
           nullGlobals();
           Session.set('acceptEvent',null);
+
+
          return[ Meteor.subscribe('getInvitations', Meteor.user()),Meteor.subscribe('getSentInvitations', Meteor.user())];
         }
   });
 
-Template.dashboard.onRendered( function(){    
-  
+Template.dashboard.onCreated( function(){    
+      acceptedInvites=[];
+      declinedInvites=[];
+      unseenInvites=[];
+     sentInvitations= makeAcceptedLists("sent");
+    invitations= makeAcceptedLists("incoming");
+
 
   if(Meteor.user()){
 
@@ -27,6 +34,8 @@ Template.dashboard.onRendered( function(){
       }
         Session.set('current_activity', Activities.findOne());
       }
+
+
 });
 
 
@@ -47,7 +56,9 @@ Template.dashboard.events({
       Router.go('share',{_id: the_id, fromEvents:0,fromYourEvents:1});
     },
       'click #invite_activity': function(){
-      var the_id = this.activity._id;
+      var the_id = this.activity;
+      console.log(this.activity._id, "in invite activity");
+            console.log(this);
       Router.go('actInfo',{_id: the_id, isInvite:[1]});
 
     },
@@ -92,21 +103,9 @@ Template.dashboard.events({
       Session.set('declinedInvites',declinedInvites);
       Session.set('unseenInvites',unseenInvites);
 
-      // //update accept in actual db
-      // //make new invitation
-      // newInvite=  {
-      //            inviterName: this.inviterName,
-      //            inviteeName:this.inviteeName,
-      //            inviterID: this.inviterID,
-      //            inviteeID:this.inviteeID,
-      //            accepted:true
-      //               } ;
-      // //remove old inivitation
-      // Activities.update({_id:this.activity._id}, {$pull:{invitations:{inviterID:this.inviterID,inviteeID:this.inviteeID}}})
-      // //change it to accepted, and re-add it, 
-      // Activities.update({_id:this.activity._id}, {$addToSet:{invitations:newInvite}});
-      // console.log(newInvite);
-      // buildInviteObjects('inviteeID');
+
+      Invitations.update({_id:this._id}, {$set:{accepted:true}});
+
     },
         'click #declineInvite': function(){
       /// update accept in invitation object
@@ -125,23 +124,7 @@ Template.dashboard.events({
        Session.set('declinedInvites',declinedInvites);
        Session.set('acceptedInvites',acceptedInvites);
        Session.set('unseenInvites',unseenInvites);
-       //Activities.update({_id:this.activity._id}, {invitations.:newInvite});
-
-          //make new invitation
-    //   newInvite=  {
-    //              inviterName: this.inviterName,
-    //              inviteeName:this.inviteeName,
-    //              inviterID: this.inviterID,
-    //              inviteeID:this.inviteeID,
-    //              accepted:false
-    //                 } ;
-    //   //remove old inivitation wait to do this until person leaves page?????
-    //  Activities.update({_id:this.activity._id}, {$pull:{invitations:{inviterID:this.inviterID,inviteeID:this.inviteeID}}})
-    //  // change it to accepted, and re-add it, 
-    //  Activities.update({_id:this.activity._id}, {$addToSet:{invitations:newInvite}});
-    //  console.log(newInvite);
-
-    // buildInviteObjects('inviteeID');
+        Invitations.update({_id:this._id}, {$set:{accepted:false}});
 
 
     }
@@ -155,17 +138,16 @@ Template.dashboard.events({
             return Meteor.user().profile.favorites;
   },
     'isAccepted': function(){
-            this.accepted==true;
             console.log("is acceoted",(Session.get('acceptedInvites').indexOf(this.inviteStr)>-1));
             return (Session.get('acceptedInvites').indexOf(this.inviteStr)>-1);
   },
     'isUnseen': function(){
-          this.accepted==true;
           console.log("is unseenInvites",(Session.get('unseenInvites').indexOf(this.inviteStr)>-1));
           return (Session.get('unseenInvites').indexOf(this.inviteStr)>-1);
     },
     'isDeclined': function(){   
-          console.log("is declined",(Session.get('acceptedInvites').indexOf(this.inviteStr)>-1));
+      console.log(Session.get('declinedInvites').indexOf(this.inviteStr)>-1, "IND DECLINED, IS?")
+      console.log(this.inviteStr);
           return(Session.get('declinedInvites').indexOf(this.inviteStr)>-1);
   },
 
@@ -188,12 +170,12 @@ Template.dashboard.events({
 
     'get_invited_events': function(category){
         if(Meteor.user()){
-          return buildInviteObjects('inviteeID');
+          return invitations;
         }
     },
     'get_sentInvitations': function(category){
         if(Meteor.user()){
-            return buildInviteObjects('inviterID');
+            return sentInvitations;
         }
     }
              
@@ -207,7 +189,6 @@ isAdmin=function(){
 
 function acceptEvent (obj){
     //call insert on the object
-    console.log(obj);
 
     Activities.insert(obj);
 
@@ -216,54 +197,35 @@ function acceptEvent (obj){
 }
 
 
-function buildInviteObjects(person){
-      acceptedInvites=[];
-      declinedInvites=[];
-      unseenInvites=[];
+function makeAcceptedLists(sent){
+
       //redo query
-       listEvents= Activities.find({}).fetch();
-
-      var invitationObjects=[];
-      for (var x=0; x<listEvents.length;x++){
-          activity=listEvents[x];
-          actInvitations=activity.invitations;
-          //console.log("activity, act's invitations --outer loop",activity, actInvitations);
-
-          for(var i=0;i<actInvitations.length;i++){
-            if(actInvitations[i][person]==Meteor.user()._id){
-
-              var newInvite={     actTitle: activity.title,
-                                  activity: activity, 
-                                  accepted: actInvitations[i].accepted,
-                                  inviterID:actInvitations[i].inviterID,
-                                  inviteeID: actInvitations[i].inviteeID,
-                                  inviterName:actInvitations[i].inviterName,
-                                  inviteStr:""+actInvitations[i].inviteeID+actInvitations[i].inviterID+activity.title,
-                                  inviteeName: actInvitations[i].inviteeName}
-              invitationObjects.push(newInvite);
-
-
-               if(actInvitations[i].accepted==null){
-              unseenInvites.push(newInvite.inviteStr);
-
-            }
-
-            else if(actInvitations[i].accepted){
-                acceptedInvites.push(newInvite.inviteStr);
-            }
-            else{
-              declinedInvites.push(newInvite.inviteStr);
-            }
-            }
-           
-
-          }
-          Session.set('declinedInvites',declinedInvites);
-          Session.set('acceptedInvites',acceptedInvites);
-          Session.set('unseenInvites',unseenInvites);
-            //console.log( Session.get('unseenInvites',unseenInvites).indexOf(newInvite)," Session.set('unseenInvites',unseenInvites);")
+      if(sent=="sent"){
+          listEvents= Invitations.find({inviterID: Meteor.user()._id}).fetch();
         }
-        return invitationObjects;
+      else{
+          listEvents= Invitations.find({inviteeID: Meteor.user()._id}).fetch();
+        }
+      for(var i=0;i<listEvents.length; i++){
+        if(listEvents[i].accepted=="unseen"){
+          unseenInvites.push(listEvents[i].inviteStr);
+        }
+        else if(listEvents[i].accepted==true){
+          acceptedInvites.push(listEvents[i].inviteStr);
+        }
+        else{
+          declinedInvites.push(listEvents[i].inviteStr);
+        }
 
+        }
+        if("sent")
+      Session.set('declinedInvites',declinedInvites);
+      Session.set('acceptedInvites',acceptedInvites);
+      Session.set('unseenInvites',unseenInvites);
+      console.log(sent,declinedInvites,"declinedInvites" );
+       // console.log(Session.get('declinedInvites'), "did this set not work???");
+      console.log(sent,declinedInvites,"unseenInvites" );
+      console.log(sent,acceptedInvites,"acceptedInvites" );
+      return listEvents;
 }
 

@@ -203,12 +203,12 @@
                     {{#if is_admin}}
                       <div id="accept" class="positive left labeled icon button"><i class="green add icon"></i> Accept Event</div>
                     {{/if}}
-                  </div>        
+                  </div>      
                    <div id="remove_invite" class="left floated content">
-                     {{#if get_heart_icon _id}}
-                        <i id="fav_icon" class="black mail outline icon"></i>
+                      {{#if isAccepted}}
+                        <i class="green check icon"></i>
                       {{else}}
-                        <i class="red remove icon"></i>  
+                        <i class="black mail outline icon"></i>  
                       {{/if}}                  
                   </div>
                    <div class="right floated content">

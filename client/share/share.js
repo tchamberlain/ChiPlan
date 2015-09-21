@@ -162,31 +162,17 @@ Template.invite_modal.events({
       invite_activity= Session.get('shareEvent');
       inviter= Meteor.user();
 
-
-     // we're going to add the invitation onto the activity
-        Activities.update({_id: invite_activity._id}, {$addToSet: {
-                  invitations: {
+      //Were going to insert an invitation into the db
+      Invitations.insert({
+                     inviteStr:""+inviter._id+invitee._id+invite_activity.title,
+                     activity: invite_activity._id,
+                     actTitle: invite_activity.title,
                      inviterName: inviter.profile.name,
                      inviteeName:invitee.profile.name,
                      inviterID: inviter._id,
                      inviteeID:invitee._id,
-                     accepted:null
-                    } 
-                  }}); 
-            console.log(inviter.profile.name,invitee.profile.name,inviter._id,invitee._id);
-
-
-      //Were going to insert an invitation into the db
-      //call meteor to do so 
-      // Invitations.insert({
-      //                inviteStr:""+inviter._id+invitee._id+invite_activity.title,
-      //                activity: invite_activity._id,
-      //                inviterName: inviter.profile.name,
-      //                inviteeName:invitee.profile.name,
-      //                inviterID: inviter._id,
-      //                inviteeID:invitee._id,
-      //                accepted:null
-      //   });
+                     accepted:"unseen"
+        });
 
     }
 

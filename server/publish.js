@@ -27,11 +27,11 @@ Meteor.publish('user_by_name', function(name){
 });
 
 Meteor.publish('getSentInvitations', function(inviter){
-        return  Activities.find({ invitations: {$elemMatch: { inviterID: inviter._id}}});
+        return  Invitations.find({ inviterID: inviter._id });
 });
 
 Meteor.publish('getInvitations', function(invitee){
-        return  Activities.find({ invitations: {$elemMatch: { inviteeID: invitee._id}}});
+        return  Invitations.find({ inviteeID: invitee._id });
 });
 
 
