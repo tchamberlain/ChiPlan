@@ -9,10 +9,14 @@ Router.route('/actInfo/:_id/:isInvite', {
     });
 
 Template.actInfo.onCreated( function(){
+   if(!Session.get('actInfoEvent')){
     var actInfoEvent=Activities.findOne(currentID);
     Session.set('actInfoEvent', actInfoEvent);
     Meteor.subscribe('event_by_id',currentID);
-
+    }
+    else{
+      var actInfoEvent=Session.get('actInfoEvent');
+    }
     //default is no buttons
     setButtonsNone();
 
@@ -37,6 +41,10 @@ Template.actInfo.helpers({
   'is_favorite': function(){
           act_id=Session.get('actInfoEvent')._id;
          return is_favorite(act_id);
+  },
+    'showAttendance': function(){
+    current_activity=Session.get('actInfoEvent');
+    return (current_activity.attending>=5);
   }
 });
 

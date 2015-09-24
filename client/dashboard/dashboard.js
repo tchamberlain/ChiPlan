@@ -2,8 +2,6 @@ Router.route('/dashboard',{
    waitOn: function(){
           nullGlobals();
           Session.set('acceptEvent',null);
-
-
          return[ Meteor.subscribe('getInvitations', Meteor.user()),Meteor.subscribe('getSentInvitations', Meteor.user())];
         }
   });
@@ -46,6 +44,7 @@ Template.dashboard.events({
     },
     'click #activity': function(){
       var the_id = this._id;
+      console.log("this",this);
       if(isAdmin){
         Session.set('actInfoEvent',this.activity);
       }
@@ -61,16 +60,20 @@ Template.dashboard.events({
       Router.go('share',{_id: the_id, fromEvents:0,fromYourEvents:1});
     },
       'click #invite_activity': function(){
-      var the_id = this.activity;
+        console.log("this in route why can u no show",this);
+        console.log("this in route why can u no show act",this.activity);
+      var the_id = this.activity._id;
       console.log(this.activity._id, "in invite activity");
-            console.log(this);
+      console.log(this.activtiy,"act in route");
+          console.log("why no show this in route");
+       console.log(this,"this in route");
+       Session.set('actInfoEvent',this.activity);
       Router.go('actInfo',{_id: the_id, isInvite:[1]});
 
     },
 
     'click #fav_icon': function(){
       var act_id = this._id;
-
       Meteor.users.update({_id: user_id}, {$addToSet: {'profile.discarding': {_id: act_id}}});
       var act_id = this._id;
 

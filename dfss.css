@@ -1,7 +1,11 @@
 
 /*tryna make cursor a hand for header*/
 
-
+.map-container {
+  width: 800px;
+  max-width: 100%;
+  height: 500px;
+}
 
 
 @computerBreakpoint : 10px;
@@ -127,5 +131,9 @@ body {
 
 }
 
-
+.map-container {
+  width: 800px;
+  max-width: 100%;
+  height: 500px;
+}
 

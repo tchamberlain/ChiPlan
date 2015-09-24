@@ -165,7 +165,7 @@ Template.invite_modal.events({
       //Were going to insert an invitation into the db
       Invitations.insert({
                      inviteStr:""+inviter._id+invitee._id+invite_activity.title,
-                     activity: invite_activity._id,
+                     activity: invite_activity,
                      actTitle: invite_activity.title,
                      inviterName: inviter.profile.name,
                      inviteeName:invitee.profile.name,

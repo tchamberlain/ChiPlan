@@ -4,7 +4,7 @@
 //adds facebook as a login service 
 Meteor.startup(function() {
     Globals= {}; 
-
+    hasSwiped=false;
 
     GoogleMaps.load();
       // first get current location lat and lng

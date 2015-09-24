@@ -37,6 +37,15 @@ Template.eventsTemp.onCreated( function(){
     create_act_list();
   }
   Session.set('currentEvent',Globals.eventList[Globals.eventIndex]);
+  //update has swiped again (better do it here or in home.js?)
+  if(Meteor.user()){
+    if(Meteor.user().hasSwiped){
+    hasSwiped=true;
+  }
+  }
+  else{
+    hasSwiped=false;
+  }
 
 });
 
@@ -89,7 +98,7 @@ Template.eventsTemp.helpers({
   //determines whether or not attendence num will be displayed (if over five people are going)
   'showAttendance': function(){
     current_activity=Session.get('currentEvent');
-    return (current_activity.attending>=1);
+    return (current_activity.attending>=5);
   },
   //we disable the more info button if the description isless than or equal to 3 lines
   'more_info_disabled': function(){
@@ -242,7 +251,7 @@ add_fav= function(activity){
       Activities.update({_id:activity._id}, {$set:{"attending":1}});
     }
     else{
-      attendence=activity.attending+1;
+      var attendence=activity.attending+1;
       Activities.update({_id:activity._id}, {$set:{"attending":attendence}});
     }
 
